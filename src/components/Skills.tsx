@@ -3,23 +3,43 @@ import { motion } from "framer-motion";
 const skillGroups = [
   {
     title: "Frontend",
-    skills: ["HTML", "CSS", "Tailwind", "React.js"],
+    skills: [
+      { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+      { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+    ],
   },
   {
     title: "Backend",
-    skills: ["Node.js", "Express.js"],
+    skills: [
+      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+      { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+    ],
   },
   {
     title: "Database",
-    skills: ["MongoDB", "Mongoose"],
+    skills: [
+      { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+      { name: "Mongoose", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongoose/mongoose-original.svg" },
+    ],
   },
   {
     title: "Core",
-    skills: ["JavaScript", "REST API"],
+    skills: [
+      { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { name: "REST API", icon: "" },
+    ],
   },
   {
     title: "Tools",
-    skills: ["Git", "GitHub", "Postman", "Vercel", "Render"],
+    skills: [
+      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+      { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+      { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
+      { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" },
+      { name: "Render", icon: "" },
+    ],
   },
 ];
 
@@ -49,17 +69,31 @@ const Skills = () => {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all card-shadow group"
             >
-              <h4 className="font-mono text-primary text-sm font-semibold mb-4">
+              <h4 className="font-mono text-primary text-sm font-semibold mb-5">
                 {`{${group.title}}`}
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1.5 text-sm rounded-md bg-secondary text-secondary-foreground font-medium group-hover:bg-primary/10 group-hover:text-primary transition-colors"
+                  <div
+                    key={skill.name}
+                    className="flex items-center gap-2.5 p-2.5 rounded-lg bg-secondary/50 hover:bg-primary/10 transition-colors"
                   >
-                    {skill}
-                  </span>
+                    {skill.icon ? (
+                      <img
+                        src={skill.icon}
+                        alt={skill.name}
+                        className="w-6 h-6 object-contain"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-primary text-xs font-bold">
+                        {skill.name.charAt(0)}
+                      </div>
+                    )}
+                    <span className="text-sm font-medium text-secondary-foreground group-hover:text-primary transition-colors">
+                      {skill.name}
+                    </span>
+                  </div>
                 ))}
               </div>
             </motion.div>
