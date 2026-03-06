@@ -5,27 +5,27 @@ const projects = [
   {
     title: "Real-Time Chat Application",
     description:
-      "Built a real-time chat system using React (Vite), Node.js, Express, MongoDB, and Socket.io enabling instant WebSocket communication and seamless messaging without page refresh.",
+      "Built a real-time chat application enabling instant messaging using WebSockets. Users can send and receive messages instantly without page refresh.",
     features: [
       "Real-time messaging",
       "WebSocket communication",
+      "Online users",
       "REST API integration",
-      "Online users support",
     ],
-    tech: ["React", "Node.js", "Express", "MongoDB", "Socket.io"],
+    tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
     hasLinks: true,
   },
   {
     title: "Social Media App",
     description:
-      "Developed a lightweight social feed application using React (Vite) with mock REST API using json-server. Implemented CRUD operations and responsive UI.",
+      "Developed a lightweight social feed application using React (Vite) with a mock REST API using json-server to simulate CRUD operations.",
     tech: ["React", "Vite", "json-server", "REST API"],
     hasLinks: false,
   },
   {
     title: "Task Manager Dashboard",
     description:
-      "Built a task management dashboard with authentication and full CRUD functionality to create, update, delete and track tasks with priority and due-date management.",
+      "Built a task management dashboard with secure login/signup authentication and full CRUD functionality to manage tasks with priority and due dates.",
     tech: ["React", "Node.js", "MongoDB", "Auth"],
     hasLinks: false,
   },

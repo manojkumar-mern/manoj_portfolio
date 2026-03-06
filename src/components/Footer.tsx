@@ -3,7 +3,7 @@ const Footer = () => {
     <footer className="py-8 border-t border-border">
       <div className="container text-center">
         <p className="text-sm text-muted-foreground font-mono">
-          © {new Date().getFullYear()} ManojKumar D. All rights reserved.
+          © 2026 Manoj Kumar D – MERN Stack Developer
         </p>
       </div>
     </footer>
