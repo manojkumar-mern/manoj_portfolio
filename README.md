@@ -4,9 +4,6 @@ This is my personal developer portfolio website built using modern web technolog
 
 The goal of this portfolio is to present my work as a Full Stack MERN Developer and demonstrate my ability to build scalable and responsive web applications.
 
-## Live Portfolio
-Coming Soon (Deploying on Vercel)
-
 ## Tech Stack
 
 Frontend
