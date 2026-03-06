@@ -5,6 +5,7 @@ const links = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "GitHub", href: "#github" },
   { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
@@ -20,31 +21,19 @@ const Navbar = () => {
         </a>
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium"
-            >
+            <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium">
               {l.label}
             </a>
           ))}
         </div>
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-foreground"
-        >
+        <button onClick={() => setOpen(!open)} className="md:hidden text-foreground">
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
       {open && (
         <div className="md:hidden border-t border-border bg-card/95 backdrop-blur-md">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="block px-6 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
-            >
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block px-6 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/50 transition-colors">
               {l.label}
             </a>
           ))}

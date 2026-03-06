@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Zap } from "lucide-react";
+import { ExternalLink, Github, Server, Zap } from "lucide-react";
 
 const projects = [
   {
     title: "Real-Time Chat Application",
     description:
-      "Built a real-time chat application enabling instant messaging using WebSockets. Users can send and receive messages instantly without page refresh.",
+      "Built a real-time chat application enabling instant messaging using WebSocket communication. Users can send and receive messages instantly without page refresh.",
     features: [
       "Real-time messaging",
       "WebSocket communication",
@@ -13,21 +13,21 @@ const projects = [
       "REST API integration",
     ],
     tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
-    hasLinks: true,
+    links: { demo: "#", github: "#", api: "#" },
   },
   {
     title: "Social Media App",
     description:
-      "Developed a lightweight social feed application using React (Vite) with a mock REST API using json-server to simulate CRUD operations.",
+      "Developed a lightweight social feed application using React (Vite) with a mock REST API powered by json-server to simulate CRUD operations.",
     tech: ["React", "Vite", "json-server", "REST API"],
-    hasLinks: false,
+    links: null,
   },
   {
     title: "Task Manager Dashboard",
     description:
-      "Built a task management dashboard with secure login/signup authentication and full CRUD functionality to manage tasks with priority and due dates.",
-    tech: ["React", "Node.js", "MongoDB", "Auth"],
-    hasLinks: false,
+      "Built a task management dashboard with secure authentication and full CRUD functionality to create, update, delete, and manage tasks.",
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "Auth"],
+    links: null,
   },
 ];
 
@@ -60,9 +60,7 @@ const Projects = () => {
               whileHover={{ y: -6 }}
               className="group rounded-xl bg-card border border-border hover:border-primary/40 transition-all card-shadow overflow-hidden flex flex-col"
             >
-              {/* Top accent bar */}
               <div className="h-1 w-full" style={{ background: "var(--gradient-primary)" }} />
-
               <div className="p-6 flex flex-col flex-1">
                 <h4 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {project.title}
@@ -84,28 +82,22 @@ const Projects = () => {
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-mono"
-                    >
+                    <span key={t} className="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-mono">
                       {t}
                     </span>
                   ))}
                 </div>
 
-                {project.hasLinks && (
-                  <div className="flex gap-3 mt-auto pt-2">
-                    <a
-                      href="#"
-                      className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium"
-                    >
+                {project.links && (
+                  <div className="flex flex-wrap gap-3 mt-auto pt-2">
+                    <a href={project.links.demo} className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium">
                       <ExternalLink size={14} /> Live Demo
                     </a>
-                    <a
-                      href="#"
-                      className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground font-medium"
-                    >
+                    <a href={project.links.github} className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground font-medium">
                       <Github size={14} /> GitHub
+                    </a>
+                    <a href={project.links.api} className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground font-medium">
+                      <Server size={14} /> Backend API
                     </a>
                   </div>
                 )}
@@ -114,7 +106,6 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Mini Projects */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -124,10 +115,7 @@ const Projects = () => {
           <h4 className="font-mono text-primary text-sm mb-4 tracking-wider">// mini projects</h4>
           <div className="flex flex-wrap gap-3">
             {miniProjects.map((p) => (
-              <span
-                key={p}
-                className="px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/40 hover:text-primary transition-all cursor-default"
-              >
+              <span key={p} className="px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/40 hover:text-primary transition-all cursor-default">
                 {p}
               </span>
             ))}
