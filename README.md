@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# Manoj Kumar D — MERN Stack Developer Portfolio
 
-## Project info
+This is my personal developer portfolio website built using modern web technologies. It showcases my projects, technical skills, education, and contact information.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+The goal of this portfolio is to present my work as a Full Stack MERN Developer and demonstrate my ability to build scalable and responsive web applications.
 
-## How can I edit this code?
+## Live Portfolio
+Coming Soon (Deploying on Vercel)
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
+Frontend
 - React
-- shadcn-ui
+- TypeScript
+- Vite
 - Tailwind CSS
+- shadcn-ui
 
-## How can I deploy this project?
+Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Tools
+- Git
+- GitHub
+- Postman
+- Vercel
+- Render
 
-## Can I connect a custom domain to my Lovable project?
+## Featured Project
 
-Yes, you can!
+### Real-Time Chat Application
+A full stack real-time messaging application built using the MERN stack with WebSocket communication.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Features:
+- Real-time messaging using Socket.io
+- User authentication
+- Instant message updates
+- REST API integration
+- Responsive UI
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Tech Stack:
+React, Node.js, Express.js, MongoDB, Socket.io
+
+## Other Projects
+
+### Social Media App
+A lightweight social feed application built with React that supports CRUD operations using a mock REST API.
+
+### Task Manager Dashboard
+A task management system with authentication and full CRUD functionality for managing tasks and deadlines.
+
+### Mini Projects
+- To Do List
+- Rock Paper Scissors Game
+- Colors App
+- Notes API
+
+## Installation
+
+To run this project locally:
+
+```bash
+git clone https://github.com/manojkumar-mern/manoj-s-mern-portfolio.git
+cd manoj-s-mern-portfolio
+npm install
+npm run dev
