@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const links = [
+  { label: "Home", href: "#" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
@@ -12,16 +13,23 @@ const links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "glass shadow-lg" : "bg-transparent"}`}>
       <div className="container flex items-center justify-between h-16">
         <a href="#" className="font-mono text-lg font-bold text-gradient">
           {"<MK />"}
         </a>
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a key={l.href + l.label} href={l.href} className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium">
               {l.label}
             </a>
           ))}
@@ -33,7 +41,7 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden border-t border-border bg-card/95 backdrop-blur-md">
           {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block px-6 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/50 transition-colors">
+            <a key={l.href + l.label} href={l.href} onClick={() => setOpen(false)} className="block px-6 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-secondary/50 transition-colors">
               {l.label}
             </a>
           ))}
