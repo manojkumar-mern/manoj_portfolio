@@ -117,14 +117,14 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
 
       {project.links && (
         <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-          <a href={project.links.demo} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all glow">
+          <a href={"https://chat-app-kappa-ashy.vercel.app/"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all glow">
             <ExternalLink size={14} /> Live Demo
           </a>
-          <a href={project.links.github} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
+          <a href={"https://github.com/manojkumar-mern/chat-app"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
             <Github size={14} /> GitHub
           </a>
           {project.links.api && (
-            <a href={project.links.api} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-muted-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
+            <a href={"https://chat-app-y0ic.onrender.com/"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-muted-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
               <Server size={14} /> Backend API
             </a>
           )}

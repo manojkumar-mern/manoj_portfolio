@@ -76,7 +76,7 @@ const Hero = () => {
             >
               <span className="h-px w-8 bg-primary/50" />
               <p className="font-mono text-primary text-base md:text-lg font-semibold">
-                Full Stack Developer | MERN Stack Specialist
+                MERN Stack Developer
               </p>
               <span className="h-px w-8 bg-primary/50" />
             </motion.div>
@@ -126,7 +126,7 @@ const Hero = () => {
               </a>
               <div className="flex items-center gap-2">
                 <a
-                  href="/resume.pdf"
+                  href="/resume.pdf#zoom=65"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-primary/30 text-primary font-semibold hover:bg-primary/10 transition-all"
@@ -136,7 +136,7 @@ const Hero = () => {
                 </a>
                 <a
                   href="/resume.pdf"
-                  download
+                  download="manoj_resume.pdf"
                   className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-primary/30 text-primary font-semibold hover:bg-primary/10 transition-all"
                 >
                   <Download size={16} />
@@ -176,7 +176,7 @@ const Hero = () => {
                 <img
                   src={profileImg}
                   alt="Manoj Kumar D"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-[center_30%]"
                 />
               </div>
               <div className="absolute -inset-2 rounded-full border border-primary/10 animate-pulse-glow" />

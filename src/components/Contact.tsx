@@ -106,7 +106,7 @@ const Contact = () => {
               className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
             >
               <div className="p-2 rounded-md bg-primary/10"><Phone size={18} className="text-primary" /></div>
-              <span className="text-sm text-muted-foreground">+91</span>
+              <span className="text-sm text-muted-foreground">+91 9159843416</span>
             </a>
             <a
               href="mailto:vijaymanoj0000@gmail.com"
@@ -131,7 +131,7 @@ const Contact = () => {
               className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
             >
               <div className="p-2 rounded-md bg-primary/10"><Linkedin size={18} className="text-primary" /></div>
-              <span className="text-sm text-muted-foreground">LinkedIn Profile</span>
+              <span className="text-sm text-muted-foreground">https://www.linkedin.com/in/manoj-kumar-d-513253293</span>
             </a>
           </motion.div>
         </div>
