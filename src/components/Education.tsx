@@ -46,78 +46,90 @@ const Education = () => {
           </h3>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Education */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4"
-          >
-            <div className="flex items-center gap-2 mb-4">
+        <div className="grid lg:grid-cols-3 gap-12">
+          {/* Timeline */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-2 mb-8">
               <GraduationCap size={20} className="text-primary" />
               <h4 className="font-semibold text-lg text-foreground">Education</h4>
             </div>
-            {education.map((e) => (
-              <div
-                key={e.degree}
-                className="p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-              >
-                <p className="font-semibold text-foreground">{e.degree}</p>
-                <p className="text-sm text-muted-foreground">{e.school}</p>
-                <div className="flex items-center justify-between mt-2">
-                  <span className="text-xs text-muted-foreground font-mono">{e.year}</span>
-                  <span className="text-xs font-mono text-primary font-semibold">{e.score}</span>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Certifications */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-4"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Award size={20} className="text-primary" />
-              <h4 className="font-semibold text-lg text-foreground">Certifications</h4>
-            </div>
-            {certifications.map((c) => (
-              <div
-                key={c}
-                className="p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-              >
-                <p className="text-sm text-muted-foreground">{c}</p>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Languages */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Languages size={20} className="text-primary" />
-              <h4 className="font-semibold text-lg text-foreground">Languages</h4>
-            </div>
-            <div className="flex gap-3">
-              {languages.map((l) => (
-                <span
-                  key={l}
-                  className="px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground"
+            <div className="relative pl-8 border-l-2 border-primary/20 space-y-8">
+              {education.map((e, i) => (
+                <motion.div
+                  key={e.degree}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.15 }}
+                  className="relative"
                 >
-                  {l}
-                </span>
+                  {/* Timeline dot */}
+                  <div className="absolute -left-[calc(2rem+5px)] top-1 w-3 h-3 rounded-full bg-primary glow" />
+                  <div className="p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all card-shadow">
+                    <div className="flex items-start justify-between gap-4 mb-1">
+                      <p className="font-semibold text-foreground">{e.degree}</p>
+                      <span className="text-xs font-mono text-primary font-semibold bg-primary/10 px-2 py-1 rounded shrink-0">
+                        {e.score}
+                      </span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{e.school}</p>
+                    <span className="text-xs text-muted-foreground font-mono mt-2 inline-block">{e.year}</span>
+                  </div>
+                </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
+
+          {/* Certifications & Languages */}
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Award size={20} className="text-primary" />
+                <h4 className="font-semibold text-lg text-foreground">Certifications</h4>
+              </div>
+              <div className="space-y-3">
+                {certifications.map((c, i) => (
+                  <motion.div
+                    key={c}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                    className="p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors text-sm text-muted-foreground"
+                  >
+                    {c}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Languages size={20} className="text-primary" />
+                <h4 className="font-semibold text-lg text-foreground">Languages</h4>
+              </div>
+              <div className="flex gap-3">
+                {languages.map((l) => (
+                  <span
+                    key={l}
+                    className="px-5 py-2.5 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/30 hover:text-primary transition-all"
+                  >
+                    {l}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

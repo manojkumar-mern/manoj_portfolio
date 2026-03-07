@@ -4,42 +4,43 @@ const skillGroups = [
   {
     title: "Frontend",
     skills: [
-      { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-      { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-      { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
-      { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", level: 90 },
+      { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", level: 85 },
+      { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", level: 88 },
+      { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", level: 92 },
     ],
   },
   {
     title: "Backend",
     skills: [
-      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-      { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", level: 88 },
+      { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", level: 85 },
     ],
   },
   {
     title: "Database",
     skills: [
-      { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-      { name: "Mongoose", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongoose/mongoose-original.svg" },
+      { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", level: 85 },
+      { name: "Mongoose", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongoose/mongoose-original.svg", level: 82 },
     ],
   },
   {
     title: "Core",
     skills: [
-      { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-      { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-      { name: "REST API", icon: "" },
+      { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", level: 90 },
+      { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", level: 80 },
+      { name: "REST API", icon: "", level: 88 },
+      { name: "Socket.io", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg", level: 78 },
     ],
   },
   {
     title: "Tools",
     skills: [
-      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-      { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
-      { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
-      { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" },
-      { name: "Render", icon: "" },
+      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", level: 85 },
+      { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", level: 88 },
+      { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg", level: 82 },
+      { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg", level: 80 },
+      { name: "Render", icon: "", level: 75 },
     ],
   },
 ];
@@ -74,28 +75,45 @@ const Skills = () => {
               <h4 className="font-mono text-primary text-sm font-semibold mb-5">
                 {`{${group.title}}`}
               </h4>
-              <div className="grid grid-cols-2 gap-3">
-                {group.skills.map((skill) => (
+              <div className="space-y-4">
+                {group.skills.map((skill, j) => (
                   <motion.div
                     key={skill.name}
-                    whileHover={{ scale: 1.05 }}
-                    className="flex items-center gap-2.5 p-2.5 rounded-lg bg-secondary/50 hover:bg-primary/10 transition-colors cursor-default"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.1 + j * 0.05 }}
+                    className="space-y-1.5"
                   >
-                    {skill.icon ? (
-                      <img
-                        src={skill.icon}
-                        alt={skill.name}
-                        className="w-6 h-6 object-contain"
-                        loading="lazy"
+                    <div className="flex items-center gap-2.5">
+                      {skill.icon ? (
+                        <img
+                          src={skill.icon}
+                          alt={skill.name}
+                          className="w-5 h-5 object-contain"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-5 h-5 rounded bg-primary/20 flex items-center justify-center text-primary text-[10px] font-bold">
+                          {skill.name.charAt(0)}
+                        </div>
+                      )}
+                      <span className="text-sm font-medium text-secondary-foreground flex-1">
+                        {skill.name}
+                      </span>
+                      <span className="text-xs font-mono text-muted-foreground">{skill.level}%</span>
+                    </div>
+                    {/* Skill bar */}
+                    <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
+                      <motion.div
+                        className="h-full rounded-full"
+                        style={{ background: "var(--gradient-primary)" }}
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: i * 0.1 + j * 0.05, ease: "easeOut" }}
                       />
-                    ) : (
-                      <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-primary text-xs font-bold">
-                        {skill.name.charAt(0)}
-                      </div>
-                    )}
-                    <span className="text-sm font-medium text-secondary-foreground group-hover:text-primary transition-colors">
-                      {skill.name}
-                    </span>
+                    </div>
                   </motion.div>
                 ))}
               </div>
