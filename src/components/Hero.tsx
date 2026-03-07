@@ -1,11 +1,39 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail, Eye } from "lucide-react";
 import profileImg from "@/assets/profile.png";
 
+const typingWords = ["React", "Node.js", "MongoDB", "Express", "Socket.io", "TypeScript"];
+
 const Hero = () => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = typingWords[wordIndex];
+    const timeout = setTimeout(
+      () => {
+        if (!isDeleting) {
+          setText(currentWord.slice(0, text.length + 1));
+          if (text.length + 1 === currentWord.length) {
+            setTimeout(() => setIsDeleting(true), 1200);
+          }
+        } else {
+          setText(currentWord.slice(0, text.length - 1));
+          if (text.length === 0) {
+            setIsDeleting(false);
+            setWordIndex((prev) => (prev + 1) % typingWords.length);
+          }
+        }
+      },
+      isDeleting ? 50 : 100
+    );
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, wordIndex]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background grid */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
         backgroundSize: "60px 60px",
@@ -36,13 +64,27 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex items-center justify-center md:justify-start gap-2 mb-6"
+              className="flex items-center justify-center md:justify-start gap-2 mb-3"
             >
               <span className="h-px w-8 bg-primary/50" />
               <p className="font-mono text-primary text-base md:text-lg font-semibold">
-                MERN Stack Developer
+                Full Stack Developer | MERN Stack Specialist
               </p>
               <span className="h-px w-8 bg-primary/50" />
+            </motion.div>
+
+            {/* Typing effect */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mb-6 flex items-center justify-center md:justify-start gap-2"
+            >
+              <span className="font-mono text-muted-foreground text-sm">{">"}</span>
+              <span className="font-mono text-accent text-lg font-semibold">
+                {text}
+              </span>
+              <span className="font-mono text-primary animate-pulse text-lg">|</span>
             </motion.div>
 
             <motion.p
@@ -51,7 +93,7 @@ const Hero = () => {
               transition={{ delay: 0.6 }}
               className="text-muted-foreground text-lg md:text-xl max-w-2xl mb-8 leading-relaxed"
             >
-              Skilled in building scalable web applications using React, Node.js,
+              MERN Stack Developer skilled in building scalable web applications using React, Node.js,
               Express, and MongoDB.
             </motion.p>
 
@@ -74,14 +116,25 @@ const Hero = () => {
               >
                 Contact Me
               </a>
-              <a
-                href="/resume.pdf"
-                download
-                className="inline-flex items-center gap-2 px-8 py-3 rounded-lg border border-primary/30 text-primary font-semibold hover:bg-primary/10 transition-all"
-              >
-                <Download size={16} />
-                Resume
-              </a>
+              <div className="flex items-center gap-2">
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-primary/30 text-primary font-semibold hover:bg-primary/10 transition-all"
+                >
+                  <Eye size={16} />
+                  View
+                </a>
+                <a
+                  href="/resume.pdf"
+                  download
+                  className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-primary/30 text-primary font-semibold hover:bg-primary/10 transition-all"
+                >
+                  <Download size={16} />
+                  Download
+                </a>
+              </div>
             </motion.div>
 
             {/* Social Icons */}
@@ -91,13 +144,13 @@ const Hero = () => {
               transition={{ delay: 1 }}
               className="flex items-center justify-center md:justify-start gap-4"
             >
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-all">
+              <a href="https://github.com/manojkumar-mern" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
                 <Github size={20} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-all">
+              <a href="https://linkedin.com/in/manoj-kumar-d-513253293" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
                 <Linkedin size={20} />
               </a>
-              <a href="mailto:your-email@gmail.com" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-all">
+              <a href="mailto:vijaymanoj0000@gmail.com" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
                 <Mail size={20} />
               </a>
             </motion.div>

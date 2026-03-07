@@ -28,6 +28,7 @@ const skillGroups = [
     title: "Core",
     skills: [
       { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
       { name: "REST API", icon: "" },
     ],
   },
@@ -67,6 +68,7 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ y: -4 }}
               className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all card-shadow group"
             >
               <h4 className="font-mono text-primary text-sm font-semibold mb-5">
@@ -74,9 +76,10 @@ const Skills = () => {
               </h4>
               <div className="grid grid-cols-2 gap-3">
                 {group.skills.map((skill) => (
-                  <div
+                  <motion.div
                     key={skill.name}
-                    className="flex items-center gap-2.5 p-2.5 rounded-lg bg-secondary/50 hover:bg-primary/10 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    className="flex items-center gap-2.5 p-2.5 rounded-lg bg-secondary/50 hover:bg-primary/10 transition-colors cursor-default"
                   >
                     {skill.icon ? (
                       <img
@@ -93,7 +96,7 @@ const Skills = () => {
                     <span className="text-sm font-medium text-secondary-foreground group-hover:text-primary transition-colors">
                       {skill.name}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
