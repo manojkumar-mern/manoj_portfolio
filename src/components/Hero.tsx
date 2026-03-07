@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail, Eye } from "lucide-react";
 import profileImg from "@/assets/profile.png";
+import FloatingIcons from "./FloatingIcons";
 
 const typingWords = ["React", "Node.js", "MongoDB", "Express", "Socket.io", "TypeScript"];
 
@@ -34,10 +35,17 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Grid background */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
         backgroundSize: "60px 60px",
       }} />
+
+      {/* Floating tech icons */}
+      <FloatingIcons />
+
+      {/* Radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-center gap-12 max-w-5xl mx-auto">
@@ -144,13 +152,13 @@ const Hero = () => {
               transition={{ delay: 1 }}
               className="flex items-center justify-center md:justify-start gap-4"
             >
-              <a href="https://github.com/manojkumar-mern" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
+              <a href="https://github.com/manojkumar-mern" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
                 <Github size={20} />
               </a>
-              <a href="https://linkedin.com/in/manoj-kumar-d-513253293" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
+              <a href="https://linkedin.com/in/manoj-kumar-d-513253293" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
                 <Linkedin size={20} />
               </a>
-              <a href="mailto:vijaymanoj0000@gmail.com" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
+              <a href="mailto:vijaymanoj0000@gmail.com" className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all">
                 <Mail size={20} />
               </a>
             </motion.div>
@@ -172,6 +180,7 @@ const Hero = () => {
                 />
               </div>
               <div className="absolute -inset-2 rounded-full border border-primary/10 animate-pulse-glow" />
+              <div className="absolute -inset-4 rounded-full border border-primary/5 animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
             </div>
           </motion.div>
         </div>
