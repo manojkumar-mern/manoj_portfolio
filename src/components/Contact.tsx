@@ -87,7 +87,7 @@ const Contact = () => {
             </div>
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
-              <textarea id="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
+              <textarea id="message" name="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
             </div>
             <button
               type="submit"
