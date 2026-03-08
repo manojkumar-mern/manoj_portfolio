@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import profileImg from "@/assets/profile.png";
 
@@ -5,15 +6,20 @@ const orbitIcons = [
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", label: "React" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", label: "Node.js" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", label: "MongoDB" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", label: "JavaScript" },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", label: "Tailwind" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", label: "Express" },
 ];
 
 const ORBIT_RADIUS_MD = 170;
 const ORBIT_RADIUS_SM = 130;
-const ORBIT_DURATION = 28;
+const ORBIT_DURATION_NORMAL = 28;
+const ORBIT_DURATION_FAST = 14;
 
-const HeroProfileImage = () => (
+const HeroProfileImage = () => {
+  const [hovered, setHovered] = useState(false);
+  const orbitDuration = hovered ? ORBIT_DURATION_FAST : ORBIT_DURATION_NORMAL;
+
+  return (
   <motion.div
     initial={{ opacity: 0, scale: 0.85 }}
     animate={{ opacity: 1, scale: 1 }}
