@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, Github, Linkedin, Send, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -10,6 +10,7 @@ const EMAILJS_PUBLIC_KEY = "UTntl434rmt4g3QM";
 
 const Contact = () => {
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,11 +24,11 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await emailjs.send(
+      const response = await emailjs.sendForm(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        { name: form.name, email: form.email, message: form.message },
-        { publicKey: EMAILJS_PUBLIC_KEY }
+        formRef.current!,
+        EMAILJS_PUBLIC_KEY
       );
       console.log("EmailJS response status:", response.status);
       if (response.status === 200) {
@@ -71,6 +72,7 @@ const Contact = () => {
 
         <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           <motion.form
+            ref={formRef}
             onSubmit={sendEmail}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
