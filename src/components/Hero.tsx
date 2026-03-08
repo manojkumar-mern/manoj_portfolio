@@ -60,7 +60,8 @@ const Hero = () => {
   // Type name once
   useEffect(() => {
     if (nameText.length < HERO_NAME.length) {
-      const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
+      const jitter = Math.random() * 20 - 10;
+      const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED + jitter);
       return () => clearTimeout(t);
     } else {
       setNameDone(true);
