@@ -17,11 +17,12 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="mb-10"
         >
-          <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// about me</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-8">
-            Who I <span className="text-gradient">Am</span>
+          <h3 className="text-3xl md:text-4xl font-bold mb-2">
+            About Me
           </h3>
+          <div className="h-1 w-16 rounded-full" style={{ background: "var(--gradient-primary)" }} />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -54,11 +55,11 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="grid grid-cols-2 gap-4"
           >
-            {highlights.map((item, i) => (
+            {highlights.map((item) => (
               <motion.div
                 key={item.label}
-                whileHover={{ y: -4 }}
-                className="p-4 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all card-shadow text-center"
+                whileHover={{ y: -4, boxShadow: "0 0 20px hsl(160 84% 50% / 0.1)" }}
+                className="p-4 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all text-center"
               >
                 <div className="p-2.5 rounded-lg bg-primary/10 text-primary mx-auto w-fit mb-3">
                   <item.icon size={20} />

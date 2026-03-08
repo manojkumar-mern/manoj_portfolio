@@ -18,11 +18,12 @@ const GitHubActivity = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// github</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-12">
-            GitHub <span className="text-gradient">Activity</span>
+          <h3 className="text-3xl md:text-4xl font-bold mb-2">
+            GitHub
           </h3>
+          <div className="h-1 w-16 rounded-full" style={{ background: "var(--gradient-primary)" }} />
         </motion.div>
 
         <motion.a
@@ -50,7 +51,7 @@ const GitHubActivity = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all card-shadow text-center"
+              className="p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all text-center"
             >
               <stat.icon size={24} className="text-primary mx-auto mb-3" />
               <p className="text-2xl font-bold text-foreground mb-1">{stat.value}</p>
@@ -64,9 +65,9 @@ const GitHubActivity = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="rounded-xl bg-card border border-border p-4 card-shadow overflow-hidden"
+          className="rounded-xl bg-card border border-border p-4 overflow-hidden"
         >
-          <h4 className="font-mono text-primary text-sm mb-4">// contribution graph</h4>
+          <h4 className="text-sm font-semibold text-foreground mb-4">Contribution Graph</h4>
           <img
             src={`https://ghchart.rshah.org/2dd4bf/${GITHUB_USERNAME}`}
             alt="GitHub Contribution Graph"
