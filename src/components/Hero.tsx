@@ -7,11 +7,11 @@ import HeroProfileImage from "./HeroProfileImage";
 const HERO_NAME = "Manoj Kumar";
 const HERO_ROLE = "MERN Stack Developer";
 const SKILLS = ["JavaScript", "React", "Node", "Express", "MongoDB"];
-const NAME_SPEED = 80;
-const TYPE_SPEED = 70;
-const DELETE_SPEED = 40;
-const PAUSE_BEFORE_DELETE = 1500;
-const PAUSE_BEFORE_TYPE = 400;
+const NAME_SPEED = 100;
+const TYPE_SPEED = 85;
+const DELETE_SPEED = 45;
+const PAUSE_BEFORE_DELETE = 2000;
+const PAUSE_BEFORE_TYPE = 500;
 
 const useTypewriterLoop = (words: string[], enabled: boolean, typeSpeed = TYPE_SPEED, deleteSpeed = DELETE_SPEED) => {
   const [index, setIndex] = useState(0);
@@ -21,25 +21,30 @@ const useTypewriterLoop = (words: string[], enabled: boolean, typeSpeed = TYPE_S
   useEffect(() => {
     if (!enabled) return;
     const current = words[index];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (text.length < current.length) {
-            setText(current.slice(0, text.length + 1));
-          } else {
-            setTimeout(() => setIsDeleting(true), PAUSE_BEFORE_DELETE);
-          }
+    // Add slight randomness for natural feel
+    const jitter = Math.random() * 30 - 15;
+    const speed = isDeleting
+      ? deleteSpeed + jitter * 0.5
+      : text.length === 0 && !isDeleting
+        ? PAUSE_BEFORE_TYPE
+        : typeSpeed + jitter;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (text.length < current.length) {
+          setText(current.slice(0, text.length + 1));
         } else {
-          if (text.length > 0) {
-            setText(current.slice(0, text.length - 1));
-          } else {
-            setIsDeleting(false);
-            setIndex((prev) => (prev + 1) % words.length);
-          }
+          setTimeout(() => setIsDeleting(true), PAUSE_BEFORE_DELETE);
         }
-      },
-      isDeleting ? deleteSpeed : (text.length === 0 && !isDeleting ? PAUSE_BEFORE_TYPE : typeSpeed)
-    );
+      } else {
+        if (text.length > 0) {
+          setText(current.slice(0, text.length - 1));
+        } else {
+          setIsDeleting(false);
+          setIndex((prev) => (prev + 1) % words.length);
+        }
+      }
+    }, Math.max(speed, 20));
     return () => clearTimeout(timeout);
   }, [enabled, text, isDeleting, index, words, typeSpeed, deleteSpeed]);
 
@@ -55,7 +60,8 @@ const Hero = () => {
   // Type name once
   useEffect(() => {
     if (nameText.length < HERO_NAME.length) {
-      const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
+      const jitter = Math.random() * 20 - 10;
+      const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED + jitter);
       return () => clearTimeout(t);
     } else {
       setNameDone(true);
@@ -66,14 +72,15 @@ const Hero = () => {
   useEffect(() => {
     if (!nameDone) return;
     if (roleText.length < HERO_ROLE.length) {
-      const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), TYPE_SPEED);
+      const jitter = Math.random() * 20 - 10;
+      const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), TYPE_SPEED + jitter);
       return () => clearTimeout(t);
     } else {
       setRoleDone(true);
     }
   }, [nameDone, roleText]);
 
-  const skillText = useTypewriterLoop(SKILLS, roleDone, 100, 50);
+  const skillText = useTypewriterLoop(SKILLS, roleDone, 110, 55);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -127,21 +134,21 @@ const Hero = () => {
                 </motion.span>
               ))}
               {!nameDone && (
-                <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 animate-pulse align-middle" />
+                <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 align-middle" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }} />
               )}
             </h1>
 
             <div className="text-base md:text-lg mb-4 min-h-[1.5em]">
               <span className="text-gradient font-semibold">{roleText}</span>
               {nameDone && !roleDone && (
-                <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
+                <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 align-middle" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }} />
               )}
             </div>
 
             <div className="mb-8 flex items-center justify-center gap-2 h-8">
               <span className="font-mono text-gradient text-lg font-semibold">{skillText}</span>
               {roleDone && (
-                <span className="font-mono text-primary/60 animate-pulse text-lg">|</span>
+                <span className="font-mono text-primary/60 text-lg" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }}>|</span>
               )}
             </div>
 
@@ -160,7 +167,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-8"
+              className="flex flex-wrap items-center justify-center gap-3 mb-8"
             >
               <a
                 href="#projects"
