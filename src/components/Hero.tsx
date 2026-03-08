@@ -141,7 +141,7 @@ const Hero = () => {
             <div className="text-base md:text-lg mb-4 min-h-[1.5em]">
               <span className="text-gradient font-semibold">{roleText}</span>
               {nameDone && !roleDone && (
-                <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
+                <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 align-middle" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }} />
               )}
             </div>
 
