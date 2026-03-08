@@ -35,8 +35,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-md border-b border-border/50" : "bg-transparent"}`}>
-      <div className="container flex items-center justify-between h-16">
+    <nav
+      className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] border ${
+        scrolled
+          ? "bg-card/60 backdrop-blur-xl border-border/40 shadow-[0_8px_32px_hsl(0_0%_0%/0.35),0_0_0_1px_hsl(187_78%_53%/0.06)]"
+          : "bg-card/30 backdrop-blur-md border-border/20 shadow-[0_4px_16px_hsl(0_0%_0%/0.2)]"
+      }`}
+    >
+      <div className="flex items-center justify-between h-14 px-5">
         <a href="#" className="font-mono text-base font-bold text-gradient">
           {"<MK />"}
         </a>
