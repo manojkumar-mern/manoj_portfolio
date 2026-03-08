@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Award, Languages } from "lucide-react";
+import { GraduationCap, Award, Languages, Calendar } from "lucide-react";
 
 const education = [
   {
@@ -47,7 +47,7 @@ const Education = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-12">
-          {/* Timeline */}
+          {/* Animated Timeline */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-8">
               <GraduationCap size={20} className="text-primary" />
@@ -57,24 +57,30 @@ const Education = () => {
               {education.map((e, i) => (
                 <motion.div
                   key={e.degree}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.15 }}
                   className="relative"
                 >
-                  {/* Timeline dot */}
+                  {/* Glowing timeline dot */}
                   <div className="absolute -left-[calc(2rem+5px)] top-1 w-3 h-3 rounded-full bg-primary glow" />
-                  <div className="p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all card-shadow">
-                    <div className="flex items-start justify-between gap-4 mb-1">
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    className="p-5 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all card-shadow"
+                  >
+                    <div className="flex items-start justify-between gap-4 mb-2">
                       <p className="font-semibold text-foreground">{e.degree}</p>
-                      <span className="text-xs font-mono text-primary font-semibold bg-primary/10 px-2 py-1 rounded shrink-0">
+                      <span className="text-xs font-mono text-primary font-semibold bg-primary/10 px-2.5 py-1 rounded-lg shrink-0 border border-primary/10">
                         {e.score}
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">{e.school}</p>
-                    <span className="text-xs text-muted-foreground font-mono mt-2 inline-block">{e.year}</span>
-                  </div>
+                    <p className="text-sm text-muted-foreground mb-2">{e.school}</p>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
+                      <Calendar size={12} />
+                      {e.year}
+                    </div>
+                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -100,7 +106,8 @@ const Education = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: i * 0.1 }}
-                    className="p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors text-sm text-muted-foreground"
+                    whileHover={{ x: 4 }}
+                    className="p-4 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all text-sm text-muted-foreground"
                   >
                     {c}
                   </motion.div>
@@ -122,7 +129,7 @@ const Education = () => {
                 {languages.map((l) => (
                   <span
                     key={l}
-                    className="px-5 py-2.5 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/30 hover:text-primary transition-all"
+                    className="px-5 py-2.5 rounded-xl bg-card/80 backdrop-blur-sm border border-border text-sm text-muted-foreground hover:border-primary/30 hover:text-primary transition-all"
                   >
                     {l}
                   </span>

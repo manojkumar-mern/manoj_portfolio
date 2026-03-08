@@ -56,9 +56,12 @@ const Skills = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// skills</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-12">
+          <h3 className="text-3xl md:text-4xl font-bold mb-4">
             Tech <span className="text-gradient">Stack</span>
           </h3>
+          <p className="text-muted-foreground mb-12 max-w-xl">
+            Technologies I use to build modern, scalable applications.
+          </p>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -70,11 +73,14 @@ const Skills = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -4 }}
-              className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 transition-all card-shadow group"
+              className="p-6 rounded-2xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all card-shadow group"
             >
-              <h4 className="font-mono text-primary text-sm font-semibold mb-5">
-                {`{${group.title}}`}
-              </h4>
+              <div className="flex items-center gap-2 mb-5">
+                <div className="w-1 h-5 rounded-full" style={{ background: "var(--gradient-primary)" }} />
+                <h4 className="font-mono text-primary text-sm font-semibold">
+                  {group.title}
+                </h4>
+              </div>
               <div className="space-y-4">
                 {group.skills.map((skill, j) => (
                   <motion.div
@@ -103,7 +109,6 @@ const Skills = () => {
                       </span>
                       <span className="text-xs font-mono text-muted-foreground">{skill.level}%</span>
                     </div>
-                    {/* Skill bar */}
                     <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
                       <motion.div
                         className="h-full rounded-full"
