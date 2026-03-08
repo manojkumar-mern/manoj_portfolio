@@ -225,10 +225,51 @@ const Projects = () => {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
                 onClick={() => setSelectedProject(project)}
-                className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_8px_40px_hsl(187_78%_53%/0.12),0_0_20px_hsl(160_64%_43%/0.06)] gradient-border"
+                className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-500 hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_12px_50px_hsl(187_78%_53%/0.15),0_0_30px_hsl(160_64%_43%/0.08)] gradient-border"
               >
+                {/* Preview banner with zoom + overlay */}
+                <div className="relative h-36 overflow-hidden bg-muted/40">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-4xl font-black text-foreground/[0.04] tracking-widest select-none transition-transform duration-500 group-hover:scale-110">
+                      {project.title.split(" ").map(w => w[0]).join("")}
+                    </span>
+                  </div>
+                  {/* Dark overlay on hover */}
+                  <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Hover action buttons */}
+                  <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-3 group-hover:translate-y-0">
+                    {project.links ? (
+                      <>
+                        <a
+                          href={project.links.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-accent text-primary-foreground font-medium text-xs hover:shadow-[0_0_20px_hsl(187_78%_53%/0.3)] hover:scale-105 active:scale-95 transition-all duration-200"
+                        >
+                          <ExternalLink size={12} /> Live Demo
+                        </a>
+                        <a
+                          href={project.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/80 bg-card/90 backdrop-blur-sm text-foreground font-medium text-xs hover:border-primary/40 hover:scale-105 active:scale-95 transition-all duration-200"
+                        >
+                          <Github size={12} /> GitHub
+                        </a>
+                      </>
+                    ) : (
+                      <span className="text-xs text-muted-foreground font-medium px-4 py-2 rounded-lg bg-card/80 backdrop-blur-sm border border-border/50">
+                        Click for details
+                      </span>
+                    )}
+                  </div>
+                </div>
+
                 <div className="p-6 flex flex-col flex-1">
-                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors">
+                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors duration-300">
                     {project.title}
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">
@@ -248,9 +289,9 @@ const Projects = () => {
                     )}
                   </div>
 
-                  <div className="pt-3 border-t border-border text-xs text-muted-foreground group-hover:text-primary transition-colors flex items-center gap-1">
+                  <div className="pt-3 border-t border-border text-xs text-muted-foreground group-hover:text-primary transition-colors duration-300 flex items-center gap-1">
                     <span>View details</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                   </div>
                 </div>
               </motion.div>
