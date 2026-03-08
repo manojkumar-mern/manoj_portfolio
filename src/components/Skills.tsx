@@ -47,7 +47,7 @@ const skillGroups = [
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-28 bg-muted/30">
+    <section id="skills" className="py-28 bg-muted/20">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ const Skills = () => {
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Skills</h2>
-          <div className="h-0.5 w-12 rounded-full bg-primary mb-4" />
+          <div className="h-0.5 w-12 rounded-full bg-gradient-accent mb-4" />
           <p className="text-muted-foreground max-w-lg">
             Technologies I use to build modern, scalable applications.
           </p>
@@ -79,7 +79,7 @@ const Skills = () => {
                 {group.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card border border-border hover:border-primary/25 transition-all duration-200 cursor-default group"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card border border-border hover:border-primary/25 hover:shadow-[0_0_15px_hsl(187_78%_53%/0.08)] hover:-translate-y-0.5 transition-all duration-300 cursor-default group"
                   >
                     {skill.icon ? (
                       <img src={skill.icon} alt={skill.name} className="w-4 h-4 object-contain" loading="lazy" />
