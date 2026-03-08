@@ -167,7 +167,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
-              className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-8"
+              className="flex flex-wrap items-center justify-center gap-3 mb-8"
             >
               <a
                 href="#projects"
