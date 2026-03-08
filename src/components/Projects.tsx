@@ -97,13 +97,13 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
+        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 hover:shadow-[0_0_10px_hsl(187_78%_53%/0.15)] transition-all duration-300"
       >
         <X size={16} />
       </button>
 
       <div className="overflow-y-auto max-h-[85vh] p-6 md:p-8">
-        <div className="h-0.5 w-full rounded-full bg-primary/20 mb-6" />
+        <div className="h-0.5 w-full rounded-full bg-gradient-accent mb-6 opacity-30" />
 
         <h3 className="text-2xl font-bold text-foreground mb-2">{project.title}</h3>
         <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
@@ -144,7 +144,7 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
           <span className="text-xs font-medium text-muted-foreground tracking-wider uppercase mb-3 block">Tech Stack</span>
           <div className="flex flex-wrap gap-2">
             {project.tech.map((t) => (
-              <span key={t} className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono">
+              <span key={t} className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono hover:border-primary/20 hover:text-foreground transition-all duration-200">
                 {t}
               </span>
             ))}
@@ -170,14 +170,14 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
 
         {project.links && (
           <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-            <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:brightness-110 transition-all">
+            <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-accent text-primary-foreground font-medium text-sm hover:shadow-[0_0_20px_hsl(187_78%_53%/0.25)] hover:scale-[1.02] transition-all duration-300">
               <ExternalLink size={14} /> Live Demo
             </a>
-            <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/30 hover:text-primary transition-all">
+            <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/30 hover:text-primary hover:shadow-[0_0_12px_hsl(187_78%_53%/0.1)] transition-all duration-300">
               <Github size={14} /> GitHub
             </a>
             {project.links.api && (
-              <a href={project.links.api} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:border-primary/30 hover:text-primary transition-all">
+              <a href={project.links.api} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:border-primary/30 hover:text-primary transition-all duration-300">
                 <Server size={14} /> API
               </a>
             )}
@@ -202,7 +202,7 @@ const Projects = () => {
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Projects</h2>
-          <div className="h-0.5 w-12 rounded-full bg-primary mb-4" />
+          <div className="h-0.5 w-12 rounded-full bg-gradient-accent mb-4" />
           <p className="text-muted-foreground max-w-lg">
             Click on any project to explore the full story — from problem to solution.
           </p>
@@ -217,10 +217,10 @@ const Projects = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
               onClick={() => setSelectedProject(project)}
-              className="group rounded-xl bg-card border border-border hover:border-primary/20 hover:shadow-[0_4px_20px_hsl(var(--primary)/0.06)] transition-all duration-300 overflow-hidden flex flex-col cursor-pointer hover:-translate-y-1"
+              className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_8px_30px_hsl(187_78%_53%/0.08)] gradient-border"
             >
               <div className="p-6 flex flex-col flex-1">
-                <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors">
                   {project.title}
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">
@@ -261,7 +261,7 @@ const Projects = () => {
               {miniProjects.map((p) => (
                 <Tooltip key={p.name}>
                   <TooltipTrigger asChild>
-                    <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground transition-all cursor-default">
+                    <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] transition-all duration-300 cursor-default">
                       {p.name}
                     </span>
                   </TooltipTrigger>
