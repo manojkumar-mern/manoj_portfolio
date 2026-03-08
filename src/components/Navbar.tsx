@@ -85,7 +85,7 @@ const Navbar = () => {
                   key={l.href + l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className={`block px-6 py-3 text-sm transition-colors ${
+                  className={`block px-6 py-3 text-sm transition-all duration-300 active:scale-[0.96] active:bg-primary/10 ${
                     isActive
                       ? "text-primary bg-primary/5 border-l-2 border-primary"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
