@@ -47,7 +47,7 @@ const Navbar = () => {
               <a
                 key={l.href + l.label}
                 href={l.href}
-                className={`relative text-sm px-3 py-1.5 rounded-md transition-all ${
+                className={`relative text-sm px-3 py-2 rounded-md transition-all duration-300 group ${
                   isActive
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
@@ -61,6 +61,7 @@ const Navbar = () => {
                   />
                 )}
                 <span className="relative z-10">{l.label}</span>
+                <span className="absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-gradient-accent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
               </a>
             );
           })}

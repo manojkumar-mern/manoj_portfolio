@@ -90,7 +90,7 @@ const Contact = () => {
                 <Wrapper
                   key={label}
                   {...(href ? { href, target: href.startsWith("http") ? "_blank" : undefined, rel: href.startsWith("http") ? "noopener noreferrer" : undefined } : {})}
-                  className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/15 transition-all group"
+                  className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/25 hover:-translate-y-0.5 hover:shadow-[0_0_15px_hsl(187_78%_53%/0.08)] transition-all duration-300 group"
                 >
                   <div className="p-2 rounded-lg bg-primary/8 group-hover:bg-primary/12 transition-colors">
                     <Icon size={15} className="text-primary" />

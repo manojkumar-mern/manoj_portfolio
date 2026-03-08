@@ -161,7 +161,7 @@ const Hero = () => {
                   href={href}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
                   rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_hsl(187_78%_53%/0.15)] transition-all duration-300"
+                  className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:shadow-[0_0_16px_hsl(187_78%_53%/0.2)] hover:scale-110 active:scale-95 transition-all duration-300"
                 >
                   <Icon size={17} />
                 </a>

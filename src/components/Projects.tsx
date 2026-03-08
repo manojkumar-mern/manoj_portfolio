@@ -228,13 +228,13 @@ const Projects = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tech.slice(0, 4).map((t) => (
-                    <span key={t} className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono border border-border">
+                  {project.tech.slice(0, 4).map((t, idx) => (
+                    <span key={t} className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono border border-border group-hover:border-primary/15 group-hover:text-foreground transition-all duration-300" style={{ transitionDelay: `${idx * 50}ms` }}>
                       {t}
                     </span>
                   ))}
                   {project.tech.length > 4 && (
-                    <span className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono">
+                    <span className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono group-hover:text-foreground transition-all duration-300">
                       +{project.tech.length - 4}
                     </span>
                   )}
