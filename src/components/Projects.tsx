@@ -298,10 +298,7 @@ const Projects = () => {
                 {projects[0].tech.map((t, ti) => (
                   <motion.span
                     key={t}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: 0.3 + ti * 0.05 }}
+                    variants={v(staggerItemScale)}
                     className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono group-hover:border-primary/20 group-hover:text-foreground transition-all duration-300"
                   >
                     {t}
