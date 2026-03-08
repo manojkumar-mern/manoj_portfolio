@@ -37,17 +37,16 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// contact</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-4">
-            Get In <span className="text-gradient">Touch</span>
+          <h3 className="text-3xl md:text-4xl font-bold mb-2">
+            Contact
           </h3>
+          <div className="h-1 w-16 rounded-full mx-auto mb-4" style={{ background: "var(--gradient-primary)" }} />
           <p className="text-muted-foreground max-w-lg mx-auto">
             I'm currently open to new opportunities. Let's build something great together.
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-          {/* Glass Contact Form */}
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -30 }}
@@ -58,56 +57,22 @@ const Contact = () => {
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Name</label>
-              <input
-                id="name"
-                type="text"
-                maxLength={100}
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                onFocus={() => setFocused("name")}
-                onBlur={() => setFocused(null)}
-                placeholder="Your name"
-                className={inputClass("name")}
-              />
+              <input id="name" type="text" maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} placeholder="Your name" className={inputClass("name")} />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1.5">Email</label>
-              <input
-                id="email"
-                type="email"
-                maxLength={255}
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                onFocus={() => setFocused("email")}
-                onBlur={() => setFocused(null)}
-                placeholder="your@email.com"
-                className={inputClass("email")}
-              />
+              <input id="email" type="email" maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} placeholder="your@email.com" className={inputClass("email")} />
             </div>
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
-              <textarea
-                id="message"
-                rows={5}
-                maxLength={1000}
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                onFocus={() => setFocused("message")}
-                onBlur={() => setFocused(null)}
-                placeholder="Your message..."
-                className={`${inputClass("message")} resize-none`}
-              />
+              <textarea id="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
             </div>
-            <button
-              type="submit"
-              className="group inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-all glow w-full justify-center text-sm"
-            >
+            <button type="submit" className="group inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-all w-full justify-center text-sm">
               Send Message
               <Send size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </motion.form>
 
-          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}

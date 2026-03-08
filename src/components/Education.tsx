@@ -2,24 +2,9 @@ import { motion } from "framer-motion";
 import { GraduationCap, Award, Languages, Calendar } from "lucide-react";
 
 const education = [
-  {
-    degree: "B.Sc Computer Science",
-    school: "Sengunthar Arts and Science College",
-    year: "2021 – 2024",
-    score: "86%",
-  },
-  {
-    degree: "HSC (12th)",
-    school: "AKV Matric Hr Sec School",
-    year: "2020 – 2021",
-    score: "93%",
-  },
-  {
-    degree: "SSLC (10th)",
-    school: "AKV Matric Hr Sec School",
-    year: "2018 – 2019",
-    score: "86%",
-  },
+  { degree: "B.Sc Computer Science", school: "Sengunthar Arts and Science College", year: "2021 – 2024", score: "86%" },
+  { degree: "HSC (12th)", school: "AKV Matric Hr Sec School", year: "2020 – 2021", score: "93%" },
+  { degree: "SSLC (10th)", school: "AKV Matric Hr Sec School", year: "2018 – 2019", score: "86%" },
 ];
 
 const certifications = [
@@ -39,19 +24,19 @@ const Education = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// education & more</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-12">
-            Background & <span className="text-gradient">Credentials</span>
+          <h3 className="text-3xl md:text-4xl font-bold mb-2">
+            Education
           </h3>
+          <div className="h-1 w-16 rounded-full" style={{ background: "var(--gradient-primary)" }} />
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-12">
-          {/* Animated Timeline */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-8">
               <GraduationCap size={20} className="text-primary" />
-              <h4 className="font-semibold text-lg text-foreground">Education</h4>
+              <h4 className="font-semibold text-lg text-foreground">Academic Background</h4>
             </div>
             <div className="relative pl-8 border-l-2 border-primary/20 space-y-8">
               {education.map((e, i) => (
@@ -63,11 +48,10 @@ const Education = () => {
                   transition={{ duration: 0.5, delay: i * 0.15 }}
                   className="relative"
                 >
-                  {/* Glowing timeline dot */}
-                  <div className="absolute -left-[calc(2rem+5px)] top-1 w-3 h-3 rounded-full bg-primary glow" />
+                  <div className="absolute -left-[calc(2rem+5px)] top-1 w-3 h-3 rounded-full bg-primary" />
                   <motion.div
                     whileHover={{ x: 4 }}
-                    className="p-5 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all card-shadow"
+                    className="p-5 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all"
                   >
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <p className="font-semibold text-foreground">{e.degree}</p>
@@ -86,7 +70,6 @@ const Education = () => {
             </div>
           </div>
 
-          {/* Certifications & Languages */}
           <div className="space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}

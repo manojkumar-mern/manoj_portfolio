@@ -35,7 +35,6 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Grid background */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
         backgroundSize: "60px 60px",
@@ -43,7 +42,6 @@ const Hero = () => {
 
       <FloatingIcons />
 
-      {/* Radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-primary/5 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="container relative z-10">
@@ -81,7 +79,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="flex items-center justify-center md:justify-start gap-2 mb-3"
+              className="flex items-center justify-center md:justify-start gap-2 mb-4"
             >
               <span className="h-px w-8 bg-primary/50" />
               <p className="font-mono text-primary text-base md:text-lg font-semibold">
@@ -90,17 +88,14 @@ const Hero = () => {
               <span className="h-px w-8 bg-primary/50" />
             </motion.div>
 
-            {/* Typing effect */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="mb-5 flex items-center justify-center md:justify-start gap-2"
+              className="mb-6 flex items-center justify-center md:justify-start gap-2"
             >
               <span className="font-mono text-muted-foreground text-sm">{">"}</span>
-              <span className="font-mono text-accent text-lg font-semibold">
-                {text}
-              </span>
+              <span className="font-mono text-accent text-lg font-semibold">{text}</span>
               <span className="font-mono text-primary animate-pulse text-lg">|</span>
             </motion.div>
 
@@ -153,7 +148,6 @@ const Hero = () => {
               </a>
             </motion.div>
 
-            {/* Social Icons */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -170,7 +164,7 @@ const Hero = () => {
                   href={href}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
                   rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:glow transition-all"
+                  className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
                 >
                   <Icon size={18} />
                 </a>
@@ -178,7 +172,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Profile Photo with glowing rings */}
+          {/* Profile Photo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -186,20 +180,15 @@ const Hero = () => {
             className="flex-shrink-0"
           >
             <div className="relative">
-              <div className="w-60 h-60 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-primary/40 glow">
+              <div className="w-60 h-60 md:w-72 md:h-72 rounded-full overflow-hidden border-2 border-primary/30">
                 <img
                   src={profileImg}
                   alt="Manoj Kumar D"
-                  className="w-full h-full object-cover object-[center_20%] scale-90"
+                  className="w-full h-full object-cover object-center scale-[0.85]"
                 />
               </div>
-              {/* Animated glowing rings */}
-              <div className="absolute -inset-2 rounded-full border border-primary/20 animate-pulse-glow" />
-              <div className="absolute -inset-4 rounded-full border border-primary/10 animate-pulse-glow" style={{ animationDelay: "1s" }} />
-              <div className="absolute -inset-6 rounded-full border border-primary/5 animate-pulse-glow" style={{ animationDelay: "2s" }} />
-              {/* Corner accent dots */}
-              <div className="absolute top-0 right-4 w-3 h-3 rounded-full bg-primary/60 blur-sm" />
-              <div className="absolute bottom-4 left-0 w-2 h-2 rounded-full bg-accent/60 blur-sm" />
+              <div className="absolute -inset-2 rounded-full border border-primary/15 animate-pulse" />
+              <div className="absolute -inset-4 rounded-full border border-primary/8" />
             </div>
           </motion.div>
         </div>
