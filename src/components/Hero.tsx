@@ -122,7 +122,17 @@ const Hero = () => {
               Hello, I'm
             </motion.p>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em]">
+            <motion.h1
+              className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em]"
+              animate={nameDone ? {
+                textShadow: [
+                  "0 0 8px hsl(187 78% 53% / 0), 0 0 20px hsl(187 78% 53% / 0)",
+                  "0 0 8px hsl(187 78% 53% / 0.15), 0 0 24px hsl(160 64% 43% / 0.1)",
+                  "0 0 8px hsl(187 78% 53% / 0), 0 0 20px hsl(187 78% 53% / 0)",
+                ],
+              } : {}}
+              transition={nameDone ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
+            >
               {nameText.split("").map((char, i) => (
                 <motion.span
                   key={i}
@@ -136,7 +146,7 @@ const Hero = () => {
               {!nameDone && (
                 <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 align-middle" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }} />
               )}
-            </h1>
+            </motion.h1>
 
             <div className="text-base md:text-lg mb-4 min-h-[1.5em]">
               <span className="text-gradient font-semibold">{roleText}</span>
