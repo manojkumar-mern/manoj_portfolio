@@ -76,7 +76,7 @@ const GitHubActivity = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="rounded-xl bg-card border border-border p-5 overflow-hidden"
+          className="premium-card glow-card p-5 overflow-hidden"
         >
           <h3 className="text-sm font-medium text-foreground mb-4">Contribution Graph</h3>
           <img

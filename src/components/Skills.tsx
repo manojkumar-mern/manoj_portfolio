@@ -98,7 +98,7 @@ const Skills = () => {
                   <motion.div
                     key={skill.name}
                     variants={v(staggerItemScale)}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-[0_0_18px_hsl(187_78%_53%/0.12)] hover:-translate-y-1 hover:scale-[1.03] transition-all duration-300 cursor-default group"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg premium-card glow-card cursor-default group"
                   >
                     {skill.icon ? (
                       <img src={skill.icon} alt={skill.name} className="w-4 h-4 object-contain" loading="lazy" />

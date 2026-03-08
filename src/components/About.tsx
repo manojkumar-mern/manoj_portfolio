@@ -67,7 +67,7 @@ const About = () => {
               <motion.div
                 key={item.label}
                 variants={v(staggerItemScale)}
-                className="p-5 rounded-xl bg-card border border-border hover:border-primary/20 transition-all duration-300 group"
+                className="p-5 premium-card glow-card group"
               >
                 <div className="p-2 rounded-lg bg-primary/8 text-primary w-fit mb-3 group-hover:bg-primary/12 transition-colors">
                   <item.icon size={18} />
