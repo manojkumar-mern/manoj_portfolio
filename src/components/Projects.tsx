@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, Server, X, Lightbulb, Target, BookOpen, AlertTriangle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  fadeUp, fadeRight, fadeLeft, staggerContainer, staggerItem, staggerItemScale, scaleIn,
+  viewportConfig, prefersReducedMotion, noMotion,
+} from "@/lib/motion";
 
 interface Project {
   title: string;
