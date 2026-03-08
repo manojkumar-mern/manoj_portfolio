@@ -192,11 +192,6 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
   </motion.div>
 );
 
-const cardDirections = [
-  { x: -40, y: 20 },
-  { x: 0, y: 40 },
-  { x: 40, y: 20 },
-];
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
