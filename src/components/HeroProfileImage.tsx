@@ -25,7 +25,9 @@ const HeroProfileImage = () => {
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.7, delay: 0.3 }}
     className="flex-shrink-0"
-  >
+    onMouseEnter={() => setHovered(true)}
+    onMouseLeave={() => setHovered(false)}
+   >
     <div className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px]">
       {/* Outer glow aura */}
       <motion.div
@@ -34,7 +36,7 @@ const HeroProfileImage = () => {
           background:
             "radial-gradient(circle, hsl(187 78% 53% / 0.08) 0%, hsl(160 64% 43% / 0.04) 40%, transparent 65%)",
         }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.9, 0.5] }}
+        animate={{ scale: [1, 1.08, 1], opacity: hovered ? [0.7, 1, 0.7] : [0.5, 0.9, 0.5] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
 
@@ -64,7 +66,7 @@ const HeroProfileImage = () => {
       <motion.div
         className="absolute inset-0 pointer-events-none"
         animate={{ rotate: 360 }}
-        transition={{ duration: ORBIT_DURATION, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: orbitDuration, repeat: Infinity, ease: "linear" }}
       >
         {orbitIcons.map((icon, i) => {
           const angle = (i / orbitIcons.length) * 360;
@@ -87,7 +89,7 @@ const HeroProfileImage = () => {
               >
                 <motion.div
                   animate={{ rotate: -360 }}
-                  transition={{ duration: ORBIT_DURATION, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: orbitDuration, repeat: Infinity, ease: "linear" }}
                 >
                   <div className="w-9 h-9 rounded-full bg-card/90 backdrop-blur-sm border border-border/50 flex items-center justify-center shadow-lg hover:shadow-[0_0_16px_hsl(187_78%_53%/0.35)] hover:border-primary/50 transition-all duration-300 cursor-pointer group">
                     <img src={icon.src} alt={icon.label} className="w-5 h-5 group-hover:drop-shadow-[0_0_6px_hsl(187_78%_53%/0.6)] transition-all duration-300" loading="lazy" />
@@ -106,7 +108,7 @@ const HeroProfileImage = () => {
               >
                 <motion.div
                   animate={{ rotate: -360 }}
-                  transition={{ duration: ORBIT_DURATION, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: orbitDuration, repeat: Infinity, ease: "linear" }}
                 >
                   <div className="w-[30px] h-[30px] rounded-full bg-card/90 backdrop-blur-sm border border-border/50 flex items-center justify-center shadow-lg hover:shadow-[0_0_12px_hsl(187_78%_53%/0.3)] hover:border-primary/50 transition-all duration-300">
                     <img src={icon.src} alt={icon.label} className="w-4 h-4" loading="lazy" />
@@ -138,21 +140,30 @@ const HeroProfileImage = () => {
 
       {/* Thin inner gradient border */}
       <div
-        className="absolute rounded-full opacity-50 pointer-events-none"
+        className="absolute rounded-full pointer-events-none transition-opacity duration-500"
         style={{
           width: "calc(100% - 123px)",
           height: "calc(100% - 123px)",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          opacity: hovered ? 0.8 : 0.5,
           background:
             "linear-gradient(135deg, hsl(187 78% 53% / 0.6), hsl(160 64% 43% / 0.6))",
+          boxShadow: hovered
+            ? "0 0 24px hsl(187 78% 53% / 0.4), 0 0 48px hsl(160 64% 43% / 0.2)"
+            : "none",
         }}
       />
 
       {/* Profile image */}
       <motion.div
-        className="relative w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
+        className="relative w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10 transition-shadow duration-500"
+        style={{
+          boxShadow: hovered
+            ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)"
+            : "none",
+        }}
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
@@ -164,6 +175,7 @@ const HeroProfileImage = () => {
       </motion.div>
     </div>
   </motion.div>
-);
+  );
+};
 
 export default HeroProfileImage;
