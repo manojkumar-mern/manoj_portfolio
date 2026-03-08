@@ -27,7 +27,7 @@ const Contact = () => {
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         { name: form.name, email: form.email, message: form.message },
-        EMAILJS_PUBLIC_KEY
+        { publicKey: EMAILJS_PUBLIC_KEY }
       );
       console.log("EmailJS response status:", response.status);
       if (response.status === 200) {
