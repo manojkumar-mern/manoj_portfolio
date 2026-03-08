@@ -57,10 +57,10 @@ const Contact = () => {
     <section id="contact" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Contact</h2>
@@ -74,10 +74,10 @@ const Contact = () => {
           <motion.form
             ref={formRef}
             onSubmit={sendEmail}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
             className="space-y-4 p-6 rounded-xl bg-card border border-border"
           >
             <div>
@@ -92,45 +92,47 @@ const Contact = () => {
               <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
               <textarea id="message" name="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
             </div>
-            <button
+            <motion.button
               type="submit"
               disabled={isSubmitting}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.3 }}
               className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-medium text-sm hover:shadow-[0_0_24px_hsl(187_78%_53%/0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Sending..." : "Send Message"}
               {!isSubmitting && <Send size={14} className="group-hover:translate-x-0.5 transition-transform" />}
               {isSubmitting && <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />}
-            </button>
+            </motion.button>
           </motion.form>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-3"
-          >
+          <div className="space-y-3">
             {[
               { icon: MapPin, label: "Mallasamudram, Tamil Nadu, India – 637503", href: "https://goo.gl/maps/cs4MH8S4r7bUA7aj8" },
               { icon: Phone, label: "+91 9159843416", href: "tel:+919159843416" },
               { icon: Mail, label: "vijaymanoj0000@gmail.com", href: "mailto:vijaymanoj0000@gmail.com" },
               { icon: Github, label: "github.com/manojkumar-mern", href: "https://github.com/manojkumar-mern" },
               { icon: Linkedin, label: "LinkedIn Profile", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
-            ].map(({ icon: Icon, label, href }) => (
-              <a
+            ].map(({ icon: Icon, label, href }, i) => (
+              <motion.a
                 key={label}
                 href={href}
                 target={href.startsWith("http") || href.startsWith("https") ? "_blank" : undefined}
                 rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 + i * 0.08 }}
                 className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/25 hover:-translate-y-0.5 hover:shadow-[0_0_15px_hsl(187_78%_53%/0.08)] transition-all duration-300 group cursor-pointer"
               >
                 <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors">
                   <Icon size={15} className="text-primary" />
                 </div>
                 <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
-              </a>
+              </motion.a>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
