@@ -392,9 +392,8 @@ const Projects = () => {
                   </div>
                 </div>
               </motion.div>
-            );
-          })}
-        </div>
+          ))}
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
