@@ -395,25 +395,26 @@ const Projects = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
+          className="mt-6"
         >
-          <h3 className="text-sm font-medium text-foreground mb-4">Other Projects</h3>
+          <h4 className="text-base font-semibold text-foreground mb-5">Mini Projects</h4>
           <TooltipProvider delayDuration={200}>
             <motion.div
               variants={v(staggerContainer(0.06))}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="flex flex-wrap gap-2"
+              className="flex flex-wrap gap-3"
             >
               {miniProjects.map((p) => (
                 <motion.div key={p.name} variants={v(staggerItemScale)}>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="px-3.5 py-2 premium-card glow-card text-sm text-muted-foreground cursor-default">
+                      <span className="inline-block px-4 py-2 rounded-full bg-muted/60 border border-border text-sm text-muted-foreground cursor-default transition-all duration-300 hover:-translate-y-[2px] hover:border-primary/25 hover:text-foreground hover:shadow-[0_4px_16px_hsl(var(--primary)/0.1)]">
                         {p.name}
                       </span>
                     </TooltipTrigger>
-                    <TooltipContent side="top" className="max-w-xs bg-card border-border p-3 rounded-xl">
+                    <TooltipContent side="top" sideOffset={8} className="max-w-xs bg-card border-border p-3 rounded-xl shadow-lg z-50">
                       <p className="text-sm font-medium text-foreground mb-1">{p.name}</p>
                       <p className="text-xs text-muted-foreground mb-2">{p.description}</p>
                       <div className="flex flex-wrap gap-1">
