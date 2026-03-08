@@ -122,30 +122,12 @@ const Hero = () => {
               )}
             </h1>
 
-            <div className="text-muted-foreground text-base md:text-lg mb-4 min-h-[1.5em]">
-              {roleText.split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-              {nameDone && !roleDone && (
+            <div className="text-muted-foreground text-base md:text-lg mb-8 min-h-[1.5em]">
+              <span className="text-gradient font-semibold">{roleText}</span>
+              {nameDone && (
                 <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
               )}
             </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mb-8 flex items-center justify-center md:justify-start gap-2 h-8"
-            >
-              <span className="font-mono text-gradient text-lg font-semibold">{text}</span>
-              <span className="font-mono text-primary/60 animate-pulse text-lg">|</span>
-            </motion.div>
 
             <motion.p
               initial={{ opacity: 0 }}
