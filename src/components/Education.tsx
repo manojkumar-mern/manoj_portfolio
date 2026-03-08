@@ -100,10 +100,10 @@ const Education = () => {
                 className="space-y-2"
               >
                 {certifications.map((c) => (
-                  <motion.div
+                   <motion.div
                     key={c}
                     variants={v(staggerItemRight)}
-                    className="p-4 rounded-xl bg-card border border-border hover:border-primary/15 transition-all text-sm text-muted-foreground"
+                    className="p-4 rounded-xl bg-card border border-border hover:border-primary/30 hover:-translate-y-2.5 hover:scale-[1.03] hover:shadow-[0_12px_40px_hsl(187_78%_53%/0.15),0_0_20px_hsl(160_64%_43%/0.08)] max-md:shadow-[0_4px_20px_hsl(187_78%_53%/0.08)] transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform text-sm text-muted-foreground"
                   >
                     {c}
                   </motion.div>
