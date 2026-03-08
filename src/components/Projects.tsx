@@ -1,39 +1,45 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, Server, Zap, X } from "lucide-react";
+import { ExternalLink, Github, Server, Zap, X, Lightbulb, Target, BookOpen, AlertTriangle } from "lucide-react";
 
 interface Project {
   title: string;
   description: string;
-  detailedDescription: string;
+  overview: string;
+  problem: string;
+  solution: string;
   features: string[];
   tech: string[];
+  challenges: string;
+  learned: string;
   links: { demo: string; github: string; api?: string } | null;
 }
 
 const projects: Project[] = [
   {
     title: "Real-Time Chat Application",
-    description:
-      "Built a real-time chat application enabling instant messaging using WebSocket communication.",
-    detailedDescription:
-      "A full-stack real-time chat application built with the MERN stack and Socket.io. Users can send and receive messages instantly without page refresh. The app supports online user status tracking, real-time typing indicators, and persistent message storage in MongoDB. The backend exposes RESTful APIs for authentication and user management.",
+    description: "Full-stack real-time messaging app with WebSocket communication and online user tracking.",
+    overview: "A production-grade real-time chat application built with the MERN stack and Socket.io enabling instant messaging between users with persistent storage.",
+    problem: "Traditional HTTP polling creates latency and wasted bandwidth for messaging apps. Users need instant, seamless communication without page refreshes.",
+    solution: "Implemented WebSocket communication via Socket.io for bi-directional real-time data flow, backed by MongoDB for message persistence and Express REST APIs for authentication.",
     features: [
       "Real-time messaging via WebSockets",
       "User authentication & authorization",
       "Online user status tracking",
-      "MongoDB message storage",
-      "REST API integration",
+      "MongoDB message persistence",
+      "REST API for user management",
     ],
     tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
-    links: { demo: "#", github: "#", api: "#" },
+    challenges: "Managing WebSocket connections at scale, handling disconnections gracefully, and ensuring message ordering with concurrent users.",
+    learned: "Deep understanding of WebSocket lifecycle, real-time state synchronization, and building scalable event-driven architectures.",
+    links: { demo: "https://chat-app-kappa-ashy.vercel.app/", github: "https://github.com/manojkumar-mern/chat-app", api: "https://chat-app-y0ic.onrender.com/" },
   },
   {
     title: "Social Media App",
-    description:
-      "Developed a lightweight social feed application using React (Vite) with a mock REST API powered by json-server to simulate CRUD operations.",
-    detailedDescription:
-      "A social media feed application that simulates a real social platform. Built with React and Vite for fast development. Uses json-server as a mock backend to simulate full CRUD operations including creating posts, liking, commenting, and deleting content. Features a responsive UI with modern card-based layouts.",
+    description: "Lightweight social feed with CRUD operations and responsive card-based UI.",
+    overview: "A social media feed application simulating a real social platform with complete CRUD functionality and a modern responsive interface.",
+    problem: "Needed a lightweight social platform prototype to demonstrate full CRUD operations and responsive design principles.",
+    solution: "Built with React and Vite using json-server as a mock REST API backend, enabling rapid prototyping with realistic data operations.",
     features: [
       "Create, read, update, delete posts",
       "Mock REST API with json-server",
@@ -41,22 +47,26 @@ const projects: Project[] = [
       "Like and comment functionality",
     ],
     tech: ["React", "Vite", "json-server", "REST API", "CSS"],
+    challenges: "Simulating realistic API behavior with json-server while maintaining a responsive and intuitive user interface.",
+    learned: "Effective rapid prototyping, REST API design patterns, and building engaging social UI components.",
     links: null,
   },
   {
     title: "Task Manager Dashboard",
-    description:
-      "Built a task management dashboard with secure authentication and full CRUD functionality to create, update, delete, and manage tasks.",
-    detailedDescription:
-      "A comprehensive task management dashboard with secure login/signup authentication. Users can create, update, delete, and track tasks with priority levels and due-date management. The app features a clean dashboard UI with task filtering, sorting, and status tracking. Built with the MERN stack for full-stack functionality.",
+    description: "Secure task management dashboard with authentication and full CRUD functionality.",
+    overview: "A comprehensive task management system with secure authentication, priority tracking, and an intuitive dashboard interface.",
+    problem: "Teams need a simple yet powerful way to manage tasks with secure access, priority levels, and real-time status tracking.",
+    solution: "Built a full-stack MERN application with JWT authentication, RESTful CRUD APIs, and a clean dashboard UI with filtering and sorting capabilities.",
     features: [
-      "Secure login/signup authentication",
+      "Secure JWT authentication",
       "Full CRUD task management",
       "Priority and due-date tracking",
       "Task filtering and sorting",
       "Responsive dashboard UI",
     ],
     tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT Auth"],
+    challenges: "Implementing secure authentication flows, managing complex task state, and building an intuitive filtering system.",
+    learned: "JWT security best practices, complex state management patterns, and building production-ready CRUD applications.",
     links: null,
   },
 ];
@@ -68,44 +78,69 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md"
     onClick={onClose}
   >
     <motion.div
-      initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.9, opacity: 0 }}
+      initial={{ scale: 0.9, opacity: 0, y: 20 }}
+      animate={{ scale: 1, opacity: 1, y: 0 }}
+      exit={{ scale: 0.95, opacity: 0, y: 10 }}
       transition={{ type: "spring", duration: 0.5 }}
-      className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-xl bg-card border border-border p-6 md:p-8 card-shadow"
+      className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-card/95 backdrop-blur-sm border border-border p-6 md:p-8 card-shadow"
       onClick={(e) => e.stopPropagation()}
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors"
+        className="absolute top-4 right-4 p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors"
       >
-        <X size={20} />
+        <X size={18} />
       </button>
 
       <div className="h-1 w-full rounded-full mb-6" style={{ background: "var(--gradient-primary)" }} />
 
-      <h3 className="text-2xl font-bold text-foreground mb-4">{project.title}</h3>
+      <h3 className="text-2xl font-bold text-foreground mb-2">{project.title}</h3>
+      <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
 
-      <p className="text-muted-foreground leading-relaxed mb-6">{project.detailedDescription}</p>
+      {/* Problem & Solution */}
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div className="p-4 rounded-xl bg-secondary/30 border border-border">
+          <div className="flex items-center gap-2 mb-2">
+            <AlertTriangle size={14} className="text-accent" />
+            <span className="font-mono text-xs text-accent tracking-wider">PROBLEM</span>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">{project.problem}</p>
+        </div>
+        <div className="p-4 rounded-xl bg-primary/5 border border-primary/10">
+          <div className="flex items-center gap-2 mb-2">
+            <Lightbulb size={14} className="text-primary" />
+            <span className="font-mono text-xs text-primary tracking-wider">SOLUTION</span>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">{project.solution}</p>
+        </div>
+      </div>
 
+      {/* Features */}
       <div className="mb-6">
-        <h4 className="font-mono text-primary text-sm mb-3 tracking-wider">// features</h4>
-        <div className="space-y-2">
+        <div className="flex items-center gap-2 mb-3">
+          <Zap size={14} className="text-primary" />
+          <span className="font-mono text-xs text-primary tracking-wider">KEY FEATURES</span>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-2">
           {project.features.map((f) => (
-            <div key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-              <Zap size={14} className="text-primary mt-0.5 shrink-0" />
+            <div key={f} className="flex items-start gap-2 text-sm text-muted-foreground p-2 rounded-lg bg-secondary/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
               {f}
             </div>
           ))}
         </div>
       </div>
 
+      {/* Tech Stack */}
       <div className="mb-6">
-        <h4 className="font-mono text-primary text-sm mb-3 tracking-wider">// tech stack</h4>
+        <div className="flex items-center gap-2 mb-3">
+          <Target size={14} className="text-primary" />
+          <span className="font-mono text-xs text-primary tracking-wider">TECH STACK</span>
+        </div>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => (
             <span key={t} className="text-xs px-3 py-1.5 rounded-lg bg-primary/10 text-primary font-mono border border-primary/20">
@@ -115,16 +150,35 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
         </div>
       </div>
 
+      {/* Challenges & Learnings */}
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div className="p-4 rounded-xl bg-secondary/20 border border-border">
+          <div className="flex items-center gap-2 mb-2">
+            <AlertTriangle size={14} className="text-muted-foreground" />
+            <span className="font-mono text-xs text-muted-foreground tracking-wider">CHALLENGES</span>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">{project.challenges}</p>
+        </div>
+        <div className="p-4 rounded-xl bg-secondary/20 border border-border">
+          <div className="flex items-center gap-2 mb-2">
+            <BookOpen size={14} className="text-muted-foreground" />
+            <span className="font-mono text-xs text-muted-foreground tracking-wider">WHAT I LEARNED</span>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">{project.learned}</p>
+        </div>
+      </div>
+
+      {/* Links */}
       {project.links && (
         <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-          <a href={"https://chat-app-kappa-ashy.vercel.app/"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all glow">
+          <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all glow">
             <ExternalLink size={14} /> Live Demo
           </a>
-          <a href={"https://github.com/manojkumar-mern/chat-app"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
+          <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
             <Github size={14} /> GitHub
           </a>
           {project.links.api && (
-            <a href={"https://chat-app-y0ic.onrender.com/"} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-muted-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
+            <a href={project.links.api} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-muted-foreground font-semibold text-sm hover:border-primary/50 hover:text-primary transition-all">
               <Server size={14} /> Backend API
             </a>
           )}
@@ -147,9 +201,12 @@ const Projects = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-mono text-primary text-sm mb-2 tracking-wider">// projects</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-12">
+          <h3 className="text-3xl md:text-4xl font-bold mb-4">
             Featured <span className="text-gradient">Work</span>
           </h3>
+          <p className="text-muted-foreground mb-12 max-w-xl">
+            Click on any project to explore the full story — from problem to solution.
+          </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-6 mb-16">
@@ -160,40 +217,52 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
               onClick={() => setSelectedProject(project)}
-              className="group rounded-xl bg-card border border-border hover:border-primary/40 transition-all card-shadow overflow-hidden flex flex-col cursor-pointer"
+              className="group rounded-2xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/40 hover:shadow-[0_0_30px_hsl(160_84%_50%/0.1)] transition-all overflow-hidden flex flex-col cursor-pointer"
             >
+              {/* Gradient top bar */}
               <div className="h-1 w-full" style={{ background: "var(--gradient-primary)" }} />
+
               <div className="p-6 flex flex-col flex-1">
+                {/* Project number badge */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-mono text-xs text-muted-foreground">
+                    project_{String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="w-2 h-2 rounded-full bg-primary/50 group-hover:bg-primary transition-colors" />
+                </div>
+
                 <h4 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {project.title}
                 </h4>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">
                   {project.description}
                 </p>
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {project.tech.slice(0, 4).map((t) => (
-                    <span key={t} className="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-mono">
+                    <span key={t} className="text-[11px] px-2.5 py-1 rounded-md bg-primary/10 text-primary font-mono border border-primary/10">
                       {t}
                     </span>
                   ))}
                   {project.tech.length > 4 && (
-                    <span className="text-xs px-2 py-1 rounded bg-secondary/50 text-muted-foreground font-mono">
+                    <span className="text-[11px] px-2.5 py-1 rounded-md bg-secondary/50 text-muted-foreground font-mono">
                       +{project.tech.length - 4}
                     </span>
                   )}
                 </div>
 
-                <div className="mt-auto pt-2 text-xs font-mono text-primary/70 group-hover:text-primary transition-colors">
-                  Click to view details →
+                <div className="mt-auto pt-3 border-t border-border/50 text-xs font-mono text-primary/60 group-hover:text-primary transition-colors flex items-center gap-1">
+                  <span>Explore details</span>
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
+        {/* Mini projects */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

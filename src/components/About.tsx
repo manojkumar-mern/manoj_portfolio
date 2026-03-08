@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
-import { Code2, Server, Database } from "lucide-react";
+import { Code2, Server, Database, Rocket } from "lucide-react";
+
+const highlights = [
+  { icon: Code2, label: "Frontend", desc: "React, Tailwind, Modern UI/UX" },
+  { icon: Server, label: "Backend", desc: "Node.js, Express, REST APIs" },
+  { icon: Database, label: "Database", desc: "MongoDB, Mongoose ODM" },
+  { icon: Rocket, label: "Real-time", desc: "Socket.io, WebSockets" },
+];
 
 const About = () => {
   return (
@@ -18,45 +25,47 @@ const About = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-muted-foreground text-lg leading-relaxed"
+            className="space-y-4"
           >
-            MERN Stack Developer skilled in building scalable web applications
-            using React, Node.js, Express, and MongoDB. Passionate about
-            creating real-time, user-friendly solutions with clean UI and
-            efficient backend architecture. Seeking an opportunity to contribute
-            to impactful products while continuously growing as a full-stack
-            developer.
-          </motion.p>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              I'm a <span className="text-foreground font-medium">Full Stack MERN Developer</span> with a passion for building
+              high-performance web applications that solve real problems.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              I specialize in crafting scalable applications using React, Node.js, Express, and MongoDB —
+              from real-time chat systems to task management platforms. I care deeply about clean code,
+              intuitive user experiences, and robust backend architecture.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Currently seeking opportunities to contribute to impactful products while growing as an engineer
+              in a collaborative team environment.
+            </p>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="grid grid-cols-1 gap-4"
+            className="grid grid-cols-2 gap-4"
           >
-            {[
-              { icon: Code2, label: "Frontend", desc: "React, Tailwind, Modern UI" },
-              { icon: Server, label: "Backend", desc: "Node.js, Express, REST APIs" },
-              { icon: Database, label: "Database", desc: "MongoDB, Mongoose ODM" },
-            ].map((item) => (
-              <div
+            {highlights.map((item, i) => (
+              <motion.div
                 key={item.label}
-                className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors card-shadow"
+                whileHover={{ y: -4 }}
+                className="p-4 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all card-shadow text-center"
               >
-                <div className="p-2 rounded-md bg-primary/10 text-primary">
-                  <item.icon size={22} />
+                <div className="p-2.5 rounded-lg bg-primary/10 text-primary mx-auto w-fit mb-3">
+                  <item.icon size={20} />
                 </div>
-                <div>
-                  <p className="font-semibold text-foreground">{item.label}</p>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
-              </div>
+                <p className="font-semibold text-foreground text-sm mb-1">{item.label}</p>
+                <p className="text-xs text-muted-foreground">{item.desc}</p>
+              </motion.div>
             ))}
           </motion.div>
         </div>
@@ -66,4 +75,3 @@ const About = () => {
 };
 
 export default About;
-

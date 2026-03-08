@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, Github, Linkedin, Send } from "lucide-react";
+import { Phone, Mail, Github, Linkedin, Send, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [focused, setFocused] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +19,13 @@ const Contact = () => {
     toast({ title: "Opening email client..." });
     setForm({ name: "", email: "", message: "" });
   };
+
+  const inputClass = (field: string) =>
+    `w-full px-4 py-3 rounded-xl bg-card/50 backdrop-blur-sm border text-foreground placeholder:text-muted-foreground focus:outline-none transition-all text-sm ${
+      focused === field
+        ? "border-primary/50 ring-2 ring-primary/20 shadow-[0_0_15px_hsl(160_84%_50%/0.1)]"
+        : "border-border hover:border-border"
+    }`;
 
   return (
     <section id="contact" className="py-24">
@@ -34,19 +42,19 @@ const Contact = () => {
             Get In <span className="text-gradient">Touch</span>
           </h3>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            I'm currently looking for new opportunities. Feel free to reach out!
+            I'm currently open to new opportunities. Let's build something great together.
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-          {/* Contact Form */}
+          {/* Glass Contact Form */}
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="space-y-4"
+            className="space-y-4 p-6 rounded-2xl bg-card/40 backdrop-blur-md border border-border"
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Name</label>
@@ -56,8 +64,10 @@ const Contact = () => {
                 maxLength={100}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onFocus={() => setFocused("name")}
+                onBlur={() => setFocused(null)}
                 placeholder="Your name"
-                className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all text-sm"
+                className={inputClass("name")}
               />
             </div>
             <div>
@@ -68,8 +78,10 @@ const Contact = () => {
                 maxLength={255}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
+                onFocus={() => setFocused("email")}
+                onBlur={() => setFocused(null)}
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all text-sm"
+                className={inputClass("email")}
               />
             </div>
             <div>
@@ -80,16 +92,18 @@ const Contact = () => {
                 maxLength={1000}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
+                onFocus={() => setFocused("message")}
+                onBlur={() => setFocused(null)}
                 placeholder="Your message..."
-                className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all text-sm resize-none"
+                className={`${inputClass("message")} resize-none`}
               />
             </div>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-all glow w-full justify-center"
+              className="group inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-all glow w-full justify-center text-sm"
             >
               Send Message
-              <Send size={16} />
+              <Send size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </motion.form>
 
@@ -101,38 +115,27 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             className="space-y-4"
           >
-            <a
-              href="tel:+91"
-              className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-            >
-              <div className="p-2 rounded-md bg-primary/10"><Phone size={18} className="text-primary" /></div>
-              <span className="text-sm text-muted-foreground">+91 9159843416</span>
-            </a>
-            <a
-              href="mailto:vijaymanoj0000@gmail.com"
-              className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-            >
-              <div className="p-2 rounded-md bg-primary/10"><Mail size={18} className="text-primary" /></div>
-              <span className="text-sm text-muted-foreground">vijaymanoj0000@gmail.com</span>
-            </a>
-            <a
-              href="https://github.com/manojkumar-mern"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-            >
-              <div className="p-2 rounded-md bg-primary/10"><Github size={18} className="text-primary" /></div>
-              <span className="text-sm text-muted-foreground">github.com/manojkumar-mern</span>
-            </a>
-            <a
-              href="https://linkedin.com/in/manoj-kumar-d-513253293"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-            >
-              <div className="p-2 rounded-md bg-primary/10"><Linkedin size={18} className="text-primary" /></div>
-              <span className="text-sm text-muted-foreground">https://www.linkedin.com/in/manoj-kumar-d-513253293</span>
-            </a>
+            {[
+              { icon: MapPin, label: "Tamil Nadu, India", href: undefined },
+              { icon: Phone, label: "+91 9159843416", href: "tel:+919159843416" },
+              { icon: Mail, label: "vijaymanoj0000@gmail.com", href: "mailto:vijaymanoj0000@gmail.com" },
+              { icon: Github, label: "github.com/manojkumar-mern", href: "https://github.com/manojkumar-mern" },
+              { icon: Linkedin, label: "LinkedIn Profile", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
+            ].map(({ icon: Icon, label, href }) => {
+              const Wrapper = href ? "a" : "div";
+              return (
+                <Wrapper
+                  key={label}
+                  {...(href ? { href, target: href.startsWith("http") ? "_blank" : undefined, rel: href.startsWith("http") ? "noopener noreferrer" : undefined } : {})}
+                  className="flex items-center gap-3 p-4 rounded-xl bg-card/50 backdrop-blur-sm border border-border hover:border-primary/30 transition-all group"
+                >
+                  <div className="p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Icon size={16} className="text-primary" />
+                  </div>
+                  <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
+                </Wrapper>
+              );
+            })}
           </motion.div>
         </div>
       </div>
