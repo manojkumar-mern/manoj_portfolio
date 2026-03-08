@@ -175,24 +175,22 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="flex-shrink-0"
           >
-            <div className="relative group">
-              {/* Outer animated glow ring */}
+            <div className="relative group flex items-center justify-center">
+              {/* Soft pulsing outer glow */}
               <motion.div
-                className="absolute -inset-4 rounded-full opacity-60"
-                style={{ background: "conic-gradient(from 0deg, hsl(187 78% 53% / 0.3), hsl(160 64% 43% / 0.3), hsl(187 78% 53% / 0.1), hsl(187 78% 53% / 0.3))" }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-8 rounded-full pointer-events-none"
+                style={{ background: "radial-gradient(circle, hsl(187 78% 53% / 0.07) 0%, hsl(160 64% 43% / 0.03) 50%, transparent 70%)" }}
+                animate={{ scale: [1, 1.06, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
-              {/* Soft glow behind */}
-              <div className="absolute -inset-6 rounded-full blur-2xl pointer-events-none" style={{ background: "hsl(187 78% 53% / 0.08)" }} />
-              {/* Gradient ring */}
-              <div className="absolute -inset-[3px] rounded-full bg-gradient-accent opacity-40" />
+              {/* Thin gradient ring */}
+              <div className="absolute -inset-[1.5px] rounded-full bg-gradient-accent opacity-50" />
               {/* Inner image container */}
-              <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-2 border-card">
+              <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden bg-card">
                 <img
                   src={profileImg}
                   alt="Manoj Kumar D"
-                  className="w-full h-full object-cover object-center scale-[0.85]"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
             </div>
