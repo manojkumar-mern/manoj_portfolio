@@ -217,7 +217,7 @@ const Projects = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
               onClick={() => setSelectedProject(project)}
-              className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_8px_30px_hsl(187_78%_53%/0.08)] gradient-border"
+              className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_8px_40px_hsl(187_78%_53%/0.12),0_0_20px_hsl(160_64%_43%/0.06)] gradient-border"
             >
               <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors">
