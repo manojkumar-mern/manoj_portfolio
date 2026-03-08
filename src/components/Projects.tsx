@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, Server, Zap, X, Lightbulb, Target, BookOpen, AlertTriangle } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Project {
   title: string;
@@ -71,7 +72,12 @@ const projects: Project[] = [
   },
 ];
 
-const miniProjects = ["To Do List", "Rock Paper Scissors Game", "Colors App", "Notes API"];
+const miniProjects: { name: string; description: string; tech: string[] }[] = [
+  { name: "To Do List", description: "A task management application with full CRUD functionality and persistent storage.", tech: ["React", "Local Storage"] },
+  { name: "Rock Paper Scissors Game", description: "Classic game with animated UI, score tracking, and computer AI opponent.", tech: ["JavaScript", "CSS"] },
+  { name: "Colors App", description: "Color palette generator and explorer with copy-to-clipboard functionality.", tech: ["React", "CSS"] },
+  { name: "Notes API", description: "RESTful API for managing notes with CRUD endpoints and validation.", tech: ["Node.js", "Express", "MongoDB"] },
+];
 
 const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => void }) => (
   <motion.div
@@ -86,15 +92,17 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
       animate={{ scale: 1, opacity: 1, y: 0 }}
       exit={{ scale: 0.95, opacity: 0, y: 10 }}
       transition={{ type: "spring", duration: 0.5 }}
-      className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-card/95 backdrop-blur-sm border border-border p-6 md:p-8 card-shadow"
+      className="relative w-full max-w-2xl max-h-[85vh] rounded-2xl bg-card/95 backdrop-blur-sm border border-border card-shadow"
       onClick={(e) => e.stopPropagation()}
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors"
+        className="sticky top-0 float-right z-10 m-4 p-2 rounded-full bg-secondary/80 backdrop-blur-sm border border-border text-muted-foreground hover:text-foreground hover:bg-primary/20 hover:border-primary/40 hover:shadow-[0_0_12px_hsl(var(--primary)/0.3)] transition-all"
       >
-        <X size={18} />
+        <X size={16} />
       </button>
+
+      <div className="overflow-y-auto max-h-[85vh] p-6 md:p-8 pt-0">
 
       <div className="h-1 w-full rounded-full mb-6" style={{ background: "var(--gradient-primary)" }} />
 
@@ -179,6 +187,7 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
           )}
         </div>
       )}
+      </div>
     </motion.div>
   </motion.div>
 );
@@ -256,13 +265,30 @@ const Projects = () => {
           transition={{ duration: 0.6 }}
         >
           <h4 className="text-sm font-semibold text-foreground mb-4 tracking-wide">Other Projects</h4>
-          <div className="flex flex-wrap gap-3">
-            {miniProjects.map((p) => (
-              <span key={p} className="px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/40 hover:text-primary transition-all cursor-default">
-                {p}
-              </span>
-            ))}
-          </div>
+          <TooltipProvider delayDuration={200}>
+            <div className="flex flex-wrap gap-3">
+              {miniProjects.map((p) => (
+                <Tooltip key={p.name}>
+                  <TooltipTrigger asChild>
+                    <span className="px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/40 hover:text-primary hover:shadow-[0_0_16px_hsl(var(--primary)/0.1)] transition-all cursor-default">
+                      {p.name}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-xs bg-card/95 backdrop-blur-sm border-border p-3 rounded-xl">
+                    <p className="text-sm font-medium text-foreground mb-1">{p.name}</p>
+                    <p className="text-xs text-muted-foreground mb-2">{p.description}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {p.tech.map((t) => (
+                        <span key={t} className="text-[10px] px-2 py-0.5 rounded-md bg-primary/10 text-primary font-mono border border-primary/20">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+          </TooltipProvider>
         </motion.div>
       </div>
 
