@@ -72,7 +72,8 @@ const Hero = () => {
   useEffect(() => {
     if (!nameDone) return;
     if (roleText.length < HERO_ROLE.length) {
-      const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), TYPE_SPEED);
+      const jitter = Math.random() * 20 - 10;
+      const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), TYPE_SPEED + jitter);
       return () => clearTimeout(t);
     } else {
       setRoleDone(true);
