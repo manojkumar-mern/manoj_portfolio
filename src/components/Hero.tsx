@@ -148,7 +148,7 @@ const Hero = () => {
             <div className="mb-8 flex items-center justify-center gap-2 h-8">
               <span className="font-mono text-gradient text-lg font-semibold">{skillText}</span>
               {roleDone && (
-                <span className="font-mono text-primary/60 animate-pulse text-lg">|</span>
+                <span className="font-mono text-primary/60 text-lg" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }}>|</span>
               )}
             </div>
 
