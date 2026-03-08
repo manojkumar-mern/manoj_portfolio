@@ -7,11 +7,11 @@ import HeroProfileImage from "./HeroProfileImage";
 const HERO_NAME = "Manoj Kumar";
 const HERO_ROLE = "MERN Stack Developer";
 const SKILLS = ["JavaScript", "React", "Node", "Express", "MongoDB"];
-const NAME_SPEED = 80;
-const TYPE_SPEED = 70;
-const DELETE_SPEED = 40;
-const PAUSE_BEFORE_DELETE = 1500;
-const PAUSE_BEFORE_TYPE = 400;
+const NAME_SPEED = 100;
+const TYPE_SPEED = 85;
+const DELETE_SPEED = 45;
+const PAUSE_BEFORE_DELETE = 2000;
+const PAUSE_BEFORE_TYPE = 500;
 
 const useTypewriterLoop = (words: string[], enabled: boolean, typeSpeed = TYPE_SPEED, deleteSpeed = DELETE_SPEED) => {
   const [index, setIndex] = useState(0);
