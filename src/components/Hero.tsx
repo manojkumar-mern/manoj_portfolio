@@ -21,25 +21,30 @@ const useTypewriterLoop = (words: string[], enabled: boolean, typeSpeed = TYPE_S
   useEffect(() => {
     if (!enabled) return;
     const current = words[index];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (text.length < current.length) {
-            setText(current.slice(0, text.length + 1));
-          } else {
-            setTimeout(() => setIsDeleting(true), PAUSE_BEFORE_DELETE);
-          }
+    // Add slight randomness for natural feel
+    const jitter = Math.random() * 30 - 15;
+    const speed = isDeleting
+      ? deleteSpeed + jitter * 0.5
+      : text.length === 0 && !isDeleting
+        ? PAUSE_BEFORE_TYPE
+        : typeSpeed + jitter;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (text.length < current.length) {
+          setText(current.slice(0, text.length + 1));
         } else {
-          if (text.length > 0) {
-            setText(current.slice(0, text.length - 1));
-          } else {
-            setIsDeleting(false);
-            setIndex((prev) => (prev + 1) % words.length);
-          }
+          setTimeout(() => setIsDeleting(true), PAUSE_BEFORE_DELETE);
         }
-      },
-      isDeleting ? deleteSpeed : (text.length === 0 && !isDeleting ? PAUSE_BEFORE_TYPE : typeSpeed)
-    );
+      } else {
+        if (text.length > 0) {
+          setText(current.slice(0, text.length - 1));
+        } else {
+          setIsDeleting(false);
+          setIndex((prev) => (prev + 1) % words.length);
+        }
+      }
+    }, Math.max(speed, 20));
     return () => clearTimeout(timeout);
   }, [enabled, text, isDeleting, index, words, typeSpeed, deleteSpeed]);
 
