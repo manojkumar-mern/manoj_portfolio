@@ -6,7 +6,7 @@ import emailjs from "@emailjs/browser";
 
 const EMAILJS_SERVICE_ID = "service_vsj8mw2";
 const EMAILJS_TEMPLATE_ID = "template_70sqib7";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_PUBLIC_KEY = "UTntl434rmt4g3QM";
 
 const Contact = () => {
   const { toast } = useToast();
