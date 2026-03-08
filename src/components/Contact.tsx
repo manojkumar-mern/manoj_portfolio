@@ -65,7 +65,7 @@ const Contact = () => {
               <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
               <textarea id="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
             </div>
-            <button type="submit" className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:brightness-110 transition-all w-full justify-center">
+            <button type="submit" className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-medium text-sm hover:shadow-[0_0_24px_hsl(187_78%_53%/0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full justify-center">
               Send Message
               <Send size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
