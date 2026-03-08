@@ -285,10 +285,7 @@ const Projects = () => {
                 {projects[0].features.slice(0, 4).map((f, fi) => (
                   <motion.div
                     key={f}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.2 + fi * 0.08 }}
+                    variants={v(staggerItem)}
                     className="flex items-center gap-2 text-sm text-muted-foreground"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
