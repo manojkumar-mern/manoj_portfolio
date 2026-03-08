@@ -79,7 +79,7 @@ const Contact = () => {
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Name</label>
-              <input id="name" type="text" maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} placeholder="Your name" className={inputClass("name")} />
+              <input id="name" name="name" type="text" maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} placeholder="Your name" className={inputClass("name")} />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1.5">Email</label>
