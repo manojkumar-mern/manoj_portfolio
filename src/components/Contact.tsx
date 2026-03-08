@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, Github, Linkedin, Send, MapPin, CheckCircle } from "lucide-react";
+import { Phone, Mail, Github, Linkedin, Send, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
 
-const FORMSPREE_URL = "https://formspree.io/f/xwpkgpvn";
+const EMAILJS_SERVICE_ID = "service_vsj8mw2";
+const EMAILJS_TEMPLATE_ID = "template_70sqib7";
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
 const Contact = () => {
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       toast({ title: "Please fill in all fields", variant: "destructive" });
@@ -20,27 +24,20 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(FORMSPREE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          email: form.email.trim(),
-          message: form.message.trim(),
-        }),
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current!,
+        EMAILJS_PUBLIC_KEY
+      );
+      toast({
+        title: "Message sent successfully!",
+        description: "I will get back to you soon.",
       });
-
-      if (res.ok) {
-        toast({
-          title: "Message sent successfully!",
-          description: "I'll get back to you soon.",
-        });
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        toast({ title: "Failed to send message. Please try again.", variant: "destructive" });
-      }
+      setForm({ name: "", email: "", message: "" });
+      formRef.current?.reset();
     } catch {
-      toast({ title: "Network error. Please try again.", variant: "destructive" });
+      toast({ title: "Failed to send message. Please try again.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
