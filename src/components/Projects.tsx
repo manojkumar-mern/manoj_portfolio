@@ -200,15 +200,19 @@ const cardDirections = [
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+
+  const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
     <section id="projects" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeRight)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Projects</h2>
