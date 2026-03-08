@@ -16,8 +16,8 @@ const Footer = () => {
         initial="hidden"
         whileInView="visible"
         viewport={viewportConfig}
+        className="container"
       >
-      <div className="container">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-center sm:text-left">
             <a href="#" className="font-mono text-base font-bold text-gradient inline-block mb-2">
