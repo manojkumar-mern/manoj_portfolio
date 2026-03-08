@@ -1,23 +1,49 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, Github, Linkedin, Send, MapPin } from "lucide-react";
+import { Phone, Mail, Github, Linkedin, Send, MapPin, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+const FORMSPREE_URL = "https://formspree.io/f/xwpkgpvn";
 
 const Contact = () => {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       toast({ title: "Please fill in all fields", variant: "destructive" });
       return;
     }
-    const mailtoLink = `mailto:vijaymanoj0000@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${encodeURIComponent(form.name)} (${encodeURIComponent(form.email)})`;
-    window.open(mailtoLink);
-    toast({ title: "Opening email client..." });
-    setForm({ name: "", email: "", message: "" });
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+        }),
+      });
+
+      if (res.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "I'll get back to you soon.",
+        });
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        toast({ title: "Failed to send message. Please try again.", variant: "destructive" });
+      }
+    } catch {
+      toast({ title: "Network error. Please try again.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const inputClass = (field: string) =>
@@ -65,9 +91,14 @@ const Contact = () => {
               <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
               <textarea id="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
             </div>
-            <button type="submit" className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-medium text-sm hover:shadow-[0_0_24px_hsl(187_78%_53%/0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full justify-center">
-              Send Message
-              <Send size={14} className="group-hover:translate-x-0.5 transition-transform" />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-medium text-sm hover:shadow-[0_0_24px_hsl(187_78%_53%/0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "Sending..." : "Send Message"}
+              {!isSubmitting && <Send size={14} className="group-hover:translate-x-0.5 transition-transform" />}
+              {isSubmitting && <span className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />}
             </button>
           </motion.form>
 
@@ -79,26 +110,25 @@ const Contact = () => {
             className="space-y-3"
           >
             {[
-              { icon: MapPin, label: "Tamil Nadu, India", href: undefined },
+              { icon: MapPin, label: "Mallasamudram, Tamil Nadu, India – 637503", href: "https://goo.gl/maps/cs4MH8S4r7bUA7aj8" },
               { icon: Phone, label: "+91 9159843416", href: "tel:+919159843416" },
               { icon: Mail, label: "vijaymanoj0000@gmail.com", href: "mailto:vijaymanoj0000@gmail.com" },
               { icon: Github, label: "github.com/manojkumar-mern", href: "https://github.com/manojkumar-mern" },
               { icon: Linkedin, label: "LinkedIn Profile", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
-            ].map(({ icon: Icon, label, href }) => {
-              const Wrapper = href ? "a" : "div";
-              return (
-                <Wrapper
-                  key={label}
-                  {...(href ? { href, target: href.startsWith("http") ? "_blank" : undefined, rel: href.startsWith("http") ? "noopener noreferrer" : undefined } : {})}
-                  className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/25 hover:-translate-y-0.5 hover:shadow-[0_0_15px_hsl(187_78%_53%/0.08)] transition-all duration-300 group"
-                >
-                  <div className="p-2 rounded-lg bg-primary/8 group-hover:bg-primary/12 transition-colors">
-                    <Icon size={15} className="text-primary" />
-                  </div>
-                  <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
-                </Wrapper>
-              );
-            })}
+            ].map(({ icon: Icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("http") || href.startsWith("https") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/25 hover:-translate-y-0.5 hover:shadow-[0_0_15px_hsl(187_78%_53%/0.08)] transition-all duration-300 group cursor-pointer"
+              >
+                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors">
+                  <Icon size={15} className="text-primary" />
+                </div>
+                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
+              </a>
+            ))}
           </motion.div>
         </div>
       </div>
