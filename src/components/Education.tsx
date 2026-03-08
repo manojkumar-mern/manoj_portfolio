@@ -1,5 +1,10 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, Award, Languages, Calendar } from "lucide-react";
+import {
+  fadeLeft, fadeUp, fadeRight, staggerContainer, staggerItem, staggerItemLeft, staggerItemRight, staggerItemScale,
+  viewportConfig, prefersReducedMotion, noMotion,
+} from "@/lib/motion";
 
 const education = [
   { degree: "B.Sc Computer Science", school: "Sengunthar Arts and Science College", year: "2021 – 2024", score: "86%" },
@@ -16,14 +21,19 @@ const certifications = [
 const languages = ["English", "Tamil"];
 
 const Education = () => {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+
+  const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
+
   return (
     <section id="education" className="py-28 bg-muted/30">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeLeft)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Education</h2>
@@ -33,25 +43,25 @@ const Education = () => {
         <div className="grid lg:grid-cols-3 gap-14">
           <div className="lg:col-span-2">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              variants={v(fadeUp)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportConfig}
               className="flex items-center gap-2 mb-8"
             >
               <GraduationCap size={18} className="text-primary" />
               <h3 className="font-medium text-foreground">Academic Background</h3>
             </motion.div>
-            <div className="relative pl-8 border-l border-border space-y-6">
-              {education.map((e, i) => (
-                <motion.div
-                  key={e.degree}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
-                  className="relative"
-                >
+
+            <motion.div
+              variants={v(staggerContainer(0.12))}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportConfig}
+              className="relative pl-8 border-l border-border space-y-6"
+            >
+              {education.map((e) => (
+                <motion.div key={e.degree} variants={v(staggerItemLeft)} className="relative">
                   <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary" />
                   <div className="p-5 rounded-xl bg-card border border-border hover:border-primary/15 transition-all">
                     <div className="flex items-start justify-between gap-4 mb-2">
@@ -68,60 +78,66 @@ const Education = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           <div className="space-y-8">
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              variants={v(fadeRight)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportConfig}
             >
               <div className="flex items-center gap-2 mb-4">
                 <Award size={18} className="text-primary" />
                 <h3 className="font-medium text-foreground">Certifications</h3>
               </div>
-              <div className="space-y-2">
-                {certifications.map((c, i) => (
+              <motion.div
+                variants={v(staggerContainer(0.1))}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="space-y-2"
+              >
+                {certifications.map((c) => (
                   <motion.div
                     key={c}
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-20px" }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
+                    variants={v(staggerItemRight)}
                     className="p-4 rounded-xl bg-card border border-border hover:border-primary/15 transition-all text-sm text-muted-foreground"
                   >
                     {c}
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              variants={v(fadeUp)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportConfig}
             >
               <div className="flex items-center gap-2 mb-4">
                 <Languages size={18} className="text-primary" />
                 <h3 className="font-medium text-foreground">Languages</h3>
               </div>
-              <div className="flex gap-2">
-                {languages.map((l, i) => (
+              <motion.div
+                variants={v(staggerContainer(0.08))}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex gap-2"
+              >
+                {languages.map((l) => (
                   <motion.span
                     key={l}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.3 + i * 0.08 }}
+                    variants={v(staggerItemScale)}
                     className="px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/15 transition-all"
                   >
                     {l}
                   </motion.span>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>

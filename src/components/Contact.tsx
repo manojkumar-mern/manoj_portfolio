@@ -1,8 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, Github, Linkedin, Send, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
+import {
+  fadeUp, fadeLeft, fadeRight, staggerContainer, staggerItemRight, staggerItem,
+  viewportConfig, prefersReducedMotion, noMotion,
+} from "@/lib/motion";
 
 const EMAILJS_SERVICE_ID = "service_vsj8mw2";
 const EMAILJS_TEMPLATE_ID = "template_70sqib7";
@@ -14,6 +18,10 @@ const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+
+  const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,10 +65,10 @@ const Contact = () => {
     <section id="contact" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Contact</h2>
@@ -74,10 +82,10 @@ const Contact = () => {
           <motion.form
             ref={formRef}
             onSubmit={sendEmail}
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            variants={v(fadeLeft)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
             className="space-y-4 p-6 rounded-xl bg-card border border-border"
           >
             <div>
@@ -95,10 +103,7 @@ const Contact = () => {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.3 }}
+              variants={v(staggerItem)}
               className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-medium text-sm hover:shadow-[0_0_24px_hsl(187_78%_53%/0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Sending..." : "Send Message"}
@@ -107,23 +112,26 @@ const Contact = () => {
             </motion.button>
           </motion.form>
 
-          <div className="space-y-3">
+          <motion.div
+            variants={v(staggerContainer(0.08))}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            className="space-y-3"
+          >
             {[
               { icon: MapPin, label: "Mallasamudram, Tamil Nadu, India – 637503", href: "https://goo.gl/maps/cs4MH8S4r7bUA7aj8" },
               { icon: Phone, label: "+91 9159843416", href: "tel:+919159843416" },
               { icon: Mail, label: "vijaymanoj0000@gmail.com", href: "mailto:vijaymanoj0000@gmail.com" },
               { icon: Github, label: "github.com/manojkumar-mern", href: "https://github.com/manojkumar-mern" },
               { icon: Linkedin, label: "LinkedIn Profile", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
-            ].map(({ icon: Icon, label, href }, i) => (
+            ].map(({ icon: Icon, label, href }) => (
               <motion.a
                 key={label}
                 href={href}
                 target={href.startsWith("http") || href.startsWith("https") ? "_blank" : undefined}
                 rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 + i * 0.08 }}
+                variants={v(staggerItemRight)}
                 className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/25 hover:-translate-y-0.5 hover:shadow-[0_0_15px_hsl(187_78%_53%/0.08)] transition-all duration-300 group cursor-pointer"
               >
                 <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors">
@@ -132,7 +140,7 @@ const Contact = () => {
                 <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
               </motion.a>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

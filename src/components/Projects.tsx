@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, Server, X, Lightbulb, Target, BookOpen, AlertTriangle } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  fadeUp, fadeRight, fadeLeft, staggerContainer, staggerItem, staggerItemScale, scaleIn,
+  viewportConfig, prefersReducedMotion, noMotion,
+} from "@/lib/motion";
 
 interface Project {
   title: string;
@@ -188,23 +192,22 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
   </motion.div>
 );
 
-const cardDirections = [
-  { x: -40, y: 20 },
-  { x: 0, y: 40 },
-  { x: 40, y: 20 },
-];
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+
+  const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
     <section id="projects" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeRight)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Projects</h2>
@@ -216,10 +219,10 @@ const Projects = () => {
 
         {/* Featured Project */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           onClick={() => setSelectedProject(projects[0])}
           className="group relative rounded-2xl bg-card border border-border overflow-hidden mb-16 cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_16px_60px_hsl(187_78%_53%/0.15),0_0_40px_hsl(160_64%_43%/0.08)] gradient-border"
         >
@@ -277,10 +280,7 @@ const Projects = () => {
                 {projects[0].features.slice(0, 4).map((f, fi) => (
                   <motion.div
                     key={f}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.2 + fi * 0.08 }}
+                    variants={v(staggerItem)}
                     className="flex items-center gap-2 text-sm text-muted-foreground"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
@@ -293,10 +293,7 @@ const Projects = () => {
                 {projects[0].tech.map((t, ti) => (
                   <motion.span
                     key={t}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: 0.3 + ti * 0.05 }}
+                    variants={v(staggerItemScale)}
                     className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono group-hover:border-primary/20 group-hover:text-foreground transition-all duration-300"
                   >
                     {t}
@@ -308,16 +305,17 @@ const Projects = () => {
         </motion.div>
 
         {/* Other Projects */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-16">
-          {projects.slice(1).map((project, i) => {
-            const dir = cardDirections[i % cardDirections.length];
-            return (
+        <motion.div
+          variants={v(staggerContainer(0.12))}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="grid lg:grid-cols-2 gap-6 mb-16"
+        >
+          {projects.slice(1).map((project) => (
               <motion.div
                 key={project.title}
-                initial={{ opacity: 0, x: dir.x, y: dir.y }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
+                variants={v(staggerItem)}
                 onClick={() => setSelectedProject(project)}
                 className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-500 hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_12px_50px_hsl(187_78%_53%/0.15),0_0_30px_hsl(160_64%_43%/0.08)] gradient-border"
               >
@@ -389,27 +387,26 @@ const Projects = () => {
                   </div>
                 </div>
               </motion.div>
-            );
-          })}
-        </div>
+          ))}
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
         >
           <h3 className="text-sm font-medium text-foreground mb-4">Other Projects</h3>
           <TooltipProvider delayDuration={200}>
-            <div className="flex flex-wrap gap-2">
-              {miniProjects.map((p, i) => (
-                <motion.div
-                  key={p.name}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
-                >
+            <motion.div
+              variants={v(staggerContainer(0.06))}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="flex flex-wrap gap-2"
+            >
+              {miniProjects.map((p) => (
+                <motion.div key={p.name} variants={v(staggerItemScale)}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] transition-all duration-300 cursor-default">
@@ -430,7 +427,7 @@ const Projects = () => {
                   </Tooltip>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </TooltipProvider>
         </motion.div>
       </div>

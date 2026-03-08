@@ -1,5 +1,10 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, ExternalLink, GitCommit, Star, GitFork } from "lucide-react";
+import {
+  fadeUp, fadeLeft, staggerContainer, staggerItem, scaleIn,
+  viewportConfig, prefersReducedMotion, noMotion,
+} from "@/lib/motion";
 
 const GITHUB_USERNAME = "manojkumar-mern";
 
@@ -10,14 +15,19 @@ const stats = [
 ];
 
 const GitHubActivity = () => {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+
+  const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
+
   return (
     <section id="github" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={v(fadeLeft)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">GitHub</h2>
@@ -28,10 +38,10 @@ const GitHubActivity = () => {
           href={`https://github.com/${GITHUB_USERNAME}`}
           target="_blank"
           rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="inline-flex items-center gap-3 px-5 py-2.5 rounded-lg bg-card border border-border hover:border-primary/20 transition-all mb-10 group"
         >
           <Github size={18} className="text-primary" />
@@ -41,14 +51,17 @@ const GitHubActivity = () => {
           <ExternalLink size={13} className="text-muted-foreground group-hover:text-primary transition-colors" />
         </motion.a>
 
-        <div className="grid sm:grid-cols-3 gap-4 mb-10">
-          {stats.map((stat, i) => (
+        <motion.div
+          variants={v(staggerContainer(0.1))}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="grid sm:grid-cols-3 gap-4 mb-10"
+        >
+          {stats.map((stat) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
+              variants={v(staggerItem)}
               className="p-5 rounded-xl bg-card border border-border hover:border-primary/15 transition-all text-center"
             >
               <stat.icon size={22} className="text-primary mx-auto mb-3" />
@@ -56,13 +69,13 @@ const GitHubActivity = () => {
               <p className="text-sm text-muted-foreground">{stat.label}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          variants={v(scaleIn)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="rounded-xl bg-card border border-border p-5 overflow-hidden"
         >
           <h3 className="text-sm font-medium text-foreground mb-4">Contribution Graph</h3>
