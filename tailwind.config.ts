@@ -92,6 +92,10 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(160 84% 50% / 0.15)" },
           "50%": { boxShadow: "0 0 40px hsl(160 84% 50% / 0.3)" },
         },
+        "gradient-sweep": {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -100,6 +104,7 @@ export default {
         "fade-in": "fade-in 0.5s ease-out forwards",
         "slide-in-left": "slide-in-left 0.5s ease-out forwards",
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+        "gradient-sweep": "gradient-sweep 0.9s ease-in-out",
       },
     },
   },

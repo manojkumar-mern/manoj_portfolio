@@ -123,7 +123,7 @@ const Hero = () => {
             </motion.p>
 
             <motion.h1
-              className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em]"
+              className="group/name text-5xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em] relative cursor-default"
               animate={nameDone ? {
                 textShadow: [
                   "0 0 8px hsl(187 78% 53% / 0), 0 0 20px hsl(187 78% 53% / 0)",
@@ -133,16 +133,35 @@ const Hero = () => {
               } : {}}
               transition={nameDone ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
             >
-              {nameText.split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className={i >= 6 ? "text-gradient" : ""}
-                >
-                  {char}
-                </motion.span>
-              ))}
+              <span className="relative inline-block">
+                {nameText.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className={`relative z-10 transition-[filter] duration-300 ${i >= 6 ? "text-gradient" : ""} group-hover/name:brightness-125`}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+                {/* Gradient sweep overlay */}
+                {nameDone && (
+                  <span
+                    className="pointer-events-none absolute inset-0 z-20 bg-[length:200%_100%] bg-clip-text opacity-0 group-hover/name:opacity-100 group-hover/name:animate-gradient-sweep transition-opacity duration-300"
+                    style={{
+                      backgroundImage: "linear-gradient(90deg, transparent 0%, hsl(187 78% 53% / 0.45) 40%, hsl(160 64% 50% / 0.55) 60%, transparent 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      mixBlendMode: "screen",
+                    }}
+                    aria-hidden="true"
+                  >
+                    {nameText}
+                  </span>
+                )}
+                {/* Neon glow behind text */}
+                <span className="pointer-events-none absolute inset-0 -z-10 blur-xl opacity-0 group-hover/name:opacity-40 transition-opacity duration-500 bg-gradient-to-r from-primary/30 via-primary/50 to-secondary/30 rounded-full scale-y-150" aria-hidden="true" />
+              </span>
               {!nameDone && (
                 <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 align-middle" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }} />
               )}
