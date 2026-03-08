@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail, Eye } from "lucide-react";
 import FloatingIcons from "./FloatingIcons";
@@ -6,10 +6,44 @@ import HeroProfileImage from "./HeroProfileImage";
 
 const typingWords = ["React", "Node.js", "Express", "MongoDB", "JavaScript"];
 
+const HERO_NAME = "Manoj Kumar";
+const HERO_ROLE = "MERN Stack Developer";
+const NAME_SPEED = 80;
+const ROLE_SPEED = 60;
+const ROLE_DELAY = 400;
+
 const Hero = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Typing animation for name & role
+  const [nameText, setNameText] = useState("");
+  const [roleText, setRoleText] = useState("");
+  const [nameDone, setNameDone] = useState(false);
+  const [roleDone, setRoleDone] = useState(false);
+
+  useEffect(() => {
+    if (nameText.length < HERO_NAME.length) {
+      const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
+      return () => clearTimeout(t);
+    } else {
+      setNameDone(true);
+    }
+  }, [nameText]);
+
+  useEffect(() => {
+    if (!nameDone) return;
+    const delay = setTimeout(() => {
+      if (roleText.length < HERO_ROLE.length) {
+        const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), ROLE_SPEED);
+        return () => clearTimeout(t);
+      } else {
+        setRoleDone(true);
+      }
+    }, roleText.length === 0 ? ROLE_DELAY : 0);
+    return () => clearTimeout(delay);
+  }, [nameDone, roleText]);
 
   useEffect(() => {
     const currentWord = typingWords[wordIndex];
@@ -73,18 +107,36 @@ const Hero = () => {
               Hello, I'm
             </motion.p>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
-              Manoj <span className="text-gradient">Kumar</span> D
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em]">
+              {nameText.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={i >= 6 ? "text-gradient" : ""}
+                >
+                  {char}
+                </motion.span>
+              ))}
+              {!nameDone && (
+                <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 animate-pulse align-middle" />
+              )}
             </h1>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-muted-foreground text-base md:text-lg mb-4"
-            >
-              MERN Stack Developer
-            </motion.p>
+            <div className="text-muted-foreground text-base md:text-lg mb-4 min-h-[1.5em]">
+              {roleText.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+              {nameDone && !roleDone && (
+                <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
+              )}
+            </div>
 
             <motion.div
               initial={{ opacity: 0 }}
