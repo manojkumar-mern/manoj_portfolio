@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail, Eye } from "lucide-react";
-import profileImg from "@/assets/profile.png";
 import FloatingIcons from "./FloatingIcons";
+import HeroProfileImage from "./HeroProfileImage";
 
 const typingWords = ["React", "Node.js", "Express", "MongoDB", "JavaScript"];
 
@@ -169,42 +169,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex-shrink-0"
-          >
-            <div className="relative group flex items-center justify-center">
-              {/* Layer 4: Outer glow aura with pulse */}
-              <motion.div
-                className="absolute -inset-12 rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(circle, hsl(187 78% 53% / 0.08) 0%, hsl(160 64% 43% / 0.04) 40%, transparent 65%)" }}
-                animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.9, 0.5] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              />
-              {/* Layer 3: Rotating gradient ring */}
-              <motion.div
-                className="absolute -inset-4 rounded-full pointer-events-none"
-                style={{
-                  background: "conic-gradient(from 0deg, hsl(187 78% 53% / 0.25), hsl(160 64% 43% / 0.2), transparent, hsl(187 78% 53% / 0.15), hsl(160 64% 43% / 0.25))",
-                  filter: "blur(3px)",
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-              />
-              {/* Layer 2: Thin gradient accent ring */}
-              <div className="absolute -inset-[1.5px] rounded-full bg-gradient-accent opacity-40" />
-              {/* Layer 1: Profile image */}
-              <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden bg-card">
-                <img
-                  src={profileImg}
-                  alt="Manoj Kumar D"
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-            </div>
-          </motion.div>
+          <HeroProfileImage />
         </div>
 
         <motion.div
