@@ -1,5 +1,10 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Server, Database, Rocket } from "lucide-react";
+import {
+  fadeLeft, fadeUp, staggerContainer, staggerItem, staggerItemScale,
+  viewportConfig, prefersReducedMotion, noMotion,
+} from "@/lib/motion";
 
 const highlights = [
   { icon: Code2, label: "Frontend", desc: "React, Tailwind, Modern UI/UX" },
@@ -9,14 +14,19 @@ const highlights = [
 ];
 
 const About = () => {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+
+  const v = (variant: typeof fadeLeft) => reduced ? noMotion : variant;
+
   return (
     <section id="about" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeLeft)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">About Me</h2>
@@ -25,35 +35,38 @@ const About = () => {
 
         <div className="grid md:grid-cols-2 gap-14 items-start">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            variants={v(staggerContainer(0.12))}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
             className="space-y-5"
           >
-            <p className="text-muted-foreground text-lg leading-relaxed">
+            <motion.p variants={v(staggerItem)} className="text-muted-foreground text-lg leading-relaxed">
               I'm a <span className="text-foreground font-medium">Full Stack MERN Developer</span> with a passion for building
               high-performance web applications that solve real problems.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
+            </motion.p>
+            <motion.p variants={v(staggerItem)} className="text-muted-foreground leading-relaxed">
               I specialize in crafting scalable applications using React, Node.js, Express, and MongoDB —
               from real-time chat systems to task management platforms. I care deeply about clean code,
               intuitive user experiences, and robust backend architecture.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
+            </motion.p>
+            <motion.p variants={v(staggerItem)} className="text-muted-foreground leading-relaxed">
               Currently seeking opportunities to contribute to impactful products while growing as an engineer
               in a collaborative team environment.
-            </p>
+            </motion.p>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-4">
-            {highlights.map((item, i) => (
+          <motion.div
+            variants={v(staggerContainer(0.1))}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            className="grid grid-cols-2 gap-4"
+          >
+            {highlights.map((item) => (
               <motion.div
                 key={item.label}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.15 + i * 0.1 }}
+                variants={v(staggerItemScale)}
                 className="p-5 rounded-xl bg-card border border-border hover:border-primary/20 transition-all duration-300 group"
               >
                 <div className="p-2 rounded-lg bg-primary/8 text-primary w-fit mb-3 group-hover:bg-primary/12 transition-colors">
@@ -63,7 +76,7 @@ const About = () => {
                 <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
