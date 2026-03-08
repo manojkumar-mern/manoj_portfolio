@@ -1,28 +1,34 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail, Eye } from "lucide-react";
 import FloatingIcons from "./FloatingIcons";
 import HeroProfileImage from "./HeroProfileImage";
 
-const typingWords = ["React", "Node.js", "Express", "MongoDB", "JavaScript"];
-
 const HERO_NAME = "Manoj Kumar";
-const HERO_ROLE = "MERN Stack Developer";
+const ROLES = [
+  "MERN Stack Developer",
+  "React Developer",
+  "Node.js Developer",
+  "MongoDB Developer",
+  "Express.js Developer",
+];
 const NAME_SPEED = 80;
-const ROLE_SPEED = 60;
-const ROLE_DELAY = 400;
+const TYPE_SPEED = 70;
+const DELETE_SPEED = 40;
+const PAUSE_BEFORE_DELETE = 1500;
+const PAUSE_BEFORE_TYPE = 400;
 
 const Hero = () => {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [text, setText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  // Typing animation for name & role
+  // Name types once and stays
   const [nameText, setNameText] = useState("");
-  const [roleText, setRoleText] = useState("");
   const [nameDone, setNameDone] = useState(false);
-  const [roleDone, setRoleDone] = useState(false);
 
+  // Looping role typing
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [roleText, setRoleText] = useState("");
+  const [isRoleDeleting, setIsRoleDeleting] = useState(false);
+
+  // Type name once
   useEffect(() => {
     if (nameText.length < HERO_NAME.length) {
       const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
@@ -32,40 +38,33 @@ const Hero = () => {
     }
   }, [nameText]);
 
+  // Looping role typewriter
   useEffect(() => {
     if (!nameDone) return;
-    const delay = setTimeout(() => {
-      if (roleText.length < HERO_ROLE.length) {
-        const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), ROLE_SPEED);
-        return () => clearTimeout(t);
-      } else {
-        setRoleDone(true);
-      }
-    }, roleText.length === 0 ? ROLE_DELAY : 0);
-    return () => clearTimeout(delay);
-  }, [nameDone, roleText]);
+    const currentRole = ROLES[roleIndex];
 
-  useEffect(() => {
-    const currentWord = typingWords[wordIndex];
     const timeout = setTimeout(
       () => {
-        if (!isDeleting) {
-          setText(currentWord.slice(0, text.length + 1));
-          if (text.length + 1 === currentWord.length) {
-            setTimeout(() => setIsDeleting(true), 1200);
+        if (!isRoleDeleting) {
+          if (roleText.length < currentRole.length) {
+            setRoleText(currentRole.slice(0, roleText.length + 1));
+          } else {
+            // Pause then start deleting
+            setTimeout(() => setIsRoleDeleting(true), PAUSE_BEFORE_DELETE);
           }
         } else {
-          setText(currentWord.slice(0, text.length - 1));
-          if (text.length === 0) {
-            setIsDeleting(false);
-            setWordIndex((prev) => (prev + 1) % typingWords.length);
+          if (roleText.length > 0) {
+            setRoleText(currentRole.slice(0, roleText.length - 1));
+          } else {
+            setIsRoleDeleting(false);
+            setRoleIndex((prev) => (prev + 1) % ROLES.length);
           }
         }
       },
-      isDeleting ? 50 : 100
+      isRoleDeleting ? DELETE_SPEED : (roleText.length === 0 && !isRoleDeleting ? PAUSE_BEFORE_TYPE : TYPE_SPEED)
     );
     return () => clearTimeout(timeout);
-  }, [text, isDeleting, wordIndex]);
+  }, [nameDone, roleText, isRoleDeleting, roleIndex]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -123,30 +122,12 @@ const Hero = () => {
               )}
             </h1>
 
-            <div className="text-muted-foreground text-base md:text-lg mb-4 min-h-[1.5em]">
-              {roleText.split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-              {nameDone && !roleDone && (
+            <div className="text-muted-foreground text-base md:text-lg mb-8 min-h-[1.5em]">
+              <span className="text-gradient font-semibold">{roleText}</span>
+              {nameDone && (
                 <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
               )}
             </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mb-8 flex items-center justify-center md:justify-start gap-2 h-8"
-            >
-              <span className="font-mono text-gradient text-lg font-semibold">{text}</span>
-              <span className="font-mono text-primary/60 animate-pulse text-lg">|</span>
-            </motion.div>
 
             <motion.p
               initial={{ opacity: 0 }}
