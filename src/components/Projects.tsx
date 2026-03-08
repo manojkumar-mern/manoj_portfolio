@@ -317,7 +317,7 @@ const Projects = () => {
                 key={project.title}
                 variants={v(staggerItem)}
                 onClick={() => setSelectedProject(project)}
-                className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-500 hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_12px_50px_hsl(187_78%_53%/0.15),0_0_30px_hsl(160_64%_43%/0.08)] gradient-border"
+                className="group relative premium-card glow-card overflow-hidden flex flex-col cursor-pointer"
               >
                 {/* Preview banner with zoom + overlay */}
                 <div className="relative h-36 overflow-hidden bg-muted/40">
