@@ -21,26 +21,24 @@ const Contact = () => {
   };
 
   const inputClass = (field: string) =>
-    `w-full px-4 py-3 rounded-xl bg-card/50 backdrop-blur-sm border text-foreground placeholder:text-muted-foreground focus:outline-none transition-all text-sm ${
+    `w-full px-4 py-3 rounded-lg bg-muted/50 border text-foreground placeholder:text-muted-foreground/60 focus:outline-none transition-all text-sm ${
       focused === field
-        ? "border-primary/50 ring-2 ring-primary/20 shadow-[0_0_15px_hsl(160_84%_50%/0.1)]"
-        : "border-border hover:border-border"
+        ? "border-primary/40 ring-1 ring-primary/15"
+        : "border-border"
     }`;
 
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h3 className="text-3xl md:text-4xl font-bold mb-2">
-            Contact
-          </h3>
-          <div className="h-1 w-16 rounded-full mx-auto mb-4" style={{ background: "var(--gradient-primary)" }} />
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">Contact</h2>
+          <div className="h-0.5 w-12 rounded-full bg-primary mx-auto mb-4" />
           <p className="text-muted-foreground max-w-lg mx-auto">
             I'm currently open to new opportunities. Let's build something great together.
           </p>
@@ -49,11 +47,11 @@ const Contact = () => {
         <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           <motion.form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-4 p-6 rounded-2xl bg-card/40 backdrop-blur-md border border-border"
+            transition={{ duration: 0.5 }}
+            className="space-y-4 p-6 rounded-xl bg-card border border-border"
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Name</label>
@@ -67,18 +65,18 @@ const Contact = () => {
               <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
               <textarea id="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
             </div>
-            <button type="submit" className="group inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-all w-full justify-center text-sm">
+            <button type="submit" className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:brightness-110 transition-all w-full justify-center">
               Send Message
-              <Send size={15} className="group-hover:translate-x-0.5 transition-transform" />
+              <Send size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </motion.form>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-4"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="space-y-3"
           >
             {[
               { icon: MapPin, label: "Tamil Nadu, India", href: undefined },
@@ -92,10 +90,10 @@ const Contact = () => {
                 <Wrapper
                   key={label}
                   {...(href ? { href, target: href.startsWith("http") ? "_blank" : undefined, rel: href.startsWith("http") ? "noopener noreferrer" : undefined } : {})}
-                  className="flex items-center gap-3 p-4 rounded-xl bg-card/50 backdrop-blur-sm border border-border hover:border-primary/30 transition-all group"
+                  className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/15 transition-all group"
                 >
-                  <div className="p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Icon size={16} className="text-primary" />
+                  <div className="p-2 rounded-lg bg-primary/8 group-hover:bg-primary/12 transition-colors">
+                    <Icon size={15} className="text-primary" />
                   </div>
                   <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
                 </Wrapper>

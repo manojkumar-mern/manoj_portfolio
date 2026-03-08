@@ -10,28 +10,26 @@ const highlights = [
 
 const About = () => {
   return (
-    <section id="about" className="py-24">
+    <section id="about" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-10"
+          transition={{ duration: 0.5 }}
+          className="mb-12"
         >
-          <h3 className="text-3xl md:text-4xl font-bold mb-2">
-            About Me
-          </h3>
-          <div className="h-1 w-16 rounded-full" style={{ background: "var(--gradient-primary)" }} />
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">About Me</h2>
+          <div className="h-0.5 w-12 rounded-full bg-primary" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-14 items-start">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-4"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="space-y-5"
           >
             <p className="text-muted-foreground text-lg leading-relaxed">
               I'm a <span className="text-foreground font-medium">Full Stack MERN Developer</span> with a passion for building
@@ -49,24 +47,23 @@ const About = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="grid grid-cols-2 gap-4"
           >
             {highlights.map((item) => (
-              <motion.div
+              <div
                 key={item.label}
-                whileHover={{ y: -4, boxShadow: "0 0 20px hsl(160 84% 50% / 0.1)" }}
-                className="p-4 rounded-xl bg-card/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all text-center"
+                className="p-5 rounded-xl bg-card border border-border hover:border-primary/20 transition-all duration-300 group"
               >
-                <div className="p-2.5 rounded-lg bg-primary/10 text-primary mx-auto w-fit mb-3">
-                  <item.icon size={20} />
+                <div className="p-2 rounded-lg bg-primary/8 text-primary w-fit mb-3 group-hover:bg-primary/12 transition-colors">
+                  <item.icon size={18} />
                 </div>
                 <p className="font-semibold text-foreground text-sm mb-1">{item.label}</p>
-                <p className="text-xs text-muted-foreground">{item.desc}</p>
-              </motion.div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
             ))}
           </motion.div>
         </div>
