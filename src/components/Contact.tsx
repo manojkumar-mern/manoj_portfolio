@@ -69,7 +69,8 @@ const Contact = () => {
 
         <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           <motion.form
-            onSubmit={handleSubmit}
+            ref={formRef}
+            onSubmit={sendEmail}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
