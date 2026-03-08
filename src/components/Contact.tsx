@@ -23,18 +23,20 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      await emailjs.send(
+      const result = await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         { name: form.name, email: form.email, message: form.message },
         EMAILJS_PUBLIC_KEY
       );
+      console.log("SUCCESS", result);
       toast({
         title: "Message sent successfully!",
         description: "I will get back to you soon.",
       });
       setForm({ name: "", email: "", message: "" });
-    } catch {
+    } catch (error) {
+      console.error("FAILED", error);
       toast({ title: "Failed to send message. Please try again.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
