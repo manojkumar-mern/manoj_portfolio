@@ -79,15 +79,15 @@ const Contact = () => {
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Name</label>
-              <input id="name" type="text" maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} placeholder="Your name" className={inputClass("name")} />
+              <input id="name" name="name" type="text" maxLength={100} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} onFocus={() => setFocused("name")} onBlur={() => setFocused(null)} placeholder="Your name" className={inputClass("name")} />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1.5">Email</label>
-              <input id="email" type="email" maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} placeholder="your@email.com" className={inputClass("email")} />
+              <input id="email" name="email" type="email" maxLength={255} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} onFocus={() => setFocused("email")} onBlur={() => setFocused(null)} placeholder="your@email.com" className={inputClass("email")} />
             </div>
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
-              <textarea id="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
+              <textarea id="message" name="message" rows={5} maxLength={1000} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} onFocus={() => setFocused("message")} onBlur={() => setFocused(null)} placeholder="Your message..." className={`${inputClass("message")} resize-none`} />
             </div>
             <button
               type="submit"
