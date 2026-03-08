@@ -224,7 +224,7 @@ const Projects = () => {
           whileInView="visible"
           viewport={viewportConfig}
           onClick={() => setSelectedProject(projects[0])}
-          className="group relative rounded-2xl bg-card border border-border overflow-hidden mb-16 cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_16px_60px_hsl(187_78%_53%/0.15),0_0_40px_hsl(160_64%_43%/0.08)] gradient-border"
+          className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-16 cursor-pointer"
         >
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left: Visual preview */}
@@ -317,7 +317,7 @@ const Projects = () => {
                 key={project.title}
                 variants={v(staggerItem)}
                 onClick={() => setSelectedProject(project)}
-                className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-500 hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_12px_50px_hsl(187_78%_53%/0.15),0_0_30px_hsl(160_64%_43%/0.08)] gradient-border"
+                className="group relative premium-card glow-card overflow-hidden flex flex-col cursor-pointer"
               >
                 {/* Preview banner with zoom + overlay */}
                 <div className="relative h-36 overflow-hidden bg-muted/40">
@@ -409,7 +409,7 @@ const Projects = () => {
                 <motion.div key={p.name} variants={v(staggerItemScale)}>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] transition-all duration-300 cursor-default">
+                      <span className="px-3.5 py-2 premium-card glow-card text-sm text-muted-foreground cursor-default">
                         {p.name}
                       </span>
                     </TooltipTrigger>

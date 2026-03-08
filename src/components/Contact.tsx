@@ -86,7 +86,7 @@ const Contact = () => {
             initial="hidden"
             whileInView="visible"
             viewport={viewportConfig}
-            className="space-y-4 p-6 rounded-xl bg-card border border-border"
+            className="space-y-4 p-6 premium-card"
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Name</label>
@@ -132,7 +132,7 @@ const Contact = () => {
                 target={href.startsWith("http") || href.startsWith("https") ? "_blank" : undefined}
                 rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                 variants={v(staggerItemRight)}
-                className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border hover:border-primary/25 hover:-translate-y-0.5 hover:shadow-[0_0_15px_hsl(187_78%_53%/0.08)] transition-all duration-300 group cursor-pointer"
+                className="flex items-center gap-3 p-4 premium-card glow-card group cursor-pointer"
               >
                 <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors">
                   <Icon size={15} className="text-primary" />

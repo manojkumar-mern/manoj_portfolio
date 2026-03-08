@@ -63,7 +63,7 @@ const Education = () => {
               {education.map((e) => (
                 <motion.div key={e.degree} variants={v(staggerItemLeft)} className="relative glow-card rounded-xl">
                   <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary" />
-                  <div className="p-5 rounded-xl bg-card border border-border hover:border-transparent hover:-translate-y-2.5 hover:scale-[1.03] hover:shadow-[0_12px_40px_hsl(187_78%_53%/0.12)] max-md:shadow-[0_4px_20px_hsl(187_78%_53%/0.08)] transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform">
+                  <div className="p-5 premium-card">
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <p className="font-medium text-foreground">{e.degree}</p>
                       <span className="text-xs font-mono text-primary bg-primary/8 px-2 py-1 rounded-md shrink-0">
@@ -103,7 +103,7 @@ const Education = () => {
                   <motion.div
                     key={c}
                     variants={v(staggerItemRight)}
-                    className="glow-card rounded-xl p-4 bg-card border border-border hover:border-transparent hover:-translate-y-2.5 hover:scale-[1.03] hover:shadow-[0_12px_40px_hsl(187_78%_53%/0.12)] max-md:shadow-[0_4px_20px_hsl(187_78%_53%/0.08)] transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform text-sm text-muted-foreground"
+                    className="glow-card p-4 premium-card text-sm text-muted-foreground"
                   >
                     {c}
                   </motion.div>
@@ -132,7 +132,7 @@ const Education = () => {
                   <motion.span
                     key={l}
                     variants={v(staggerItemScale)}
-                    className="glow-card px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-transparent hover:-translate-y-2 hover:scale-[1.03] hover:shadow-[0_8px_30px_hsl(187_78%_53%/0.1)] max-md:shadow-[0_4px_16px_hsl(187_78%_53%/0.06)] transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
+                    className="glow-card px-4 py-2 premium-card text-sm text-muted-foreground"
                   >
                     {l}
                   </motion.span>
