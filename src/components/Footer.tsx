@@ -24,7 +24,7 @@ const Footer = () => {
                 href={href}
                 target={href.startsWith("mailto") ? undefined : "_blank"}
                 rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/20 transition-all"
+                className="p-2 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:shadow-[0_0_14px_hsl(187_78%_53%/0.18)] hover:scale-110 active:scale-95 transition-all duration-300"
               >
                 <Icon size={15} />
               </a>

@@ -115,14 +115,14 @@ const Hero = () => {
             >
               <a
                 href="#projects"
-                className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-semibold text-sm hover:shadow-[0_0_20px_hsl(187_78%_53%/0.3)] hover:scale-[1.03] transition-all duration-300"
+                className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-semibold text-sm hover:shadow-[0_0_24px_hsl(187_78%_53%/0.35)] hover:scale-[1.04] active:scale-[0.98] transition-all duration-300"
               >
                 View Projects
                 <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform" />
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/40 hover:text-primary hover:shadow-[0_0_15px_hsl(187_78%_53%/0.1)] transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/40 hover:text-primary hover:shadow-[0_0_18px_hsl(187_78%_53%/0.12)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
               >
                 Contact Me
               </a>
@@ -130,7 +130,7 @@ const Hero = () => {
                 href="/resume.pdf#zoom=65"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary hover:border-primary/30 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
               >
                 <Eye size={14} />
                 View Resume
@@ -138,7 +138,7 @@ const Hero = () => {
               <a
                 href="/resume.pdf"
                 download="manoj_resume.pdf"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary hover:border-primary/30 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
               >
                 <Download size={14} />
                 Download
@@ -161,7 +161,7 @@ const Hero = () => {
                   href={href}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
                   rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_hsl(187_78%_53%/0.15)] transition-all duration-300"
+                  className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:shadow-[0_0_16px_hsl(187_78%_53%/0.2)] hover:scale-110 active:scale-95 transition-all duration-300"
                 >
                   <Icon size={17} />
                 </a>
