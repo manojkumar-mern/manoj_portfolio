@@ -134,7 +134,7 @@ const Hero = () => {
                 </motion.span>
               ))}
               {!nameDone && (
-                <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 animate-pulse align-middle" />
+                <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 align-middle" style={{ animation: "pulse 1s cubic-bezier(0.4,0,0.6,1) infinite" }} />
               )}
             </h1>
 
