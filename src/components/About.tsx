@@ -7,10 +7,32 @@ import {
 } from "@/lib/motion";
 
 const highlights = [
-  { icon: Code2, label: "Frontend", desc: "React, Tailwind, Modern UI/UX" },
-  { icon: Server, label: "Backend", desc: "Node.js, Express, REST APIs" },
-  { icon: Database, label: "Database", desc: "MongoDB, Mongoose ODM" },
-  { icon: Rocket, label: "Real-time", desc: "Socket.io, WebSockets" },
+  {
+    icon: Code2, label: "Frontend", desc: "React, Tailwind, Modern UI/UX",
+    logos: [
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", alt: "Tailwind" },
+    ],
+  },
+  {
+    icon: Server, label: "Backend", desc: "Node.js, Express, REST APIs",
+    logos: [
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", alt: "Express" },
+    ],
+  },
+  {
+    icon: Database, label: "Database", desc: "MongoDB, Mongoose ODM",
+    logos: [
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", alt: "MongoDB" },
+    ],
+  },
+  {
+    icon: Rocket, label: "Real-time", desc: "Socket.io, WebSockets",
+    logos: [
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg", alt: "Socket.io" },
+    ],
+  },
 ];
 
 const About = () => {
@@ -73,7 +95,12 @@ const About = () => {
                   <item.icon size={18} />
                 </div>
                 <p className="font-semibold text-foreground text-sm mb-1">{item.label}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-2">{item.desc}</p>
+                <div className="flex items-center gap-2 max-md:opacity-100 max-md:translate-y-0 max-md:scale-100 opacity-0 translate-y-1 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                  {item.logos.map((logo) => (
+                    <img key={logo.alt} src={logo.src} alt={logo.alt} className="w-5 h-5 object-contain" loading="lazy" />
+                  ))}
+                </div>
               </motion.div>
             ))}
           </motion.div>
