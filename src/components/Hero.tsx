@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail, Eye } from "lucide-react";
 import FloatingIcons from "./FloatingIcons";
@@ -6,10 +6,44 @@ import HeroProfileImage from "./HeroProfileImage";
 
 const typingWords = ["React", "Node.js", "Express", "MongoDB", "JavaScript"];
 
+const HERO_NAME = "Manoj Kumar";
+const HERO_ROLE = "MERN Stack Developer";
+const NAME_SPEED = 80;
+const ROLE_SPEED = 60;
+const ROLE_DELAY = 400;
+
 const Hero = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Typing animation for name & role
+  const [nameText, setNameText] = useState("");
+  const [roleText, setRoleText] = useState("");
+  const [nameDone, setNameDone] = useState(false);
+  const [roleDone, setRoleDone] = useState(false);
+
+  useEffect(() => {
+    if (nameText.length < HERO_NAME.length) {
+      const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
+      return () => clearTimeout(t);
+    } else {
+      setNameDone(true);
+    }
+  }, [nameText]);
+
+  useEffect(() => {
+    if (!nameDone) return;
+    const delay = setTimeout(() => {
+      if (roleText.length < HERO_ROLE.length) {
+        const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), ROLE_SPEED);
+        return () => clearTimeout(t);
+      } else {
+        setRoleDone(true);
+      }
+    }, roleText.length === 0 ? ROLE_DELAY : 0);
+    return () => clearTimeout(delay);
+  }, [nameDone, roleText]);
 
   useEffect(() => {
     const currentWord = typingWords[wordIndex];
