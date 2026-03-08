@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, Github, Linkedin, Send, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
