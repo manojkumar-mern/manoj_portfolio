@@ -120,4 +120,80 @@
   .gradient-border:hover::before {
     opacity: 1;
   }
+
+  /* Moving gradient glow card */
+  .glow-card {
+    position: relative;
+    overflow: visible;
+  }
+
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--glow-angle, 0deg),
+      transparent 0%,
+      hsl(187 78% 53% / 0.6) 10%,
+      hsl(160 64% 43% / 0.5) 20%,
+      transparent 40%,
+      transparent 60%,
+      hsl(160 64% 43% / 0.5) 80%,
+      hsl(187 78% 53% / 0.6) 90%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    animation: glow-spin 3s linear infinite;
+  }
+
+  .glow-card::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--glow-angle, 0deg),
+      transparent 0%,
+      hsl(187 78% 53% / 0.08) 10%,
+      hsl(160 64% 43% / 0.06) 20%,
+      transparent 40%,
+      transparent 60%,
+      hsl(160 64% 43% / 0.06) 80%,
+      hsl(187 78% 53% / 0.08) 90%,
+      transparent 100%
+    );
+    filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    animation: glow-spin 3s linear infinite;
+    z-index: -1;
+  }
+
+  .glow-card:hover::before,
+  .glow-card:hover::after {
+    opacity: 1;
+  }
+
+  @supports not (animation-timeline: auto) {
+    @property --glow-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+  }
+}
+
+@keyframes glow-spin {
+  to {
+    --glow-angle: 360deg;
+  }
 }
