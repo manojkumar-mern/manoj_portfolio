@@ -47,10 +47,10 @@ const Navbar = () => {
               <a
                 key={l.href + l.label}
                 href={l.href}
-                className={`relative text-sm px-3 py-2 rounded-md transition-all duration-300 group ${
+                className={`relative text-sm px-3 py-2 rounded-md transition-all duration-300 ease-in-out group hover:-translate-y-[3px] active:scale-[0.96] ${
                   isActive
                     ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:drop-shadow-[0_0_6px_hsl(187_78%_53%/0.4)]"
                 }`}
               >
                 {isActive && (
@@ -61,7 +61,7 @@ const Navbar = () => {
                   />
                 )}
                 <span className="relative z-10">{l.label}</span>
-                <span className="absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-gradient-accent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                <span className="absolute bottom-0.5 left-1/2 right-1/2 h-[2px] rounded-full bg-gradient-accent group-hover:left-3 group-hover:right-3 transition-all duration-300 ease-in-out" />
               </a>
             );
           })}
@@ -85,7 +85,7 @@ const Navbar = () => {
                   key={l.href + l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className={`block px-6 py-3 text-sm transition-colors ${
+                  className={`block px-6 py-3 text-sm transition-all duration-300 active:scale-[0.96] active:bg-primary/10 ${
                     isActive
                       ? "text-primary bg-primary/5 border-l-2 border-primary"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
