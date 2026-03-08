@@ -409,7 +409,7 @@ const Projects = () => {
                 <motion.div key={p.name} variants={v(staggerItemScale)}>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] transition-all duration-300 cursor-default">
+                      <span className="px-3.5 py-2 premium-card glow-card text-sm text-muted-foreground cursor-default">
                         {p.name}
                       </span>
                     </TooltipTrigger>
