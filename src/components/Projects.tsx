@@ -396,22 +396,22 @@ const Projects = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
         >
           <h3 className="text-sm font-medium text-foreground mb-4">Other Projects</h3>
           <TooltipProvider delayDuration={200}>
-            <div className="flex flex-wrap gap-2">
-              {miniProjects.map((p, i) => (
-                <motion.div
-                  key={p.name}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
-                >
+            <motion.div
+              variants={v(staggerContainer(0.06))}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="flex flex-wrap gap-2"
+            >
+              {miniProjects.map((p) => (
+                <motion.div key={p.name} variants={v(staggerItemScale)}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] transition-all duration-300 cursor-default">
@@ -432,7 +432,7 @@ const Projects = () => {
                   </Tooltip>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </TooltipProvider>
         </motion.div>
       </div>
