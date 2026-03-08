@@ -153,7 +153,7 @@ const HeroProfileImage = () => (
         <img
           src={profileImg}
           alt="Manoj Kumar D"
-          className="w-full h-full object-cover object-[50%_40%]"
+          className="w-full h-full object-cover object-[50%_45%]"
         />
       </motion.div>
     </div>
