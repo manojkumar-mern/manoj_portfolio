@@ -106,11 +106,6 @@ const About = () => {
           </motion.div>
         </div>
       </div>
-    </section>
-          </motion.div>
-        </div>
-      </div>
-    </section>
   );
 };
 
