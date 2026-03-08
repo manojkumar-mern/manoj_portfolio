@@ -80,7 +80,7 @@ const Hero = () => {
     }
   }, [nameDone, roleText]);
 
-  const skillText = useTypewriterLoop(SKILLS, roleDone, 100, 50);
+  const skillText = useTypewriterLoop(SKILLS, roleDone, 110, 55);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
