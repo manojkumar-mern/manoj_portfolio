@@ -107,18 +107,36 @@ const Hero = () => {
               Hello, I'm
             </motion.p>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
-              Manoj <span className="text-gradient">Kumar</span> D
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em]">
+              {nameText.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={i >= 6 ? "text-gradient" : ""}
+                >
+                  {char}
+                </motion.span>
+              ))}
+              {!nameDone && (
+                <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 animate-pulse align-middle" />
+              )}
             </h1>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-muted-foreground text-base md:text-lg mb-4"
-            >
-              MERN Stack Developer
-            </motion.p>
+            <div className="text-muted-foreground text-base md:text-lg mb-4 min-h-[1.5em]">
+              {roleText.split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+              {nameDone && !roleDone && (
+                <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
+              )}
+            </div>
 
             <motion.div
               initial={{ opacity: 0 }}
