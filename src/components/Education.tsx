@@ -103,7 +103,7 @@ const Education = () => {
                   <motion.div
                     key={c}
                     variants={v(staggerItemRight)}
-                    className="glow-card rounded-xl p-4 bg-card border border-border hover:border-transparent hover:-translate-y-2.5 hover:scale-[1.03] hover:shadow-[0_12px_40px_hsl(187_78%_53%/0.12)] max-md:shadow-[0_4px_20px_hsl(187_78%_53%/0.08)] transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform text-sm text-muted-foreground"
+                    className="glow-card p-4 premium-card text-sm text-muted-foreground"
                   >
                     {c}
                   </motion.div>
