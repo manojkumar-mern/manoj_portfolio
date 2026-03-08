@@ -24,11 +24,11 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await emailjs.send(
+      const response = await emailjs.sendForm(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        { name: form.name, email: form.email, message: form.message },
-        { publicKey: EMAILJS_PUBLIC_KEY }
+        formRef.current!,
+        EMAILJS_PUBLIC_KEY
       );
       console.log("EmailJS response status:", response.status);
       if (response.status === 200) {
