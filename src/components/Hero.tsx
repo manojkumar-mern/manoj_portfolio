@@ -83,7 +83,7 @@ const Hero = () => {
               transition={{ delay: 0.4 }}
               className="text-muted-foreground text-base md:text-lg mb-4"
             >
-              Full Stack Developer · MERN Stack Specialist
+              MERN Stack Developer
             </motion.p>
 
             <motion.div
@@ -141,7 +141,7 @@ const Hero = () => {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
               >
                 <Download size={14} />
-                Download
+                Resume Download
               </a>
             </motion.div>
 
@@ -149,7 +149,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
-              className="flex items-center justify-center md:justify-start gap-2"
+              className="flex items-center justify-center gap-2"
             >
               {[
                 { icon: Github, href: "https://github.com/manojkumar-mern" },
