@@ -310,16 +310,17 @@ const Projects = () => {
         </motion.div>
 
         {/* Other Projects */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-16">
-          {projects.slice(1).map((project, i) => {
-            const dir = cardDirections[i % cardDirections.length];
-            return (
+        <motion.div
+          variants={v(staggerContainer(0.12))}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="grid lg:grid-cols-2 gap-6 mb-16"
+        >
+          {projects.slice(1).map((project) => (
               <motion.div
                 key={project.title}
-                initial={{ opacity: 0, x: dir.x, y: dir.y }}
-                whileInView={{ opacity: 1, x: 0, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
+                variants={v(staggerItem)}
                 onClick={() => setSelectedProject(project)}
                 className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-500 hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_12px_50px_hsl(187_78%_53%/0.15),0_0_30px_hsl(160_64%_43%/0.08)] gradient-border"
               >
