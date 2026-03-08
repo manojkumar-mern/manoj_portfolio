@@ -149,7 +149,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
-              className="flex items-center justify-center md:justify-start gap-2"
+              className="flex items-center justify-center gap-2"
             >
               {[
                 { icon: Github, href: "https://github.com/manojkumar-mern" },
