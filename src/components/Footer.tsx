@@ -10,13 +10,13 @@ const Footer = () => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <motion.footer
-      variants={v(fadeUp)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewportConfig}
-      className="py-10 border-t border-border"
-    >
+    <footer className="py-10 border-t border-border">
+      <motion.div
+        variants={v(fadeUp)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+      >
       <div className="container">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-center sm:text-left">
