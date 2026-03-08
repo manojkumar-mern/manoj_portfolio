@@ -82,7 +82,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-border bg-background/95 backdrop-blur-md overflow-hidden"
+            className="md:hidden border-t border-border/30 bg-card/50 backdrop-blur-xl overflow-hidden rounded-b-2xl"
           >
             {links.map((l) => {
               const isActive = l.href === "#" ? !activeSection : activeSection === l.href.replace("#", "");
