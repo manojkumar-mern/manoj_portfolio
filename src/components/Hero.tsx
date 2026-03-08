@@ -49,7 +49,10 @@ const useTypewriterLoop = (words: string[], enabled: boolean, typeSpeed = TYPE_S
 const Hero = () => {
   const [nameText, setNameText] = useState("");
   const [nameDone, setNameDone] = useState(false);
+  const [roleText, setRoleText] = useState("");
+  const [roleDone, setRoleDone] = useState(false);
 
+  // Type name once
   useEffect(() => {
     if (nameText.length < HERO_NAME.length) {
       const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
@@ -59,8 +62,18 @@ const Hero = () => {
     }
   }, [nameText]);
 
-  const roleText = useTypewriterLoop([HERO_ROLE], nameDone);
-  const skillText = useTypewriterLoop(SKILLS, nameDone, 100, 50);
+  // Type role once after name finishes
+  useEffect(() => {
+    if (!nameDone) return;
+    if (roleText.length < HERO_ROLE.length) {
+      const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), TYPE_SPEED);
+      return () => clearTimeout(t);
+    } else {
+      setRoleDone(true);
+    }
+  }, [nameDone, roleText]);
+
+  const skillText = useTypewriterLoop(SKILLS, roleDone, 100, 50);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -81,7 +94,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex-1 text-center md:text-left"
+            className="flex-1 text-center"
           >
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -118,16 +131,16 @@ const Hero = () => {
               )}
             </h1>
 
-            <div className="text-muted-foreground text-base md:text-lg mb-4 min-h-[1.5em]">
+            <div className="text-base md:text-lg mb-4 min-h-[1.5em]">
               <span className="text-gradient font-semibold">{roleText}</span>
-              {nameDone && (
+              {nameDone && !roleDone && (
                 <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
               )}
             </div>
 
-            <div className="mb-8 flex items-center justify-center md:justify-start gap-2 h-8">
+            <div className="mb-8 flex items-center justify-center gap-2 h-8">
               <span className="font-mono text-gradient text-lg font-semibold">{skillText}</span>
-              {nameDone && (
+              {roleDone && (
                 <span className="font-mono text-primary/60 animate-pulse text-lg">|</span>
               )}
             </div>
@@ -136,7 +149,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="text-muted-foreground text-base max-w-lg mb-10 leading-relaxed"
+              className="text-muted-foreground text-base max-w-lg mx-auto mb-10 leading-relaxed"
             >
               I build high-performance, scalable web applications with modern
               technologies. Passionate about clean architecture, real-time systems,
