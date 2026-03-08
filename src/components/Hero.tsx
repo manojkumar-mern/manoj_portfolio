@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ExternalLink, Download, Github, Linkedin, Mail, Eye } from "lucide-react";
-import profileImg from "@/assets/profile.png";
 import FloatingIcons from "./FloatingIcons";
+import HeroProfileImage from "./HeroProfileImage";
 
 const typingWords = ["React", "Node.js", "Express", "MongoDB", "JavaScript"];
 
