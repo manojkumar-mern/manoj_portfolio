@@ -62,7 +62,7 @@ const GitHubActivity = () => {
             <motion.div
               key={stat.label}
               variants={v(staggerItem)}
-              className="p-5 rounded-xl bg-card border border-border hover:border-primary/15 transition-all text-center"
+              className="p-5 premium-card glow-card text-center"
             >
               <stat.icon size={22} className="text-primary mx-auto mb-3" />
               <p className="text-2xl font-bold text-foreground mb-1">{stat.value}</p>
