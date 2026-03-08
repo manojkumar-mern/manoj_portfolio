@@ -107,7 +107,7 @@ const Hero = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-muted/50 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-muted/50 mb-6 premium-card glow-card"
             >
               <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
               <span className="font-mono text-muted-foreground text-xs tracking-wider">Available for opportunities</span>
