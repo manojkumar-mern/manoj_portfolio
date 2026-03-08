@@ -10,7 +10,6 @@ const EMAILJS_PUBLIC_KEY = "UTntl434rmt4g3QM";
 
 const Contact = () => {
   const { toast } = useToast();
-  const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [focused, setFocused] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,10 +23,10 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      await emailjs.sendForm(
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        formRef.current!,
+        { name: form.name, email: form.email, message: form.message },
         EMAILJS_PUBLIC_KEY
       );
       toast({
@@ -35,7 +34,6 @@ const Contact = () => {
         description: "I will get back to you soon.",
       });
       setForm({ name: "", email: "", message: "" });
-      formRef.current?.reset();
     } catch {
       toast({ title: "Failed to send message. Please try again.", variant: "destructive" });
     } finally {
