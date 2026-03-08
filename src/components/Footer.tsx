@@ -57,8 +57,8 @@ const Footer = () => {
             © 2026 Manoj Kumar D
           </p>
         </div>
-      </div>
-    </motion.footer>
+      </motion.div>
+    </footer>
   );
 };
 
