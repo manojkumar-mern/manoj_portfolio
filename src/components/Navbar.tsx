@@ -35,19 +35,19 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-lg" : "bg-transparent"}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-md border-b border-border/50" : "bg-transparent"}`}>
       <div className="container flex items-center justify-between h-16">
-        <a href="#" className="font-mono text-lg font-bold text-gradient">
+        <a href="#" className="font-mono text-base font-bold text-gradient">
           {"<MK />"}
         </a>
-        <div className="hidden md:flex items-center gap-0.5">
+        <div className="hidden md:flex items-center gap-1">
           {links.map((l) => {
             const isActive = l.href === "#" ? !activeSection : activeSection === l.href.replace("#", "");
             return (
               <a
                 key={l.href + l.label}
                 href={l.href}
-                className={`relative text-sm px-3 py-1.5 rounded-lg transition-all font-medium ${
+                className={`relative text-sm px-3 py-1.5 rounded-md transition-all ${
                   isActive
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
@@ -56,7 +56,7 @@ const Navbar = () => {
                 {isActive && (
                   <motion.div
                     layoutId="activeNav"
-                    className="absolute inset-0 bg-primary/10 rounded-lg border border-primary/20"
+                    className="absolute inset-0 bg-primary/8 rounded-md"
                     transition={{ type: "spring", duration: 0.4 }}
                   />
                 )}
@@ -66,7 +66,7 @@ const Navbar = () => {
           })}
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden text-foreground p-2">
-          {open ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
       <AnimatePresence>
@@ -75,7 +75,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-border bg-background/95 backdrop-blur-lg overflow-hidden"
+            className="md:hidden border-t border-border bg-background/95 backdrop-blur-md overflow-hidden"
           >
             {links.map((l) => {
               const isActive = l.href === "#" ? !activeSection : activeSection === l.href.replace("#", "");
@@ -87,7 +87,7 @@ const Navbar = () => {
                   className={`block px-6 py-3 text-sm transition-colors ${
                     isActive
                       ? "text-primary bg-primary/5 border-l-2 border-primary"
-                      : "text-muted-foreground hover:text-primary hover:bg-secondary/30"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
                   }`}
                 >
                   {l.label}
