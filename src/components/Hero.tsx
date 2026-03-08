@@ -176,16 +176,26 @@ const Hero = () => {
             className="flex-shrink-0"
           >
             <div className="relative group flex items-center justify-center">
-              {/* Soft pulsing outer glow */}
+              {/* Layer 4: Outer glow aura with pulse */}
               <motion.div
-                className="absolute -inset-8 rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(circle, hsl(187 78% 53% / 0.07) 0%, hsl(160 64% 43% / 0.03) 50%, transparent 70%)" }}
-                animate={{ scale: [1, 1.06, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -inset-12 rounded-full pointer-events-none"
+                style={{ background: "radial-gradient(circle, hsl(187 78% 53% / 0.08) 0%, hsl(160 64% 43% / 0.04) 40%, transparent 65%)" }}
+                animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.9, 0.5] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               />
-              {/* Thin gradient ring */}
-              <div className="absolute -inset-[1.5px] rounded-full bg-gradient-accent opacity-50" />
-              {/* Inner image container */}
+              {/* Layer 3: Rotating gradient ring */}
+              <motion.div
+                className="absolute -inset-4 rounded-full pointer-events-none"
+                style={{
+                  background: "conic-gradient(from 0deg, hsl(187 78% 53% / 0.25), hsl(160 64% 43% / 0.2), transparent, hsl(187 78% 53% / 0.15), hsl(160 64% 43% / 0.25))",
+                  filter: "blur(3px)",
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              />
+              {/* Layer 2: Thin gradient accent ring */}
+              <div className="absolute -inset-[1.5px] rounded-full bg-gradient-accent opacity-40" />
+              {/* Layer 1: Profile image */}
               <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden bg-card">
                 <img
                   src={profileImg}
