@@ -214,8 +214,102 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-6 mb-16">
-          {projects.map((project, i) => {
+        {/* Featured Project */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          onClick={() => setSelectedProject(projects[0])}
+          className="group relative rounded-2xl bg-card border border-border overflow-hidden mb-16 cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_16px_60px_hsl(187_78%_53%/0.15),0_0_40px_hsl(160_64%_43%/0.08)] gradient-border"
+        >
+          <div className="grid md:grid-cols-2 gap-0">
+            {/* Left: Visual preview */}
+            <div className="relative h-64 md:h-auto min-h-[280px] overflow-hidden bg-muted/30">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-primary/5 to-secondary/10 transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-7xl md:text-8xl font-black text-foreground/[0.03] tracking-[0.2em] select-none transition-transform duration-700 group-hover:scale-105">
+                  {projects[0].title.split(" ").map(w => w[0]).join("")}
+                </span>
+              </div>
+              {/* Decorative floating elements */}
+              <div className="absolute top-6 left-6 px-3 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[10px] font-semibold tracking-wider uppercase backdrop-blur-sm">
+                ★ Featured Project
+              </div>
+              {/* Hover overlay with buttons */}
+              <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                {projects[0].links && (
+                  <>
+                    <a
+                      href={projects[0].links.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-semibold text-sm hover:shadow-[0_0_24px_hsl(187_78%_53%/0.35)] hover:scale-105 active:scale-95 transition-all duration-200"
+                    >
+                      <ExternalLink size={14} /> Live Demo
+                    </a>
+                    <a
+                      href={projects[0].links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border/80 bg-card/90 backdrop-blur-sm text-foreground font-semibold text-sm hover:border-primary/40 hover:scale-105 active:scale-95 transition-all duration-200"
+                    >
+                      <Github size={14} /> GitHub
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Right: Details */}
+            <div className="p-8 md:p-10 flex flex-col justify-center">
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
+                {projects[0].title}
+              </h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                {projects[0].overview}
+              </p>
+
+              <div className="space-y-2 mb-6">
+                {projects[0].features.slice(0, 4).map((f, fi) => (
+                  <motion.div
+                    key={f}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.2 + fi * 0.08 }}
+                    className="flex items-center gap-2 text-sm text-muted-foreground"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                    {f}
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {projects[0].tech.map((t, ti) => (
+                  <motion.span
+                    key={t}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: 0.3 + ti * 0.05 }}
+                    className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono group-hover:border-primary/20 group-hover:text-foreground transition-all duration-300"
+                  >
+                    {t}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Other Projects */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-16">
+          {projects.slice(1).map((project, i) => {
             const dir = cardDirections[i % cardDirections.length];
             return (
               <motion.div
