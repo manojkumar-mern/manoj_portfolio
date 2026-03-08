@@ -141,7 +141,7 @@ const Hero = () => {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary hover:border-primary/30 hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
               >
                 <Download size={14} />
-                Download
+                Resume Download
               </a>
             </motion.div>
 
