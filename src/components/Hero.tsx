@@ -83,7 +83,7 @@ const Hero = () => {
               transition={{ delay: 0.4 }}
               className="text-muted-foreground text-base md:text-lg mb-4"
             >
-              Full Stack Developer · MERN Stack Specialist
+              MERN Stack Developer
             </motion.p>
 
             <motion.div
