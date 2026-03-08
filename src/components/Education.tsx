@@ -20,10 +20,10 @@ const Education = () => {
     <section id="education" className="py-28 bg-muted/30">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Education</h2>
@@ -32,18 +32,24 @@ const Education = () => {
 
         <div className="grid lg:grid-cols-3 gap-14">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-2 mb-8"
+            >
               <GraduationCap size={18} className="text-primary" />
               <h3 className="font-medium text-foreground">Academic Background</h3>
-            </div>
+            </motion.div>
             <div className="relative pl-8 border-l border-border space-y-6">
               {education.map((e, i) => (
                 <motion.div
                   key={e.degree}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
                   className="relative"
                 >
                   <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary" />
@@ -67,10 +73,10 @@ const Education = () => {
 
           <div className="space-y-8">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex items-center gap-2 mb-4">
                 <Award size={18} className="text-primary" />
@@ -80,10 +86,10 @@ const Education = () => {
                 {certifications.map((c, i) => (
                   <motion.div
                     key={c}
-                    initial={{ opacity: 0, x: 15 }}
+                    initial={{ opacity: 0, x: 30 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: i * 0.08 }}
+                    viewport={{ once: true, margin: "-20px" }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
                     className="p-4 rounded-xl bg-card border border-border hover:border-primary/15 transition-all text-sm text-muted-foreground"
                   >
                     {c}
@@ -93,23 +99,27 @@ const Education = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
             >
               <div className="flex items-center gap-2 mb-4">
                 <Languages size={18} className="text-primary" />
                 <h3 className="font-medium text-foreground">Languages</h3>
               </div>
               <div className="flex gap-2">
-                {languages.map((l) => (
-                  <span
+                {languages.map((l, i) => (
+                  <motion.span
                     key={l}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.3 + i * 0.08 }}
                     className="px-4 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/15 transition-all"
                   >
                     {l}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>

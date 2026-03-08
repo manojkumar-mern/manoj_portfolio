@@ -188,6 +188,12 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
   </motion.div>
 );
 
+const cardDirections = [
+  { x: -40, y: 20 },
+  { x: 0, y: 40 },
+  { x: 40, y: 20 },
+];
+
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -195,10 +201,10 @@ const Projects = () => {
     <section id="projects" className="py-28">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Projects</h2>
@@ -209,74 +215,85 @@ const Projects = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-6 mb-16">
-          {projects.map((project, i) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              onClick={() => setSelectedProject(project)}
-              className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_8px_40px_hsl(187_78%_53%/0.12),0_0_20px_hsl(160_64%_43%/0.06)] gradient-border"
-            >
-              <div className="p-6 flex flex-col flex-1">
-                <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">
-                  {project.description}
-                </p>
+          {projects.map((project, i) => {
+            const dir = cardDirections[i % cardDirections.length];
+            return (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, x: dir.x, y: dir.y }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
+                onClick={() => setSelectedProject(project)}
+                className="group relative rounded-xl bg-card border border-border overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[0_8px_40px_hsl(187_78%_53%/0.12),0_0_20px_hsl(160_64%_43%/0.06)] gradient-border"
+              >
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">
+                    {project.description}
+                  </p>
 
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tech.slice(0, 4).map((t, idx) => (
-                    <span key={t} className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono border border-border group-hover:border-primary/15 group-hover:text-foreground transition-all duration-300" style={{ transitionDelay: `${idx * 50}ms` }}>
-                      {t}
-                    </span>
-                  ))}
-                  {project.tech.length > 4 && (
-                    <span className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono group-hover:text-foreground transition-all duration-300">
-                      +{project.tech.length - 4}
-                    </span>
-                  )}
-                </div>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.tech.slice(0, 4).map((t, idx) => (
+                      <span key={t} className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono border border-border group-hover:border-primary/15 group-hover:text-foreground transition-all duration-300" style={{ transitionDelay: `${idx * 50}ms` }}>
+                        {t}
+                      </span>
+                    ))}
+                    {project.tech.length > 4 && (
+                      <span className="text-[11px] px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono group-hover:text-foreground transition-all duration-300">
+                        +{project.tech.length - 4}
+                      </span>
+                    )}
+                  </div>
 
-                <div className="pt-3 border-t border-border text-xs text-muted-foreground group-hover:text-primary transition-colors flex items-center gap-1">
-                  <span>View details</span>
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  <div className="pt-3 border-t border-border text-xs text-muted-foreground group-hover:text-primary transition-colors flex items-center gap-1">
+                    <span>View details</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <h3 className="text-sm font-medium text-foreground mb-4">Other Projects</h3>
           <TooltipProvider delayDuration={200}>
             <div className="flex flex-wrap gap-2">
-              {miniProjects.map((p) => (
-                <Tooltip key={p.name}>
-                  <TooltipTrigger asChild>
-                    <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] transition-all duration-300 cursor-default">
-                      {p.name}
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="max-w-xs bg-card border-border p-3 rounded-xl">
-                    <p className="text-sm font-medium text-foreground mb-1">{p.name}</p>
-                    <p className="text-xs text-muted-foreground mb-2">{p.description}</p>
-                    <div className="flex flex-wrap gap-1">
-                      {p.tech.map((t) => (
-                        <span key={t} className="text-[10px] px-2 py-0.5 rounded-md bg-muted text-muted-foreground font-mono border border-border">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
+              {miniProjects.map((p, i) => (
+                <motion.div
+                  key={p.name}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
+                >
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="px-3.5 py-2 rounded-lg bg-card border border-border text-sm text-muted-foreground hover:border-primary/20 hover:text-foreground hover:shadow-[0_0_12px_hsl(187_78%_53%/0.08)] transition-all duration-300 cursor-default">
+                        {p.name}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-xs bg-card border-border p-3 rounded-xl">
+                      <p className="text-sm font-medium text-foreground mb-1">{p.name}</p>
+                      <p className="text-xs text-muted-foreground mb-2">{p.description}</p>
+                      <div className="flex flex-wrap gap-1">
+                        {p.tech.map((t) => (
+                          <span key={t} className="text-[10px] px-2 py-0.5 rounded-md bg-muted text-muted-foreground font-mono border border-border">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </motion.div>
               ))}
             </div>
           </TooltipProvider>
