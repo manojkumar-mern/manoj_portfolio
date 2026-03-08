@@ -5,30 +5,51 @@ import FloatingIcons from "./FloatingIcons";
 import HeroProfileImage from "./HeroProfileImage";
 
 const HERO_NAME = "Manoj Kumar";
-const ROLES = [
-  "MERN Stack Developer",
-  "React Developer",
-  "Node.js Developer",
-  "MongoDB Developer",
-  "Express.js Developer",
-];
+const HERO_ROLE = "MERN Stack Developer";
+const SKILLS = ["JavaScript", "React", "Node", "Express", "MongoDB"];
 const NAME_SPEED = 80;
 const TYPE_SPEED = 70;
 const DELETE_SPEED = 40;
 const PAUSE_BEFORE_DELETE = 1500;
 const PAUSE_BEFORE_TYPE = 400;
 
+const useTypewriterLoop = (words: string[], enabled: boolean, typeSpeed = TYPE_SPEED, deleteSpeed = DELETE_SPEED) => {
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const current = words[index];
+    const timeout = setTimeout(
+      () => {
+        if (!isDeleting) {
+          if (text.length < current.length) {
+            setText(current.slice(0, text.length + 1));
+          } else {
+            setTimeout(() => setIsDeleting(true), PAUSE_BEFORE_DELETE);
+          }
+        } else {
+          if (text.length > 0) {
+            setText(current.slice(0, text.length - 1));
+          } else {
+            setIsDeleting(false);
+            setIndex((prev) => (prev + 1) % words.length);
+          }
+        }
+      },
+      isDeleting ? deleteSpeed : (text.length === 0 && !isDeleting ? PAUSE_BEFORE_TYPE : typeSpeed)
+    );
+    return () => clearTimeout(timeout);
+  }, [enabled, text, isDeleting, index, words, typeSpeed, deleteSpeed]);
+
+  return text;
+};
+
 const Hero = () => {
-  // Name types once and stays
   const [nameText, setNameText] = useState("");
   const [nameDone, setNameDone] = useState(false);
 
-  // Looping role typing
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [roleText, setRoleText] = useState("");
-  const [isRoleDeleting, setIsRoleDeleting] = useState(false);
-
-  // Type name once
   useEffect(() => {
     if (nameText.length < HERO_NAME.length) {
       const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
@@ -38,33 +59,8 @@ const Hero = () => {
     }
   }, [nameText]);
 
-  // Looping role typewriter
-  useEffect(() => {
-    if (!nameDone) return;
-    const currentRole = ROLES[roleIndex];
-
-    const timeout = setTimeout(
-      () => {
-        if (!isRoleDeleting) {
-          if (roleText.length < currentRole.length) {
-            setRoleText(currentRole.slice(0, roleText.length + 1));
-          } else {
-            // Pause then start deleting
-            setTimeout(() => setIsRoleDeleting(true), PAUSE_BEFORE_DELETE);
-          }
-        } else {
-          if (roleText.length > 0) {
-            setRoleText(currentRole.slice(0, roleText.length - 1));
-          } else {
-            setIsRoleDeleting(false);
-            setRoleIndex((prev) => (prev + 1) % ROLES.length);
-          }
-        }
-      },
-      isRoleDeleting ? DELETE_SPEED : (roleText.length === 0 && !isRoleDeleting ? PAUSE_BEFORE_TYPE : TYPE_SPEED)
-    );
-    return () => clearTimeout(timeout);
-  }, [nameDone, roleText, isRoleDeleting, roleIndex]);
+  const roleText = useTypewriterLoop([HERO_ROLE], nameDone);
+  const skillText = useTypewriterLoop(SKILLS, nameDone, 100, 50);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -122,10 +118,17 @@ const Hero = () => {
               )}
             </h1>
 
-            <div className="text-muted-foreground text-base md:text-lg mb-8 min-h-[1.5em]">
+            <div className="text-muted-foreground text-base md:text-lg mb-4 min-h-[1.5em]">
               <span className="text-gradient font-semibold">{roleText}</span>
               {nameDone && (
                 <span className="inline-block w-[2px] h-[0.8em] bg-primary/60 ml-0.5 animate-pulse align-middle" />
+              )}
+            </div>
+
+            <div className="mb-8 flex items-center justify-center md:justify-start gap-2 h-8">
+              <span className="font-mono text-gradient text-lg font-semibold">{skillText}</span>
+              {nameDone && (
+                <span className="font-mono text-primary/60 animate-pulse text-lg">|</span>
               )}
             </div>
 
