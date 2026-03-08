@@ -86,7 +86,7 @@ const Contact = () => {
             initial="hidden"
             whileInView="visible"
             viewport={viewportConfig}
-            className="space-y-4 p-6 rounded-xl bg-card border border-border"
+            className="space-y-4 p-6 premium-card"
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">Name</label>
