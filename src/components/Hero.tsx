@@ -49,7 +49,10 @@ const useTypewriterLoop = (words: string[], enabled: boolean, typeSpeed = TYPE_S
 const Hero = () => {
   const [nameText, setNameText] = useState("");
   const [nameDone, setNameDone] = useState(false);
+  const [roleText, setRoleText] = useState("");
+  const [roleDone, setRoleDone] = useState(false);
 
+  // Type name once
   useEffect(() => {
     if (nameText.length < HERO_NAME.length) {
       const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
@@ -59,8 +62,18 @@ const Hero = () => {
     }
   }, [nameText]);
 
-  const roleText = useTypewriterLoop([HERO_ROLE], nameDone);
-  const skillText = useTypewriterLoop(SKILLS, nameDone, 100, 50);
+  // Type role once after name finishes
+  useEffect(() => {
+    if (!nameDone) return;
+    if (roleText.length < HERO_ROLE.length) {
+      const t = setTimeout(() => setRoleText(HERO_ROLE.slice(0, roleText.length + 1)), TYPE_SPEED);
+      return () => clearTimeout(t);
+    } else {
+      setRoleDone(true);
+    }
+  }, [nameDone, roleText]);
+
+  const skillText = useTypewriterLoop(SKILLS, roleDone, 100, 50);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
