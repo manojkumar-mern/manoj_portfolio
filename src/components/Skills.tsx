@@ -59,7 +59,7 @@ const Skills = () => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-g-muted/20 px-4 md:px-0">
+    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-g-muted/20 px-4 md:px-g-muted/20 px-4 md:px-0">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}
@@ -80,7 +80,7 @@ const Skills = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="grid sm:grid-cols8 md:gap--2 lg:grid-cols-3 gap-10"
+          classN8 md:gap-ame="grid sm:grid-cols8 md:gap--2 lg:grid-cols-3 gap-10"
         >
           {skillGroups.map((group, i) => (
             <motion.div key={group.title} variants={v(groupVariants[i % groupVariants.length])}>
@@ -92,7 +92,7 @@ const Skills = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="flex flex-wrap gap-2"
+                 max-sm:justify-centerclassName="flex flex-wrap gap-2"
               >
                 {group.skills.map((skill) => (
                   <motion.div
