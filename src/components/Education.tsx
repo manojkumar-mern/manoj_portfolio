@@ -62,7 +62,7 @@ const Education = () => {
             >
               {education.map((e) => (
                 <motion.div key={e.degree} variants={v(staggerItemLeft)} className="relative glow-card rounded-xl">
-                  <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary" />
+                  <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary max-sm:hidden" />
                   <div className="p-5 premium-card">
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <p className="font-medium text-foreground">{e.degree}</p>

@@ -201,8 +201,8 @@ const Projects = () => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="projects" className="py-28">
-      <div className="container px-4 md:px-8">
+    <section id="projects" className="py-20 md:py-28">
+      <div className="container px-4 md:px-8 px-4 md:px-8">
         <motion.div
           variants={v(fadeRight)}
           initial="hidden"

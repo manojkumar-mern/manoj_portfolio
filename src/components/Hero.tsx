@@ -123,7 +123,7 @@ const Hero = () => {
             </motion.p>
 
             <motion.h1
-              className="group/name text-5xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em] relative cursor-default"
+              className="group/name text-4xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em] relative cursor-default"
               animate={nameDone ? {
                 textShadow: [
                   "0 0 8px hsl(187 78% 53% / 0), 0 0 20px hsl(187 78% 53% / 0)",
