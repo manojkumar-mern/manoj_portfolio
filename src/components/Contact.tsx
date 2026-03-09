@@ -55,10 +55,9 @@ const Contact = () => {
   };
 
   const inputClass = (field: string) =>
-    `w-full px-4 py-3 rounded-lg bg-muted/50 border text-foreground placeholder:text-muted-foreground/60 focus:outline-none transition-all text-sm ${
-      focused === field
-        ? "border-primary/40 ring-1 ring-primary/15"
-        : "border-border"
+    `w-full px-4 py-3 rounded-lg bg-muted/50 border text-foreground placeholder:text-muted-foreground/60 focus:outline-none transition-all text-sm ${focused === field
+      ? "border-primary/40 ring-1 ring-primary/15"
+      : "border-border"
     }`;
 
   return (
