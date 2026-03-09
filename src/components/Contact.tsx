@@ -123,7 +123,7 @@ const Contact = () => {
               { icon: Phone, label: "+91 9159843416", href: "tel:+919159843416" },
               { icon: Mail, label: "vijaymanoj0000@gmail.com", href: "mailto:vijaymanoj0000@gmail.com" },
               { icon: Github, label: "github.com/manojkumar-mern", href: "https://github.com/manojkumar-mern" },
-              { icon: Linkedin, label: "LinkedIn Profile", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
+              { icon: Linkedin, label: "linkedin.com/in/manoj-kumar-d-513253293", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
             ].map(({ icon: Icon, label, href }) => (
               <motion.a
                 key={label}
