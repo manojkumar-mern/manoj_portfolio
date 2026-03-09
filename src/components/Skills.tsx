@@ -59,7 +59,7 @@ const Skills = () => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-g-muted/20 px-4 md:px-g-muted/20 px-4 md:px-g-muted/20 px-4 md:px-0">
+    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-0 overflow-x-hidden">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}
@@ -80,11 +80,11 @@ const Skills = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
         >
           {skillGroups.map((group, i) => (
-            <motion.div key={group.title} variants={v(groupVariants[i % groupVariants.length])}>
-              <h3 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-4 max-sm:text-center">
+            <motion.div key={group.title} variants={v(groupVariants[i % groupVariants.length])} className="max-sm:text-center">
+              <h3 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-4">
                 {group.title}
               </h3>
               <motion.div
@@ -92,7 +92,7 @@ const Skills = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="flex flex-wrap gap-2 max-sm:justify-center"
+                className="flex flex-wrap gap-2.5 justify-center sm:justify-start"
               >
                 {group.skills.map((skill) => (
                   <motion.div
