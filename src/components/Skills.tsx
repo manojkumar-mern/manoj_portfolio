@@ -79,20 +79,20 @@ const Skills = () => {
           variants={v(staggerContainer(0.12))}
           initial="hidden"
           whileInView="visible"
-          viewport={viewportCo8 md:gap-nfig}
-          classN8 md:gap-ame="grid sm:grid-cols8 md:gap--2 lg:grid-cols-3 gap-10"
+          viewport={viewportConfig}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
         >
           {skillGroups.map((group, i) => (
             <motion.div key={group.title} variants={v(groupVariants[i % groupVariants.length])}>
-              <h3 className="text-xs font-semibold text-muted-foreground max-sm:text-center tracking-widest uppercase mb-4">
+              <h3 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-4 max-sm:text-center">
                 {group.title}
               </h3>
               <motion.div
                 variants={v(staggerContainer(0.06))}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ max-sm:justify-center once: true }}
-                 max-sm:justify-centerclassName="flex flex-wrap gap-2"
+                viewport={{ once: true }}
+                className="flex flex-wrap gap-2 max-sm:justify-center"
               >
                 {group.skills.map((skill) => (
                   <motion.div
