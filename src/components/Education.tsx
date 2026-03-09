@@ -27,7 +27,7 @@ const Education = () => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="education" className="py-28 bg-muted/30">
+    <section id="education" className="py-20 md:py-28 bg-muted/30 px-4 md:px-g-muted/30 px-4 md:px-0">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}
@@ -58,11 +58,11 @@ const Education = () => {
               initial="hidden"
               whileInView="visible"
               viewport={viewportConfig}
-              className="relative pl-8 border-l border-border space-y-6"
+            max-sm:pl-0 max-sm:border-l-0   className="relative pl-8 border-l border-border space-y-6"
             >
               {education.map((e) => (
                 <motion.div key={e.degree} variants={v(staggerItemLeft)} className="relative glow-card rounded-xl">
-                  <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary" />
+                  <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary max-sm:hidden" />
                   <div className="p-5 premium-card">
                     <div className="flex items-start justify-between gap-4 mb-2">
                       <p className="font-medium text-foreground">{e.degree}</p>

@@ -42,7 +42,7 @@ const About = () => {
   const v = (variant: typeof fadeLeft) => reduced ? noMotion : variant;
 
   return (
-    <section id="about" className="py-28">
+    <section id="about" className="py-20 md:py-28 px-4 md:px-0">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}

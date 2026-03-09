@@ -13,23 +13,26 @@ export const prefersReducedMotion = (): boolean => {
 };
 
 // Reusable animation variants
+// Detect mobile for reduced slide distances
+const isMobile = (): boolean => typeof window !== "undefined" && window.innerWidth < 768;
+
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: isMobile() ? 20 : 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
 };
 
 export const fadeDown: Variants = {
-  hidden: { opacity: 0, y: -30 },
+  hidden: { opacity: 0, y: isMobile() ? -15 : -30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
 };
 
 export const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -50 },
+  hidden: { opacity: 0, x: isMobile() ? -20 : -50 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease } },
 };
 
 export const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 50 },
+  hidden: { opacity: 0, x: isMobile() ? 20 : 50 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease } },
 };
 
@@ -57,17 +60,17 @@ export const staggerContainer = (stagger = 0.1): Variants => ({
 
 // For items inside a stagger container
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 25 },
+  hidden: { opacity: 0, y: isMobile() ? 12 : 25 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
 };
 
 export const staggerItemLeft: Variants = {
-  hidden: { opacity: 0, x: -30 },
+  hidden: { opacity: 0, x: isMobile() ? -15 : -30 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease } },
 };
 
 export const staggerItemRight: Variants = {
-  hidden: { opacity: 0, x: 30 },
+  hidden: { opacity: 0, x: isMobile() ? 15 : 30 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease } },
 };
 
