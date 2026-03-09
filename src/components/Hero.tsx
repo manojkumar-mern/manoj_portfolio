@@ -83,7 +83,7 @@ const Hero = () => {
   const skillText = useTypewriterLoop(SKILLS, roleDone, 110, 55);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-16 px-4 md:px-0">
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
         backgroundSize: "60px 60px",
