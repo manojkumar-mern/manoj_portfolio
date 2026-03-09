@@ -37,7 +37,7 @@ const projects: Project[] = [
     tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
     challenges: "Managing WebSocket connections at scale, handling disconnections gracefully, and ensuring message ordering with concurrent users.",
     learned: "Deep understanding of WebSocket lifecycle, real-time state synchronization, and building scalable event-driven architectures.",
-    links: { demo: "https://chat-app-kappa-ashy.vercel.app/", github: "https://github.com/manojkumar-mern/chat-app", api: "https://chat-app-y0ic.onrender.com/" },
+    links: { demo: "https://chat-app-manoj.vercel.app/", github: "https://github.com/manojkumar-mern/chat-app", api: "https://chat-app-y0ic.onrender.com/" },
   },
   {
     title: "Social Media Feed Application",
