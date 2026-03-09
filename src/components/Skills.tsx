@@ -59,7 +59,7 @@ const Skills = () => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-g-muted/20 px-4 md:px-g-muted/20 px-4 md:px-g-muted/20 px-4 md:px-0">
+    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-0 overflow-x-hidden">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}
