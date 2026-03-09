@@ -202,7 +202,7 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-28">
-      <div className="container">
+      <div className="container px-4 md:px-8">
         <motion.div
           variants={v(fadeRight)}
           initial="hidden"
