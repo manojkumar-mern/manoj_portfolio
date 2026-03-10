@@ -95,8 +95,8 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
       initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.97, opacity: 0 }}
-      transition={{ type: "spring", duration: 0.4 }}
-      className="relative w-full max-w-2xl max-h-[85vh] rounded-2xl bg-card border border-border card-shadow"
+      transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
+      className="relative w-full max-w-2xl max-h-[85vh] rounded-2xl bg-card border border-border card-shadow transform-gpu will-change-transform"
       onClick={(e) => e.stopPropagation()}
     >
       <button
