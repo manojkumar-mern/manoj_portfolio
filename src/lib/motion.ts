@@ -1,7 +1,7 @@
 import type { Variants } from "framer-motion";
 
 // Shared easing curve for buttery-smooth motion
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.22, 0.61, 0.36, 1];
 
 // Standard viewport trigger config
 export const viewportConfig = { once: true, margin: "-80px" as const };

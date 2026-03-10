@@ -317,7 +317,7 @@ const Projects = () => {
                 key={project.title}
                 variants={v(staggerItem)}
                 onClick={() => setSelectedProject(project)}
-                className="group relative premium-card glow-card overflow-hidden flex flex-col cursor-pointer"
+                className="group relative premium-card glow-card overflow-hidden flex flex-col cursor-pointer transform-gpu will-change-transform"
               >
                 {/* Preview banner with zoom + overlay */}
                 <div className="relative h-36 overflow-hidden bg-muted/40">
