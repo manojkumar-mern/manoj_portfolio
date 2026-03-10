@@ -16,17 +16,17 @@ const FloatingIcons = () => (
         key={i}
         src={icon.src}
         alt=""
-        className="absolute w-8 h-8 opacity-[0.06]"
+        className="absolute w-8 h-8 opacity-[0.06] transform-gpu will-change-transform"
         style={{ left: icon.x, top: icon.y }}
         animate={{
-          y: [0, -20, 0],
-          rotate: [0, 10, -10, 0],
+          y: [0, -15, 0],
+          opacity: [0.04, 0.08, 0.04],
         }}
         transition={{
-          duration: 6 + i * 0.8,
+          duration: 12 + i * 1.5,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: i * 0.5,
+          delay: i * 0.8,
         }}
         loading="lazy"
       />

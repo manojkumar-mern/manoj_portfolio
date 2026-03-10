@@ -63,12 +63,19 @@
   }
 
   html {
-    scroll-behavior: smooth;
     overflow-x: hidden;
   }
 
   body {
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 }
 
