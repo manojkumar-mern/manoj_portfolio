@@ -224,7 +224,7 @@ const Projects = () => {
           whileInView="visible"
           viewport={viewportConfig}
           onClick={() => setSelectedProject(projects[0])}
-          className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-16 cursor-pointer"
+          className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-16 cursor-pointer transform-gpu will-change-transform"
         >
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left: Visual preview */}
