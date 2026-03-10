@@ -14,7 +14,7 @@ const HeroParticles = () => (
     {particles.map((p) => (
       <motion.div
         key={p.id}
-        className="absolute left-1/2 top-1/2 rounded-full"
+        className="absolute left-1/2 top-1/2 rounded-full transform-gpu will-change-transform"
         style={{
           width: p.size,
           height: p.size,

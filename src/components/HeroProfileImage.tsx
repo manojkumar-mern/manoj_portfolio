@@ -28,7 +28,7 @@ const HeroProfileImage = () => {
     onMouseEnter={() => setHovered(true)}
     onMouseLeave={() => setHovered(false)}
    >
-    <div className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px]">
+    <div className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px] transform-gpu will-change-transform">
       {/* Outer glow aura */}
       <motion.div
         className="absolute inset-0 rounded-full pointer-events-none"

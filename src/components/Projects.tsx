@@ -95,8 +95,8 @@ const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => v
       initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.97, opacity: 0 }}
-      transition={{ type: "spring", duration: 0.4 }}
-      className="relative w-full max-w-2xl max-h-[85vh] rounded-2xl bg-card border border-border card-shadow"
+      transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
+      className="relative w-full max-w-2xl max-h-[85vh] rounded-2xl bg-card border border-border card-shadow transform-gpu will-change-transform"
       onClick={(e) => e.stopPropagation()}
     >
       <button
@@ -224,7 +224,7 @@ const Projects = () => {
           whileInView="visible"
           viewport={viewportConfig}
           onClick={() => setSelectedProject(projects[0])}
-          className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-16 cursor-pointer"
+          className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-16 cursor-pointer transform-gpu will-change-transform"
         >
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left: Visual preview */}
@@ -317,7 +317,7 @@ const Projects = () => {
                 key={project.title}
                 variants={v(staggerItem)}
                 onClick={() => setSelectedProject(project)}
-                className="group relative premium-card glow-card overflow-hidden flex flex-col cursor-pointer"
+                className="group relative premium-card glow-card overflow-hidden flex flex-col cursor-pointer transform-gpu will-change-transform"
               >
                 {/* Preview banner with zoom + overlay */}
                 <div className="relative h-36 overflow-hidden bg-muted/40">
