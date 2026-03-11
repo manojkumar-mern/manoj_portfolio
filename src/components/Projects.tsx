@@ -80,7 +80,7 @@ const miniProjects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://rock-paper-scissors-game-online.vercel.app",
     github: "https://github.com/manojkumar-mern/rock-paper-scissors-game",
-    image: "/projects/rps-preview.png",
+    image: "/projects/rps-game.png",
   },
 ];
 
