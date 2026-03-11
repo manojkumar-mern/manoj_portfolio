@@ -23,7 +23,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
     demo: "https://chat-app-manoj.vercel.app",
     github: "https://github.com/manojkumar-mern/chat-app",
-    image: "/public/projects/chat-app.png",
+    image: "/projects/chat-app.png",
   },
   {
     title: "Postly – Social Media Feed",
@@ -32,7 +32,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB"],
     demo: "https://postly-react.vercel.app",
     github: "https://github.com/manojkumar-mern/postly",
-    image: "/public/projects/postly.png",
+    image: "/projects/postly.png",
   },
   {
     title: "Task Manager Authentication",
@@ -41,7 +41,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT"],
     demo: "https://task-manager-auth-mern.vercel.app",
     github: "https://github.com/manojkumar-mern/task-manager-auth",
-    image: "/public/projects/task-manager.png",
+    image: "/projects/task-manager.png",
   },
 ];
 
@@ -53,7 +53,7 @@ const miniProjects: Project[] = [
     tech: ["Node.js", "Express.js", "MongoDB"],
     demo: "https://notes-api-mern.vercel.app",
     github: "https://github.com/manojkumar-mern/notes-api",
-    image: "/public/projects/notes-api.png",
+    image: "/projects/notes-api.png",
   },
   {
     title: "To-Do List Application",
@@ -62,7 +62,7 @@ const miniProjects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://to-do-list-app-87.vercel.app",
     github: "https://github.com/manojkumar-mern/to-do-list",
-    image: "/public/projects/todo-list.png",
+    image: "/projects/todo-list.png",
   },
   {
     title: "React Live Color Generator",
@@ -71,7 +71,7 @@ const miniProjects: Project[] = [
     tech: ["React", "JavaScript", "CSS"],
     demo: "https://react-live-color.vercel.app",
     github: "https://github.com/manojkumar-mern/react-live-color",
-    image: "/public/projects/color-generator.png",
+    image: "/projects/color-generator.png",
   },
   {
     title: "Rock Paper Scissors – Elite RPS Arena",
@@ -80,7 +80,7 @@ const miniProjects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://rock-paper-scissors-game-online.vercel.app",
     github: "https://github.com/manojkumar-mern/rock-paper-scissors-game",
-    image: "/public/projects/rps-game.png",
+    image: "/projects/rps-game.png",
   },
 ];
 
