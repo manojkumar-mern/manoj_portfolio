@@ -71,7 +71,7 @@ const miniProjects: Project[] = [
     tech: ["React", "JavaScript", "CSS"],
     demo: "https://react-live-color.vercel.app",
     github: "https://github.com/manojkumar-mern/react-live-color",
-    image: "/projects/color-preview.png",
+    image: "/projects/color-generator.png",
   },
   {
     title: "Rock Paper Scissors – Elite RPS Arena",
