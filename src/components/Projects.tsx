@@ -62,7 +62,7 @@ const miniProjects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://to-do-list-app-87.vercel.app",
     github: "https://github.com/manojkumar-mern/to-do-list",
-    image: "/projects/todo-preview.png",
+    image: "/projects/todo-list.png",
   },
   {
     title: "React Live Color Generator",
