@@ -53,7 +53,7 @@ const miniProjects: Project[] = [
     tech: ["Node.js", "Express.js", "MongoDB"],
     demo: "https://notes-api-mern.vercel.app",
     github: "https://github.com/manojkumar-mern/notes-api",
-    image: "/projects/notes-preview.png",
+    image: "/projects/notes-api.png",
   },
   {
     title: "To-Do List Application",
