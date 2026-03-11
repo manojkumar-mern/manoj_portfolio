@@ -41,7 +41,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT"],
     demo: "https://task-manager-auth-mern.vercel.app",
     github: "https://github.com/manojkumar-mern/task-manager-auth",
-    image: "/projects/task-preview.png",
+    image: "/projects/task-manager.png",
   },
 ];
 
