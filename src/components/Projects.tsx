@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, X } from "lucide-react";
 import {
-  fadeUp, fadeRight, staggerContainer, staggerItem, staggerItemScale,
+  fadeUp, fadeRight, staggerContainer, staggerItem,
   viewportConfig, prefersReducedMotion, noMotion,
 } from "@/lib/motion";
 
@@ -12,18 +12,18 @@ interface Project {
   tech: string[];
   demo: string | null;
   github: string;
-  featured?: boolean;
+  image: string;
 }
 
-const projects: Project[] = [
+const featuredProjects: Project[] = [
   {
     title: "Real-Time Chat Application",
     description:
       "A real-time messaging application built with MERN stack and Socket.io. Users can send instant messages, see online status, and experience live communication using WebSockets.",
     tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
-    demo: null,
+    demo: "https://chat-app-manoj.vercel.app",
     github: "https://github.com/manojkumar-mern/chat-app",
-    featured: true,
+    image: "/projects/chat-preview.png",
   },
   {
     title: "Postly – Social Media Feed",
@@ -32,6 +32,7 @@ const projects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB"],
     demo: "https://postly-react.vercel.app",
     github: "https://github.com/manojkumar-mern/postly",
+    image: "/projects/postly-preview.png",
   },
   {
     title: "Task Manager Authentication",
@@ -40,6 +41,19 @@ const projects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT"],
     demo: "https://task-manager-auth-mern.vercel.app",
     github: "https://github.com/manojkumar-mern/task-manager-auth",
+    image: "/projects/task-preview.png",
+  },
+];
+
+const miniProjects: Project[] = [
+  {
+    title: "Notes API",
+    description:
+      "A RESTful API built with Node.js and Express for creating, updating, deleting, and retrieving notes with MongoDB database integration.",
+    tech: ["Node.js", "Express.js", "MongoDB"],
+    demo: "https://notes-api-mern.vercel.app",
+    github: "https://github.com/manojkumar-mern/notes-api",
+    image: "/projects/notes-preview.png",
   },
   {
     title: "To-Do List Application",
@@ -48,14 +62,7 @@ const projects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://to-do-list-app-87.vercel.app",
     github: "https://github.com/manojkumar-mern/to-do-list",
-  },
-  {
-    title: "Notes API",
-    description:
-      "A RESTful API built with Node.js and Express for creating, updating, deleting, and retrieving notes with MongoDB database integration.",
-    tech: ["Node.js", "Express.js", "MongoDB"],
-    demo: "https://notes-api-mern.vercel.app",
-    github: "https://github.com/manojkumar-mern/notes-api",
+    image: "/projects/todo-preview.png",
   },
   {
     title: "React Live Color Generator",
@@ -64,6 +71,7 @@ const projects: Project[] = [
     tech: ["React", "JavaScript", "CSS"],
     demo: "https://react-live-color.vercel.app",
     github: "https://github.com/manojkumar-mern/react-live-color",
+    image: "/projects/color-preview.png",
   },
   {
     title: "Rock Paper Scissors – Elite RPS Arena",
@@ -72,11 +80,9 @@ const projects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://rock-paper-scissors-game-online.vercel.app",
     github: "https://github.com/manojkumar-mern/rock-paper-scissors-game",
+    image: "/projects/rps-preview.png",
   },
 ];
-
-const featured = projects[0];
-const otherProjects = projects.slice(1);
 
 /* ── Glowing link button ── */
 const GlowButton = ({
@@ -108,30 +114,86 @@ const GlowButton = ({
   );
 };
 
-/* ── Project Card ── */
-const ProjectCard = ({
-  project,
-  onOpen,
-}: {
-  project: Project;
-  onOpen: () => void;
-}) => (
+/* ── Featured Hero Card (Chat App) ── */
+const HeroCard = ({ project, reduced }: { project: Project; reduced: boolean }) => {
+  const v = <T extends object>(variant: T) => (reduced ? noMotion : variant);
+  return (
+    <motion.div
+      variants={v(fadeUp)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportConfig}
+      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu will-change-transform"
+    >
+      <div className="grid md:grid-cols-2 gap-0">
+        {/* Left — preview image */}
+        <div className="relative h-56 md:h-auto min-h-[260px] overflow-hidden bg-muted/30">
+          <img
+            src={project.image}
+            alt={project.title}
+            loading="eager"
+            width={960}
+            height={540}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
+          <div className="absolute top-5 left-5 px-3 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[10px] font-semibold tracking-wider uppercase backdrop-blur-sm">
+            ★ Featured
+          </div>
+        </div>
+
+        {/* Right — content */}
+        <div className="p-7 md:p-10 flex flex-col justify-center">
+          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono group-hover:border-primary/20 group-hover:text-foreground transition-all duration-300"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          {/* Buttons — hover reveal */}
+          <div className="flex gap-3 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+            {project.demo && (
+              <GlowButton href={project.demo} variant="primary">
+                <ExternalLink size={14} /> Live Demo
+              </GlowButton>
+            )}
+            <GlowButton href={project.github} variant="outline">
+              <Github size={14} /> GitHub
+            </GlowButton>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+/* ── Featured Sub Card (Postly, Task Manager) ── */
+const FeaturedCard = ({ project }: { project: Project }) => (
   <motion.div
     variants={staggerItem}
-    onClick={onOpen}
-    className="group relative premium-card glow-card overflow-hidden flex flex-col cursor-pointer transform-gpu will-change-transform"
+    className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu will-change-transform"
   >
-    {/* Visual header */}
-    <div className="relative h-36 overflow-hidden bg-muted/30">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 transition-transform duration-500 group-hover:scale-110" />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-4xl font-black text-foreground/[0.04] tracking-widest select-none transition-transform duration-500 group-hover:scale-110">
-          {project.title
-            .split(" ")
-            .map((w) => w[0])
-            .join("")}
-        </span>
-      </div>
+    {/* Preview image */}
+    <div className="relative h-44 overflow-hidden bg-muted/30">
+      <img
+        src={project.image}
+        alt={project.title}
+        loading="lazy"
+        width={640}
+        height={360}
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-transparent to-transparent" />
     </div>
 
     {/* Content */}
@@ -142,8 +204,6 @@ const ProjectCard = ({
       <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
         {project.description}
       </p>
-
-      {/* Tech badges */}
       <div className="flex flex-wrap gap-1.5 mb-5">
         {project.tech.map((t, idx) => (
           <span
@@ -155,9 +215,8 @@ const ProjectCard = ({
           </span>
         ))}
       </div>
-
-      {/* Action buttons */}
-      <div className="flex gap-3">
+      {/* Hover-reveal buttons */}
+      <div className="flex gap-3 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
         {project.demo && (
           <GlowButton href={project.demo} variant="primary">
             <ExternalLink size={14} /> Live Demo
@@ -171,8 +230,75 @@ const ProjectCard = ({
   </motion.div>
 );
 
-/* ── Modal ── */
-const ProjectModal = ({
+/* ── Mini Project Card ── */
+const MiniCard = ({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: () => void;
+}) => (
+  <motion.div
+    variants={staggerItem}
+    onClick={onOpen}
+    className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu will-change-transform"
+  >
+    {/* Preview image */}
+    <div className="relative h-36 overflow-hidden bg-muted/30">
+      <img
+        src={project.image}
+        alt={project.title}
+        loading="lazy"
+        width={512}
+        height={288}
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-transparent to-transparent" />
+    </div>
+
+    <div className="p-4 flex flex-col flex-1">
+      <h4 className="text-sm font-semibold text-foreground mb-1 group-hover:text-gradient transition-colors duration-300">
+        {project.title}
+      </h4>
+      <div className="flex flex-wrap gap-1 mb-3">
+        {project.tech.slice(0, 3).map((t) => (
+          <span
+            key={t}
+            className="text-[10px] px-2 py-0.5 rounded bg-muted text-muted-foreground font-mono border border-border"
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+      {/* Hover-reveal buttons */}
+      <div className="flex gap-2 mt-auto opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+        {project.demo && (
+          <a
+            href={project.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1 text-[11px] px-3 py-1.5 rounded-md bg-gradient-accent text-primary-foreground font-semibold transform-gpu hover:scale-105 transition-transform"
+          >
+            <ExternalLink size={12} /> Demo
+          </a>
+        )}
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex items-center gap-1 text-[11px] px-3 py-1.5 rounded-md border border-border text-foreground font-semibold transform-gpu hover:scale-105 hover:border-primary/40 transition-all"
+        >
+          <Github size={12} /> GitHub
+        </a>
+      </div>
+    </div>
+  </motion.div>
+);
+
+/* ── Mini Project Modal ── */
+const MiniModal = ({
   project,
   onClose,
 }: {
@@ -187,11 +313,11 @@ const ProjectModal = ({
     onClick={onClose}
   >
     <motion.div
-      initial={{ scale: 0.95, opacity: 0, y: 10 }}
-      animate={{ scale: 1, opacity: 1, y: 0 }}
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.97, opacity: 0 }}
       transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
-      className="relative w-full max-w-lg rounded-2xl bg-card border border-border card-shadow transform-gpu will-change-transform"
+      className="relative w-full max-w-lg rounded-2xl bg-card border border-border card-shadow overflow-hidden transform-gpu will-change-transform"
       onClick={(e) => e.stopPropagation()}
     >
       <button
@@ -201,8 +327,18 @@ const ProjectModal = ({
         <X size={16} />
       </button>
 
+      {/* Large preview */}
+      <div className="h-52 overflow-hidden bg-muted/30">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover"
+          width={640}
+          height={360}
+        />
+      </div>
+
       <div className="p-6 md:p-8">
-        <div className="h-0.5 w-full rounded-full bg-gradient-accent mb-5 opacity-30" />
         <h3 className="text-2xl font-bold text-foreground mb-3">
           {project.title}
         </h3>
@@ -243,13 +379,15 @@ const ProjectModal = ({
 
 /* ── Main Section ── */
 const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedMini, setSelectedMini] = useState<Project | null>(null);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     setReduced(prefersReducedMotion());
   }, []);
 
   const v = <T extends object>(variant: T) => (reduced ? noMotion : variant);
+  const hero = featuredProjects[0];
+  const subFeatured = featuredProjects.slice(1);
 
   return (
     <section id="projects" className="py-20 md:py-28 overflow-x-hidden">
@@ -262,96 +400,67 @@ const Projects = () => {
           viewport={viewportConfig}
           className="mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">Featured Projects</h2>
           <div className="h-0.5 w-12 rounded-full bg-gradient-accent mb-4" />
           <p className="text-muted-foreground max-w-lg">
-            Explore my projects — click any card for more details.
+            Full-stack applications built with modern technologies.
           </p>
         </motion.div>
 
-        {/* Featured Project — large hero card */}
+        {/* Hero project */}
+        <HeroCard project={hero} reduced={reduced} />
+
+        {/* Sub-featured: Postly | Task Manager */}
         <motion.div
-          variants={v(fadeUp)}
+          variants={v(staggerContainer(0.15))}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          onClick={() => setSelectedProject(featured)}
-          className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-14 cursor-pointer transform-gpu will-change-transform"
+          className="grid sm:grid-cols-2 gap-6 mb-20"
         >
-          <div className="grid md:grid-cols-2 gap-0">
-            {/* Left visual */}
-            <div className="relative h-56 md:h-auto min-h-[260px] overflow-hidden bg-muted/30">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-primary/5 to-secondary/10 transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-7xl md:text-8xl font-black text-foreground/[0.03] tracking-[0.2em] select-none transition-transform duration-700 group-hover:scale-105">
-                  {featured.title
-                    .split(" ")
-                    .map((w) => w[0])
-                    .join("")}
-                </span>
-              </div>
-              <div className="absolute top-5 left-5 px-3 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[10px] font-semibold tracking-wider uppercase backdrop-blur-sm">
-                ★ Featured
-              </div>
-            </div>
-
-            {/* Right content */}
-            <div className="p-7 md:p-10 flex flex-col justify-center">
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
-                {featured.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                {featured.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-6">
-                {featured.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono group-hover:border-primary/20 group-hover:text-foreground transition-all duration-300"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex gap-3">
-                {featured.demo && (
-                  <GlowButton href={featured.demo} variant="primary">
-                    <ExternalLink size={14} /> Live Demo
-                  </GlowButton>
-                )}
-                <GlowButton href={featured.github} variant="outline">
-                  <Github size={14} /> GitHub
-                </GlowButton>
-              </div>
-            </div>
-          </div>
+          {subFeatured.map((p) => (
+            <FeaturedCard key={p.title} project={p} />
+          ))}
         </motion.div>
 
-        {/* Project grid */}
+        {/* Mini Projects Header */}
+        <motion.div
+          variants={v(fadeRight)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          className="mb-10"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold mb-3">Mini Projects</h2>
+          <div className="h-0.5 w-12 rounded-full bg-gradient-accent mb-4" />
+          <p className="text-muted-foreground max-w-lg">
+            Smaller experiments and utility tools.
+          </p>
+        </motion.div>
+
+        {/* Mini Projects Grid: 4 cols desktop, 2 tablet, 1 mobile */}
         <motion.div
           variants={v(staggerContainer(0.1))}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
         >
-          {otherProjects.map((project) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              onOpen={() => setSelectedProject(project)}
+          {miniProjects.map((p) => (
+            <MiniCard
+              key={p.title}
+              project={p}
+              onOpen={() => setSelectedMini(p)}
             />
           ))}
         </motion.div>
       </div>
 
       <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
+        {selectedMini && (
+          <MiniModal
+            project={selectedMini}
+            onClose={() => setSelectedMini(null)}
           />
         )}
       </AnimatePresence>
