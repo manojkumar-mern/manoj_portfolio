@@ -23,7 +23,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
     demo: "https://chat-app-manoj.vercel.app",
     github: "https://github.com/manojkumar-mern/chat-app",
-    image: "/projects/chat-preview.png",
+    image: "/projects/chat-app.png",
   },
   {
     title: "Postly – Social Media Feed",
