@@ -32,7 +32,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB"],
     demo: "https://postly-react.vercel.app",
     github: "https://github.com/manojkumar-mern/postly",
-    image: "/projects/postly-preview.png",
+    image: "/projects/postly.png",
   },
   {
     title: "Task Manager Authentication",
