@@ -6,9 +6,10 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      touchMultiplier: 1.5,
+      duration: 0.9,
+      easing: (t) => 1 - Math.pow(1 - t, 4),
+      smoothWheel: true,
+      touchMultiplier: 1.2,
       infinite: false,
     });
 
@@ -19,7 +20,9 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
       requestAnimationFrame(raf);
     };
 
-    requestAnimationFrame(raf);
+    setTimeout(() => {
+      requestAnimationFrame(raf);
+    }, 100);
 
     // Handle anchor clicks for smooth navigation
     const handleAnchorClick = (e: MouseEvent) => {
