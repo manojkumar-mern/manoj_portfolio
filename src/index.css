@@ -73,10 +73,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  * {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
+  /* backface-visibility applied selectively via transform-gpu class instead of globally */
 }
 
 @layer utilities {

@@ -114,8 +114,105 @@ const GlowButton = ({
   );
 };
 
+/* ── Project Detail Modal (shared for featured + mini) ── */
+const ProjectModal = ({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) => {
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.97, opacity: 0 }}
+        transition={{ type: "spring", duration: 0.4, bounce: 0.12 }}
+        className="relative w-full max-w-2xl rounded-2xl bg-card border border-border card-shadow overflow-hidden transform-gpu will-change-transform"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-300"
+        >
+          <X size={16} />
+        </button>
+
+        {/* Large preview */}
+        <div className="h-56 md:h-64 overflow-hidden bg-muted/30">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+            width={800}
+            height={450}
+          />
+        </div>
+
+        <div className="p-6 md:p-8">
+          <h3 className="text-2xl font-bold text-foreground mb-3">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+            {project.description}
+          </p>
+
+          <div className="mb-6">
+            <span className="text-xs font-medium text-muted-foreground tracking-wider uppercase mb-3 block">
+              Tech Stack
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((t) => (
+                <span
+                  key={t}
+                  className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
+            {project.demo && (
+              <GlowButton href={project.demo} variant="primary">
+                <ExternalLink size={14} /> Live Demo
+              </GlowButton>
+            )}
+            <GlowButton href={project.github} variant="outline">
+              <Github size={14} /> GitHub
+            </GlowButton>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 /* ── Featured Hero Card (Chat App) ── */
-const HeroCard = ({ project, reduced }: { project: Project; reduced: boolean }) => {
+const HeroCard = ({
+  project,
+  reduced,
+  onOpen,
+}: {
+  project: Project;
+  reduced: boolean;
+  onOpen: () => void;
+}) => {
   const v = <T extends object>(variant: T) => (reduced ? noMotion : variant);
   return (
     <motion.div
@@ -123,10 +220,10 @@ const HeroCard = ({ project, reduced }: { project: Project; reduced: boolean }) 
       initial="hidden"
       whileInView="visible"
       viewport={viewportConfig}
-      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu will-change-transform"
+      onClick={onOpen}
+      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu will-change-transform cursor-pointer"
     >
       <div className="grid md:grid-cols-2 gap-0">
-        {/* Left — preview image */}
         <div className="relative h-56 md:h-auto min-h-[260px] overflow-hidden bg-muted/30">
           <img
             src={project.image}
@@ -134,7 +231,7 @@ const HeroCard = ({ project, reduced }: { project: Project; reduced: boolean }) 
             loading="eager"
             width={960}
             height={540}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 transform-gpu"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
           <div className="absolute top-5 left-5 px-3 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[10px] font-semibold tracking-wider uppercase backdrop-blur-sm">
@@ -142,7 +239,6 @@ const HeroCard = ({ project, reduced }: { project: Project; reduced: boolean }) 
           </div>
         </div>
 
-        {/* Right — content */}
         <div className="p-7 md:p-10 flex flex-col justify-center">
           <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
             {project.title}
@@ -160,7 +256,6 @@ const HeroCard = ({ project, reduced }: { project: Project; reduced: boolean }) 
               </span>
             ))}
           </div>
-          {/* Buttons — hover reveal */}
           <div className="flex gap-3 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
             {project.demo && (
               <GlowButton href={project.demo} variant="primary">
@@ -178,12 +273,18 @@ const HeroCard = ({ project, reduced }: { project: Project; reduced: boolean }) 
 };
 
 /* ── Featured Sub Card (Postly, Task Manager) ── */
-const FeaturedCard = ({ project }: { project: Project }) => (
+const FeaturedCard = ({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: () => void;
+}) => (
   <motion.div
     variants={staggerItem}
-    className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu will-change-transform"
+    onClick={onOpen}
+    className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu will-change-transform cursor-pointer"
   >
-    {/* Preview image */}
     <div className="relative h-44 overflow-hidden bg-muted/30">
       <img
         src={project.image}
@@ -191,12 +292,11 @@ const FeaturedCard = ({ project }: { project: Project }) => (
         loading="lazy"
         width={640}
         height={360}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-transparent to-transparent" />
     </div>
 
-    {/* Content */}
     <div className="p-6 flex flex-col flex-1">
       <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors duration-300">
         {project.title}
@@ -215,7 +315,6 @@ const FeaturedCard = ({ project }: { project: Project }) => (
           </span>
         ))}
       </div>
-      {/* Hover-reveal buttons */}
       <div className="flex gap-3 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
         {project.demo && (
           <GlowButton href={project.demo} variant="primary">
@@ -243,7 +342,6 @@ const MiniCard = ({
     onClick={onOpen}
     className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu will-change-transform"
   >
-    {/* Preview image */}
     <div className="relative h-36 overflow-hidden bg-muted/30">
       <img
         src={project.image}
@@ -251,7 +349,7 @@ const MiniCard = ({
         loading="lazy"
         width={512}
         height={288}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 transform-gpu"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-transparent to-transparent" />
     </div>
@@ -270,7 +368,6 @@ const MiniCard = ({
           </span>
         ))}
       </div>
-      {/* Hover-reveal buttons */}
       <div className="flex gap-2 mt-auto opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
         {project.demo && (
           <a
@@ -297,89 +394,9 @@ const MiniCard = ({
   </motion.div>
 );
 
-/* ── Mini Project Modal ── */
-const MiniModal = ({
-  project,
-  onClose,
-}: {
-  project: Project;
-  onClose: () => void;
-}) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
-    onClick={onClose}
-  >
-    <motion.div
-      initial={{ scale: 0.95, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.97, opacity: 0 }}
-      transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
-      className="relative w-full max-w-lg rounded-2xl bg-card border border-border card-shadow overflow-hidden transform-gpu will-change-transform"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-300"
-      >
-        <X size={16} />
-      </button>
-
-      {/* Large preview */}
-      <div className="h-52 overflow-hidden bg-muted/30">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover"
-          width={640}
-          height={360}
-        />
-      </div>
-
-      <div className="p-6 md:p-8">
-        <h3 className="text-2xl font-bold text-foreground mb-3">
-          {project.title}
-        </h3>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-          {project.description}
-        </p>
-
-        <div className="mb-6">
-          <span className="text-xs font-medium text-muted-foreground tracking-wider uppercase mb-3 block">
-            Tech Stack
-          </span>
-          <div className="flex flex-wrap gap-2">
-            {project.tech.map((t) => (
-              <span
-                key={t}
-                className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-          {project.demo && (
-            <GlowButton href={project.demo} variant="primary">
-              <ExternalLink size={14} /> Live Demo
-            </GlowButton>
-          )}
-          <GlowButton href={project.github} variant="outline">
-            <Github size={14} /> GitHub
-          </GlowButton>
-        </div>
-      </div>
-    </motion.div>
-  </motion.div>
-);
-
 /* ── Main Section ── */
 const Projects = () => {
-  const [selectedMini, setSelectedMini] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     setReduced(prefersReducedMotion());
@@ -408,7 +425,7 @@ const Projects = () => {
         </motion.div>
 
         {/* Hero project */}
-        <HeroCard project={hero} reduced={reduced} />
+        <HeroCard project={hero} reduced={reduced} onOpen={() => setSelectedProject(hero)} />
 
         {/* Sub-featured: Postly | Task Manager */}
         <motion.div
@@ -419,7 +436,7 @@ const Projects = () => {
           className="grid sm:grid-cols-2 gap-6 mb-20"
         >
           {subFeatured.map((p) => (
-            <FeaturedCard key={p.title} project={p} />
+            <FeaturedCard key={p.title} project={p} onOpen={() => setSelectedProject(p)} />
           ))}
         </motion.div>
 
@@ -438,7 +455,7 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        {/* Mini Projects Grid: 4 cols desktop, 2 tablet, 1 mobile */}
+        {/* Mini Projects Grid */}
         <motion.div
           variants={v(staggerContainer(0.1))}
           initial="hidden"
@@ -450,17 +467,17 @@ const Projects = () => {
             <MiniCard
               key={p.title}
               project={p}
-              onOpen={() => setSelectedMini(p)}
+              onOpen={() => setSelectedProject(p)}
             />
           ))}
         </motion.div>
       </div>
 
       <AnimatePresence>
-        {selectedMini && (
-          <MiniModal
-            project={selectedMini}
-            onClose={() => setSelectedMini(null)}
+        {selectedProject && (
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
           />
         )}
       </AnimatePresence>

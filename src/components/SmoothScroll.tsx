@@ -1,8 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import Lenis from "lenis";
 
 const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   const lenisRef = useRef<Lenis | null>(null);
+  const rafIdRef = useRef<number>(0);
+
+  const raf = useCallback((time: number) => {
+    lenisRef.current?.raf(time);
+    rafIdRef.current = requestAnimationFrame(raf);
+  }, []);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -14,17 +20,8 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     });
 
     lenisRef.current = lenis;
+    rafIdRef.current = requestAnimationFrame(raf);
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    setTimeout(() => {
-      requestAnimationFrame(raf);
-    }, 100);
-
-    // Handle anchor clicks for smooth navigation
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement | null;
@@ -44,10 +41,11 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     document.addEventListener("click", handleAnchorClick);
 
     return () => {
+      cancelAnimationFrame(rafIdRef.current);
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
     };
-  }, []);
+  }, [raf]);
 
   return <>{children}</>;
 };
