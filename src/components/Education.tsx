@@ -27,7 +27,7 @@ const Education = () => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="education" className="py-20 md:py-28 bg-muted/30 px-4 md:px-6">
+    <section id="education" className="py-20 md:py-28 bg-muted/30 px-4 md:px-6 transform-gpu will-change-transform">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}

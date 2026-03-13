@@ -23,7 +23,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
     demo: "https://chat-app-manoj.vercel.app",
     github: "https://github.com/manojkumar-mern/chat-app",
-    image: "/projects/chat-app.png",
+    image: "/projects/chat-app.webp",
   },
   {
     title: "Postly – Social Media Feed",
@@ -32,7 +32,7 @@ const featuredProjects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB"],
     demo: "https://postly-react.vercel.app",
     github: "https://github.com/manojkumar-mern/postly",
-    image: "/projects/postly.png",
+    image: "/projects/postly.webp",
   },
   {
     title: "Task Manager Authentication",
@@ -41,20 +41,12 @@ const featuredProjects: Project[] = [
     tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT"],
     demo: "https://task-manager-auth-mern.vercel.app",
     github: "https://github.com/manojkumar-mern/task-manager-auth",
-    image: "/projects/task-manager.png",
+    image: "/projects/task-manager.webp",
   },
 ];
 
 const miniProjects: Project[] = [
-  {
-    title: "Notes API",
-    description:
-      "A RESTful API built with Node.js and Express for creating, updating, deleting, and retrieving notes with MongoDB database integration.",
-    tech: ["Node.js", "Express.js", "MongoDB"],
-    demo: "https://notes-api-mern.vercel.app",
-    github: "https://github.com/manojkumar-mern/notes-api",
-    image: "/projects/notes-api.png",
-  },
+  
   {
     title: "To-Do List Application",
     description:
@@ -62,7 +54,7 @@ const miniProjects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://to-do-list-app-87.vercel.app",
     github: "https://github.com/manojkumar-mern/to-do-list",
-    image: "/projects/todo-list.png",
+    image: "/projects/todo-list.webp",
   },
   {
     title: "React Live Color Generator",
@@ -71,7 +63,7 @@ const miniProjects: Project[] = [
     tech: ["React", "JavaScript", "CSS"],
     demo: "https://react-live-color.vercel.app",
     github: "https://github.com/manojkumar-mern/react-live-color",
-    image: "/projects/color-generator.png",
+    image: "/projects/color-generator.webp",
   },
   {
     title: "Rock Paper Scissors – Elite RPS Arena",
@@ -80,8 +72,17 @@ const miniProjects: Project[] = [
     tech: ["JavaScript", "HTML", "CSS"],
     demo: "https://rock-paper-scissors-game-online.vercel.app",
     github: "https://github.com/manojkumar-mern/rock-paper-scissors-game",
-    image: "/projects/rps-game.png",
+    image: "/projects/rps-game.webp",
   },
+  {
+    title: "Notes API",
+    description:
+      "A RESTful API built with Node.js and Express for creating, updating, deleting, and retrieving notes with MongoDB database integration.",
+    tech: ["Node.js", "Express.js", "MongoDB"],
+    demo: "https://notes-api-mern.vercel.app",
+    github: "https://github.com/manojkumar-mern/notes-api",
+    image: "/projects/notes-api.webp",
+  }
 ];
 
 /* ── Glowing link button ── */
@@ -290,6 +291,7 @@ const FeaturedCard = ({
         src={project.image}
         alt={project.title}
         loading="lazy"
+        decoding="async"
         width={640}
         height={360}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu"
@@ -347,9 +349,10 @@ const MiniCard = ({
         src={project.image}
         alt={project.title}
         loading="lazy"
+        decoding="async"
         width={512}
         height={288}
-        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 transform-gpu"
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-transparent to-transparent" />
     </div>

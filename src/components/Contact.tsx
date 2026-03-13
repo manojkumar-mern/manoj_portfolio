@@ -61,7 +61,7 @@ const Contact = () => {
     }`;
 
   return (
-    <section id="contact" className="py-20 md:py-28 px-4 md:px-0">
+    <section id="contact" className="py-20 md:py-28 px-4 md:px-0 transform-gpu will-change-transform">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}
