@@ -204,7 +204,7 @@ return (
       <img
         src={profileImg}
         alt="Manoj Kumar"
-        className="w-full h-full object-cover object-[center_30%] rounded-full"
+        className="w-full h-full object-cover object-[center_20%] rounded-full"
       />
 
     </motion.div>
