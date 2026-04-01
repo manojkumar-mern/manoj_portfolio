@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, Award, Languages, Calendar } from "lucide-react";
 import {
@@ -20,14 +20,14 @@ const certifications = [
 
 const languages = ["English", "Tamil"];
 
-const Education = () => {
+const Education = memo(() => {
   const [reduced, setReduced] = useState(false);
   useEffect(() => { setReduced(prefersReducedMotion()); }, []);
 
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="education" className="py-20 md:py-28 bg-muted/30 px-4 md:px-6 transform-gpu will-change-transform">
+    <section id="education" className="py-20 md:py-28 bg-muted/30 px-4 md:px-8 transform-gpu will-change-transform">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}
@@ -40,7 +40,7 @@ const Education = () => {
           <div className="h-0.5 w-12 rounded-full bg-primary" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-14">
+        <div className="grid lg:grid-cols-3 gap-10 lg:gap-14">
           <div className="lg:col-span-2">
             <motion.div
               variants={v(fadeUp)}
@@ -54,20 +54,19 @@ const Education = () => {
             </motion.div>
 
             <motion.div
-                variants={v(staggerContainer(0.12))}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportConfig}
-                className="relative pl-8 border-l border-border space-y-6 max-sm:pl-0 max-sm:border-l-0"
+              variants={v(staggerContainer(0.12))}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportConfig}
+              className="relative pl-8 border-l border-border space-y-6 max-sm:pl-0 max-sm:border-l-0"
             >
-              
               {education.map((e) => (
                 <motion.div key={e.degree} variants={v(staggerItemLeft)} className="relative glow-card rounded-xl">
                   <div className="absolute -left-[calc(2rem+4px)] top-2 w-2 h-2 rounded-full bg-primary max-sm:hidden" />
                   <div className="p-5 premium-card">
-                    <div className="flex items-start justify-between gap-4 mb-2">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 mb-2">
                       <p className="font-medium text-foreground">{e.degree}</p>
-                      <span className="text-xs font-mono text-primary bg-primary/8 px-2 py-1 rounded-md shrink-0">
+                      <span className="text-xs font-mono text-primary bg-primary/8 px-2 py-1 rounded-md shrink-0 w-fit">
                         {e.score}
                       </span>
                     </div>
@@ -127,7 +126,7 @@ const Education = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="flex gap-2"
+                className="flex flex-wrap gap-2"
               >
                 {languages.map((l) => (
                   <motion.span
@@ -145,6 +144,7 @@ const Education = () => {
       </div>
     </section>
   );
-};
+});
 
+Education.displayName = "Education";
 export default Education;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   fadeUp, fadeLeft, fadeRight, staggerContainer, staggerItemScale,
@@ -52,14 +52,14 @@ const skillGroups = [
 
 const groupVariants = [fadeLeft, fadeRight, fadeUp, fadeLeft, fadeRight];
 
-const Skills = () => {
+const Skills = memo(() => {
   const [reduced, setReduced] = useState(false);
   useEffect(() => { setReduced(prefersReducedMotion()); }, []);
 
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-0 overflow-x-hidden transform-gpu will-change-transform">
+    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-8 overflow-x-hidden transform-gpu will-change-transform">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}
@@ -101,7 +101,7 @@ const Skills = () => {
                     className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg premium-card glow-card cursor-default group"
                   >
                     {skill.icon ? (
-                      <img src={skill.icon} alt={skill.name} className="w-4 h-4 object-contain" loading="lazy" />
+                      <img src={skill.icon} alt={skill.name} className="w-4 h-4 object-contain" loading="lazy" width={16} height={16} />
                     ) : (
                       <div className="w-4 h-4 rounded bg-primary/15 flex items-center justify-center text-primary text-[9px] font-bold">
                         {skill.name.charAt(0)}
@@ -119,6 +119,7 @@ const Skills = () => {
       </div>
     </section>
   );
-};
+});
 
+Skills.displayName = "Skills";
 export default Skills;

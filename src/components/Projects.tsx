@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, X } from "lucide-react";
 import {
@@ -46,7 +46,6 @@ const featuredProjects: Project[] = [
 ];
 
 const miniProjects: Project[] = [
-  
   {
     title: "To-Do List Application",
     description:
@@ -82,11 +81,11 @@ const miniProjects: Project[] = [
     demo: "https://notes-api-mern.vercel.app",
     github: "https://github.com/manojkumar-mern/notes-api",
     image: "/projects/notes-api.webp",
-  }
+  },
 ];
 
 /* ── Glowing link button ── */
-const GlowButton = ({
+const GlowButton = memo(({
   href,
   variant,
   children,
@@ -113,17 +112,17 @@ const GlowButton = ({
       {children}
     </a>
   );
-};
+});
+GlowButton.displayName = "GlowButton";
 
-/* ── Project Detail Modal (shared for featured + mini) ── */
-const ProjectModal = ({
+/* ── Project Detail Modal ── */
+const ProjectModal = memo(({
   project,
   onClose,
 }: {
   project: Project;
   onClose: () => void;
 }) => {
-  // Lock body scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
@@ -143,7 +142,7 @@ const ProjectModal = ({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.97, opacity: 0 }}
         transition={{ type: "spring", duration: 0.4, bounce: 0.12 }}
-        className="relative w-full max-w-2xl rounded-2xl bg-card border border-border card-shadow overflow-hidden transform-gpu will-change-transform"
+        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto transform-gpu will-change-transform"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -153,8 +152,7 @@ const ProjectModal = ({
           <X size={16} />
         </button>
 
-        {/* Large preview */}
-        <div className="h-56 md:h-64 overflow-hidden bg-muted/30">
+        <div className="h-48 sm:h-56 md:h-64 overflow-hidden bg-muted/30">
           <img
             src={project.image}
             alt={project.title}
@@ -164,8 +162,8 @@ const ProjectModal = ({
           />
         </div>
 
-        <div className="p-6 md:p-8">
-          <h3 className="text-2xl font-bold text-foreground mb-3">
+        <div className="p-5 sm:p-6 md:p-8">
+          <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
             {project.title}
           </h3>
           <p className="text-muted-foreground text-sm leading-relaxed mb-6">
@@ -202,10 +200,11 @@ const ProjectModal = ({
       </motion.div>
     </motion.div>
   );
-};
+});
+ProjectModal.displayName = "ProjectModal";
 
-/* ── Featured Hero Card (Chat App) ── */
-const HeroCard = ({
+/* ── Featured Hero Card ── */
+const HeroCard = memo(({
   project,
   reduced,
   onOpen,
@@ -225,7 +224,7 @@ const HeroCard = ({
       className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu will-change-transform cursor-pointer"
     >
       <div className="grid md:grid-cols-2 gap-0">
-        <div className="relative h-56 md:h-auto min-h-[260px] overflow-hidden bg-muted/30">
+        <div className="relative h-48 sm:h-56 md:h-auto md:min-h-[260px] overflow-hidden bg-muted/30">
           <img
             src={project.image}
             alt={project.title}
@@ -240,8 +239,8 @@ const HeroCard = ({
           </div>
         </div>
 
-        <div className="p-7 md:p-10 flex flex-col justify-center">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
+        <div className="p-5 sm:p-7 md:p-10 flex flex-col justify-center">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
             {project.title}
           </h3>
           <p className="text-muted-foreground text-sm leading-relaxed mb-5">
@@ -257,7 +256,7 @@ const HeroCard = ({
               </span>
             ))}
           </div>
-          <div className="flex gap-3 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+          <div className="flex flex-wrap gap-3 max-md:opacity-100 max-md:translate-y-0 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
             {project.demo && (
               <GlowButton href={project.demo} variant="primary">
                 <ExternalLink size={14} /> Live Demo
@@ -271,10 +270,11 @@ const HeroCard = ({
       </div>
     </motion.div>
   );
-};
+});
+HeroCard.displayName = "HeroCard";
 
-/* ── Featured Sub Card (Postly, Task Manager) ── */
-const FeaturedCard = ({
+/* ── Featured Sub Card ── */
+const FeaturedCard = memo(({
   project,
   onOpen,
 }: {
@@ -286,7 +286,7 @@ const FeaturedCard = ({
     onClick={onOpen}
     className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu will-change-transform cursor-pointer"
   >
-    <div className="relative h-44 overflow-hidden bg-muted/30">
+    <div className="relative h-36 sm:h-44 overflow-hidden bg-muted/30">
       <img
         src={project.image}
         alt={project.title}
@@ -299,8 +299,8 @@ const FeaturedCard = ({
       <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-transparent to-transparent" />
     </div>
 
-    <div className="p-6 flex flex-col flex-1">
-      <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors duration-300">
+    <div className="p-4 sm:p-6 flex flex-col flex-1">
+      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-colors duration-300">
         {project.title}
       </h3>
       <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
@@ -317,7 +317,7 @@ const FeaturedCard = ({
           </span>
         ))}
       </div>
-      <div className="flex gap-3 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+      <div className="flex flex-wrap gap-3 max-md:opacity-100 max-md:translate-y-0 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
         {project.demo && (
           <GlowButton href={project.demo} variant="primary">
             <ExternalLink size={14} /> Live Demo
@@ -329,10 +329,11 @@ const FeaturedCard = ({
       </div>
     </div>
   </motion.div>
-);
+));
+FeaturedCard.displayName = "FeaturedCard";
 
 /* ── Mini Project Card ── */
-const MiniCard = ({
+const MiniCard = memo(({
   project,
   onOpen,
 }: {
@@ -344,7 +345,7 @@ const MiniCard = ({
     onClick={onOpen}
     className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu will-change-transform"
   >
-    <div className="relative h-36 overflow-hidden bg-muted/30">
+    <div className="relative h-32 sm:h-36 overflow-hidden bg-muted/30">
       <img
         src={project.image}
         alt={project.title}
@@ -357,7 +358,7 @@ const MiniCard = ({
       <div className="absolute inset-0 bg-gradient-to-t from-card/50 via-transparent to-transparent" />
     </div>
 
-    <div className="p-4 flex flex-col flex-1">
+    <div className="p-3 sm:p-4 flex flex-col flex-1">
       <h4 className="text-sm font-semibold text-foreground mb-1 group-hover:text-gradient transition-colors duration-300">
         {project.title}
       </h4>
@@ -371,7 +372,7 @@ const MiniCard = ({
           </span>
         ))}
       </div>
-      <div className="flex gap-2 mt-auto opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+      <div className="flex flex-wrap gap-2 mt-auto max-md:opacity-100 max-md:translate-y-0 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
         {project.demo && (
           <a
             href={project.demo}
@@ -395,10 +396,11 @@ const MiniCard = ({
       </div>
     </div>
   </motion.div>
-);
+));
+MiniCard.displayName = "MiniCard";
 
 /* ── Main Section ── */
-const Projects = () => {
+const Projects = memo(() => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
@@ -430,13 +432,13 @@ const Projects = () => {
         {/* Hero project */}
         <HeroCard project={hero} reduced={reduced} onOpen={() => setSelectedProject(hero)} />
 
-        {/* Sub-featured: Postly | Task Manager */}
+        {/* Sub-featured */}
         <motion.div
           variants={v(staggerContainer(0.15))}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="grid sm:grid-cols-2 gap-6 mb-20"
+          className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-20"
         >
           {subFeatured.map((p) => (
             <FeaturedCard key={p.title} project={p} onOpen={() => setSelectedProject(p)} />
@@ -464,7 +466,7 @@ const Projects = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
         >
           {miniProjects.map((p) => (
             <MiniCard
@@ -486,6 +488,7 @@ const Projects = () => {
       </AnimatePresence>
     </section>
   );
-};
+});
 
+Projects.displayName = "Projects";
 export default Projects;

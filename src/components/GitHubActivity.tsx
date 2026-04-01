@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, ExternalLink, GitCommit, Star, GitFork } from "lucide-react";
 import {
@@ -14,14 +14,14 @@ const stats = [
   { icon: GitFork, label: "Open Source", value: "Contributor" },
 ];
 
-const GitHubActivity = () => {
+const GitHubActivity = memo(() => {
   const [reduced, setReduced] = useState(false);
   useEffect(() => { setReduced(prefersReducedMotion()); }, []);
 
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="github" className="py-20 md:py-28 px-4 md:px-0">
+    <section id="github" className="py-20 md:py-28 px-4 md:px-8">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}
@@ -42,13 +42,13 @@ const GitHubActivity = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-lg bg-card border border-border hover:border-primary/20 transition-all mb-10 group"
+          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-lg bg-card border border-border hover:border-primary/20 transition-all mb-10 group max-w-full"
         >
-          <Github size={18} className="text-primary" />
-          <span className="font-mono text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+          <Github size={18} className="text-primary flex-shrink-0" />
+          <span className="font-mono text-sm text-muted-foreground group-hover:text-foreground transition-colors truncate">
             github.com/{GITHUB_USERNAME}
           </span>
-          <ExternalLink size={13} className="text-muted-foreground group-hover:text-primary transition-colors" />
+          <ExternalLink size={13} className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
         </motion.a>
 
         <motion.div
@@ -56,7 +56,7 @@ const GitHubActivity = () => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="grid sm:grid-cols-3 gap-4 mb-10"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
         >
           {stats.map((stat) => (
             <motion.div
@@ -84,11 +84,14 @@ const GitHubActivity = () => {
             alt="GitHub Contribution Graph"
             className="w-full rounded-lg"
             loading="lazy"
+            width={722}
+            height={112}
           />
         </motion.div>
       </div>
     </section>
   );
-};
+});
 
+GitHubActivity.displayName = "GitHubActivity";
 export default GitHubActivity;

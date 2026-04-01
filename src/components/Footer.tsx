@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Heart } from "lucide-react";
 import { fadeUp, staggerContainer, staggerItemScale, viewportConfig, prefersReducedMotion, noMotion } from "@/lib/motion";
 
-const Footer = () => {
+const Footer = memo(() => {
   const [reduced, setReduced] = useState(false);
   useEffect(() => { setReduced(prefersReducedMotion()); }, []);
 
@@ -16,7 +16,7 @@ const Footer = () => {
         initial="hidden"
         whileInView="visible"
         viewport={viewportConfig}
-        className="container"
+        className="container px-4 md:px-8"
       >
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-center sm:text-left">
@@ -60,6 +60,7 @@ const Footer = () => {
       </motion.div>
     </footer>
   );
-};
+});
 
+Footer.displayName = "Footer";
 export default Footer;
