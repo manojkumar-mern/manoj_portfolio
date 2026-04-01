@@ -63,4 +63,4 @@ To run this project locally:
 git clone https://github.com/manojkumar-mern/manoj-s-mern-portfolio.git
 cd manoj-s-mern-portfolio
 npm install
-npm run dev
+npm run dev 
