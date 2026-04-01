@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const particles = Array.from({ length: 6 }, (_, i) => ({
@@ -10,7 +10,7 @@ const particles = Array.from({ length: 6 }, (_, i) => ({
   duration: 5 + (i % 3) * 2,
 }));
 
-const HeroParticles = () => {
+const HeroParticles = memo(() => {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
 
@@ -59,6 +59,7 @@ const HeroParticles = () => {
         ))}
     </div>
   );
-};
+});
 
+HeroParticles.displayName = "HeroParticles";
 export default HeroParticles;

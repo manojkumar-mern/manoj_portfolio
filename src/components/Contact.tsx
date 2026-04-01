@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { memo, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, Github, Linkedin, Send, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -12,7 +12,15 @@ const EMAILJS_SERVICE_ID = "service_vsj8mw2";
 const EMAILJS_TEMPLATE_ID = "template_70sqib7";
 const EMAILJS_PUBLIC_KEY = "UTnItI434rmT4g3QM";
 
-const Contact = () => {
+const contactLinks = [
+  { icon: MapPin, label: "Mallasamudram, Tamil Nadu, India – 637503", href: "https://goo.gl/maps/cs4MH8S4r7bUA7aj8" },
+  { icon: Phone, label: "+91 9159843416", href: "tel:+919159843416" },
+  { icon: Mail, label: "vijaymanoj0000@gmail.com", href: "mailto:vijaymanoj0000@gmail.com" },
+  { icon: Github, label: "github.com/manojkumar-mern", href: "https://github.com/manojkumar-mern" },
+  { icon: Linkedin, label: "linkedin.com/in/manoj-kumar-d-513253293", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
+];
+
+const Contact = memo(() => {
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -38,7 +46,6 @@ const Contact = () => {
         formRef.current!,
         EMAILJS_PUBLIC_KEY
       );
-      console.log("EmailJS response status:", response.status);
       if (response.status === 200) {
         toast({
           title: "Message sent successfully!",
@@ -61,7 +68,7 @@ const Contact = () => {
     }`;
 
   return (
-    <section id="contact" className="py-20 md:py-28 px-4 md:px-0 transform-gpu will-change-transform">
+    <section id="contact" className="py-20 md:py-28 px-4 md:px-8 transform-gpu will-change-transform">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}
@@ -77,7 +84,7 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto">
           <motion.form
             ref={formRef}
             onSubmit={sendEmail}
@@ -118,13 +125,7 @@ const Contact = () => {
             viewport={viewportConfig}
             className="space-y-3"
           >
-            {[
-              { icon: MapPin, label: "Mallasamudram, Tamil Nadu, India – 637503", href: "https://goo.gl/maps/cs4MH8S4r7bUA7aj8" },
-              { icon: Phone, label: "+91 9159843416", href: "tel:+919159843416" },
-              { icon: Mail, label: "vijaymanoj0000@gmail.com", href: "mailto:vijaymanoj0000@gmail.com" },
-              { icon: Github, label: "github.com/manojkumar-mern", href: "https://github.com/manojkumar-mern" },
-              { icon: Linkedin, label: "linkedin.com/in/manoj-kumar-d-513253293", href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
-            ].map(({ icon: Icon, label, href }) => (
+            {contactLinks.map(({ icon: Icon, label, href }) => (
               <motion.a
                 key={label}
                 href={href}
@@ -133,10 +134,10 @@ const Contact = () => {
                 variants={v(staggerItemRight)}
                 className="flex items-center gap-3 p-4 premium-card glow-card group cursor-pointer"
               >
-                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors">
+                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors flex-shrink-0">
                   <Icon size={15} className="text-primary" />
                 </div>
-                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
+                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors break-all sm:break-normal">{label}</span>
               </motion.a>
             ))}
           </motion.div>
@@ -144,6 +145,7 @@ const Contact = () => {
       </div>
     </section>
   );
-};
+});
 
+Contact.displayName = "Contact";
 export default Contact;
