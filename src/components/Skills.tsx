@@ -59,7 +59,7 @@ const Skills = memo(() => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-8 overflow-x-hidden transform-gpu will-change-transform">
+    <section id="skills" className="py-20 md:py-28 bg-muted/20 px-4 md:px-8 overflow-x-hidden">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}

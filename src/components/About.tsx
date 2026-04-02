@@ -42,7 +42,7 @@ const About = memo(() => {
   const v = (variant: typeof fadeLeft) => reduced ? noMotion : variant;
 
   return (
-    <section id="about" className="py-20 md:py-28 px-4 md:px-8 transform-gpu will-change-transform">
+    <section id="about" className="py-20 md:py-28 px-4 md:px-8">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}

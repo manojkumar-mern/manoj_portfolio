@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -12,27 +12,53 @@ const links = [
   { label: "Contact", href: "#contact" },
 ];
 
-const Navbar = () => {
+const sectionIds = links.map((l) => l.href.replace("#", "")).filter(Boolean);
+
+const Navbar = memo(() => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const scrolledRef = useRef(false);
+  const activeRef = useRef("");
+  const rafScheduled = useRef(false);
 
+  // Use a single passive scroll listener with rAF batching — no re-render unless value changes
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const sections = links.map((l) => l.href.replace("#", "")).filter(Boolean);
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
+    const update = () => {
+      rafScheduled.current = false;
+
+      const nowScrolled = window.scrollY > 20;
+      if (nowScrolled !== scrolledRef.current) {
+        scrolledRef.current = nowScrolled;
+        setScrolled(nowScrolled);
+      }
+
+      let newActive = "";
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
         if (el && el.getBoundingClientRect().top <= 100) {
-          setActiveSection(sections[i]);
-          return;
+          newActive = sectionIds[i];
+          break;
         }
       }
-      setActiveSection("");
+      if (newActive !== activeRef.current) {
+        activeRef.current = newActive;
+        setActiveSection(newActive);
+      }
     };
-    window.addEventListener("scroll", onScroll);
+
+    const onScroll = () => {
+      if (!rafScheduled.current) {
+        rafScheduled.current = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const close = useCallback(() => setOpen(false), []);
 
   return (
     <nav
@@ -53,7 +79,7 @@ const Navbar = () => {
               <a
                 key={l.href + l.label}
                 href={l.href}
-                className={`relative text-sm px-3 py-2 rounded-md transition-all duration-300 ease-in-out group hover:-translate-y-[3px] active:scale-[0.96] ${
+                className={`relative text-sm px-3 py-2 rounded-md transition-all duration-300 ease-in-out group hover:-translate-y-[3px] active:scale-[0.96] transform-gpu ${
                   isActive
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground hover:drop-shadow-[0_0_6px_hsl(187_78%_53%/0.4)]"
@@ -90,7 +116,7 @@ const Navbar = () => {
                 <a
                   key={l.href + l.label}
                   href={l.href}
-                  onClick={() => setOpen(false)}
+                  onClick={close}
                   className={`block px-6 py-3 text-sm transition-all duration-300 active:scale-[0.96] active:bg-primary/10 ${
                     isActive
                       ? "text-primary bg-primary/5 border-l-2 border-primary"
@@ -106,6 +132,7 @@ const Navbar = () => {
       </AnimatePresence>
     </nav>
   );
-};
+});
 
+Navbar.displayName = "Navbar";
 export default Navbar;

@@ -179,11 +179,9 @@
 
   .premium-card {
     @apply rounded-xl bg-card border border-border transition-all;
-    will-change: transform;
 
     transition-duration: 350ms;
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-    
   }
 
   .premium-card:hover {
