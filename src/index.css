@@ -70,10 +70,9 @@
 
 @layer utilities {
 
-  /* GPU layer for smooth animations */
+  /* GPU layer — apply only to actively animated elements */
   .gpu-layer {
     transform: translateZ(0);
-    will-change: transform;
   }
 
   .text-gradient {
