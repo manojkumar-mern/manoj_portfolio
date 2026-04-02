@@ -1,7 +1,8 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { usePerformanceTier } from "@/hooks/use-performance";
 
-const icons = [
+const allIcons = [
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", x: "10%", y: "20%" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", x: "80%", y: "15%" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", x: "70%", y: "70%" },
@@ -11,8 +12,15 @@ const icons = [
 ];
 
 const FloatingIcons = memo(() => {
+  const tier = usePerformanceTier();
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 600);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -25,9 +33,15 @@ const FloatingIcons = memo(() => {
     return () => observer.disconnect();
   }, []);
 
+  // LOW: no floating icons
+  if (tier === "low") return <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none" />;
+
+  const icons = tier === "medium" ? allIcons.slice(0, 3) : allIcons;
+  const durationMultiplier = tier === "medium" ? 1.3 : 1;
+
   return (
     <div ref={ref} className="absolute inset-0 overflow-hidden pointer-events-none">
-      {visible &&
+      {visible && ready &&
         icons.map((icon, i) => (
           <motion.img
             key={i}
@@ -40,7 +54,7 @@ const FloatingIcons = memo(() => {
               opacity: [0.03, 0.06, 0.03],
             }}
             transition={{
-              duration: 12 + i * 2,
+              duration: (12 + i * 2) * durationMultiplier,
               repeat: Infinity,
               ease: "easeInOut",
               delay: i * 0.8,

@@ -1,7 +1,8 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { usePerformanceTier } from "@/hooks/use-performance";
 
-const particles = Array.from({ length: 6 }, (_, i) => ({
+const allParticles = Array.from({ length: 6 }, (_, i) => ({
   id: i,
   x: Math.cos((i / 6) * Math.PI * 2) * 140,
   y: Math.sin((i / 6) * Math.PI * 2) * 140,
@@ -11,8 +12,16 @@ const particles = Array.from({ length: 6 }, (_, i) => ({
 }));
 
 const HeroParticles = memo(() => {
+  const tier = usePerformanceTier();
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  // Delay mount by 500ms to reduce first-load jank
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 500);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -25,9 +34,16 @@ const HeroParticles = memo(() => {
     return () => observer.disconnect();
   }, []);
 
+  // LOW tier: don't render particles at all
+  if (tier === "low") return <div ref={ref} className="absolute inset-0 pointer-events-none" />;
+
+  // MEDIUM: fewer particles, longer duration
+  const particles = tier === "medium" ? allParticles.slice(0, 3) : allParticles;
+  const durationMultiplier = tier === "medium" ? 1.5 : 1;
+
   return (
     <div ref={ref} className="absolute inset-0 pointer-events-none">
-      {visible &&
+      {visible && ready &&
         particles.map((p) => (
           <motion.div
             key={p.id}
@@ -50,7 +66,7 @@ const HeroParticles = memo(() => {
               scale: [1, 1.2, 0.95, 1],
             }}
             transition={{
-              duration: p.duration,
+              duration: p.duration * durationMultiplier,
               repeat: Infinity,
               ease: "easeInOut",
               delay: p.delay,
