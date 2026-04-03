@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { usePerformanceTier } from "@/hooks/use-performance";
+import { useIdleReady } from "@/hooks/use-idle-animation";
 
 const allIcons = [
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", x: "10%", y: "20%" },
