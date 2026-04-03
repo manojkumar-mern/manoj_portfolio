@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { usePerformanceTier } from "@/hooks/use-performance";
+import { useIdleReady } from "@/hooks/use-idle-animation";
 
 const allParticles = Array.from({ length: 6 }, (_, i) => ({
   id: i,
