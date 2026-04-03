@@ -221,7 +221,7 @@ const HeroCard = memo(({
       whileInView="visible"
       viewport={viewportConfig}
       onClick={onOpen}
-      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu will-change-transform cursor-pointer"
+      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu cursor-pointer"
     >
       <div className="grid md:grid-cols-2 gap-0">
         <div className="relative h-48 sm:h-56 md:h-auto md:min-h-[260px] overflow-hidden bg-muted/30">
