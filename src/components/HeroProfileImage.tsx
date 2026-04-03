@@ -2,6 +2,7 @@ import { useState, memo } from "react";
 import { motion } from "framer-motion";
 import profileImg from "@/assets/profile.webp";
 import { usePerformanceTier } from "@/hooks/use-performance";
+import { useIdleReady } from "@/hooks/use-idle-animation";
 
 const orbitIcons = [
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", label: "React" },
