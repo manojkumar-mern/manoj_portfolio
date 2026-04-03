@@ -142,7 +142,7 @@ const ProjectModal = memo(({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.97, opacity: 0 }}
         transition={{ type: "spring", duration: 0.4, bounce: 0.12 }}
-        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto transform-gpu will-change-transform"
+        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto transform-gpu"
         onClick={(e) => e.stopPropagation()}
       >
         <button
