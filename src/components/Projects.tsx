@@ -343,7 +343,7 @@ const MiniCard = memo(({
   <motion.div
     variants={staggerItem}
     onClick={onOpen}
-    className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu will-change-transform"
+    className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu"
   >
     <div className="relative h-32 sm:h-36 overflow-hidden bg-muted/30">
       <img
