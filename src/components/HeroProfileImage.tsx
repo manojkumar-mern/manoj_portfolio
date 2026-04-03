@@ -53,8 +53,8 @@ const OrbitRing = memo(({ icons, duration, tier }: { icons: typeof orbitIcons; d
               style={{ left: -15, top: -ORBIT_RADIUS_SM - 15 }}
               whileHover={{ scale: 1.25 }}
             >
-              <div className="w-[30px] h-[30px] rounded-full bg-card/90 backdrop-blur-sm border border-border/50 flex items-center justify-center shadow-lg">
-                <img src={icon.src} alt={icon.label} className="w-4 h-4" loading="lazy" width={16} height={16} />
+              <div className="w-[30px] h-[30px] rounded-full bg-card border border-border/60 flex items-center justify-center shadow-lg shadow-black/20">
+                <img src={icon.src} alt={icon.label} className={`w-4 h-4${icon.invert ? " invert brightness-200" : ""}`} loading="lazy" width={16} height={16} />
               </div>
             </motion.div>
           </div>
