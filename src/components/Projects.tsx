@@ -142,7 +142,7 @@ const ProjectModal = memo(({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.97, opacity: 0 }}
         transition={{ type: "spring", duration: 0.4, bounce: 0.12 }}
-        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto transform-gpu will-change-transform"
+        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto transform-gpu"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -221,7 +221,7 @@ const HeroCard = memo(({
       whileInView="visible"
       viewport={viewportConfig}
       onClick={onOpen}
-      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu will-change-transform cursor-pointer"
+      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu cursor-pointer"
     >
       <div className="grid md:grid-cols-2 gap-0">
         <div className="relative h-48 sm:h-56 md:h-auto md:min-h-[260px] overflow-hidden bg-muted/30">
@@ -284,7 +284,7 @@ const FeaturedCard = memo(({
   <motion.div
     variants={staggerItem}
     onClick={onOpen}
-    className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu will-change-transform cursor-pointer"
+    className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu cursor-pointer"
   >
     <div className="relative h-36 sm:h-44 overflow-hidden bg-muted/30">
       <img
@@ -343,7 +343,7 @@ const MiniCard = memo(({
   <motion.div
     variants={staggerItem}
     onClick={onOpen}
-    className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu will-change-transform"
+    className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu"
   >
     <div className="relative h-32 sm:h-36 overflow-hidden bg-muted/30">
       <img
