@@ -284,7 +284,7 @@ const FeaturedCard = memo(({
   <motion.div
     variants={staggerItem}
     onClick={onOpen}
-    className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu will-change-transform cursor-pointer"
+    className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu cursor-pointer"
   >
     <div className="relative h-36 sm:h-44 overflow-hidden bg-muted/30">
       <img
