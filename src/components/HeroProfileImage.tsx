@@ -67,6 +67,7 @@ OrbitRing.displayName = "OrbitRing";
 
 const HeroProfileImage = memo(() => {
   const tier = usePerformanceTier();
+  const idleReady = useIdleReady(400);
   const [hovered, setHovered] = useState(false);
   const orbitDuration = hovered ? ORBIT_DURATION_FAST : ORBIT_DURATION_NORMAL;
 
