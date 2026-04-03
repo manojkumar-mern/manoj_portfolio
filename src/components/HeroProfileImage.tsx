@@ -113,7 +113,7 @@ const HeroProfileImage = memo(() => {
         {idleReady && <OrbitRing icons={orbitIcons} duration={orbitDuration} tier={tier} />}
 
         {/* Rotating Gradient Ring - skip on low */}
-        {tier !== "low" && (
+        {tier !== "low" && idleReady && (
           <motion.div
             className="absolute rounded-full pointer-events-none"
             style={{
