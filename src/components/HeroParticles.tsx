@@ -16,13 +16,7 @@ const HeroParticles = memo(() => {
   const tier = usePerformanceTier();
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [ready, setReady] = useState(false);
-
-  // Delay mount by 500ms to reduce first-load jank
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 500);
-    return () => clearTimeout(t);
-  }, []);
+  const ready = useIdleReady(500);
 
   useEffect(() => {
     const el = ref.current;
