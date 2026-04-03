@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { usePerformanceTier } from "@/hooks/use-performance";
+import { useIdleReady } from "@/hooks/use-idle-animation";
 
 const allIcons = [
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", x: "10%", y: "20%" },
@@ -15,12 +16,7 @@ const FloatingIcons = memo(() => {
   const tier = usePerformanceTier();
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 600);
-    return () => clearTimeout(t);
-  }, []);
+  const ready = useIdleReady(600);
 
   useEffect(() => {
     const el = ref.current;

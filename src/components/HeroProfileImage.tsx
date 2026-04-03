@@ -2,6 +2,7 @@ import { useState, memo } from "react";
 import { motion } from "framer-motion";
 import profileImg from "@/assets/profile.webp";
 import { usePerformanceTier } from "@/hooks/use-performance";
+import { useIdleReady } from "@/hooks/use-idle-animation";
 
 const orbitIcons = [
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", label: "React" },
@@ -66,6 +67,7 @@ OrbitRing.displayName = "OrbitRing";
 
 const HeroProfileImage = memo(() => {
   const tier = usePerformanceTier();
+  const idleReady = useIdleReady(400);
   const [hovered, setHovered] = useState(false);
   const orbitDuration = hovered ? ORBIT_DURATION_FAST : ORBIT_DURATION_NORMAL;
 
@@ -80,7 +82,7 @@ const HeroProfileImage = memo(() => {
     >
       <div className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px] transform-gpu">
         {/* Aura Glow - skip on low */}
-        {tier !== "low" && (
+        {tier !== "low" && idleReady && (
           <motion.div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
@@ -109,10 +111,10 @@ const HeroProfileImage = memo(() => {
         )}
 
         {/* Orbit Icons */}
-        <OrbitRing icons={orbitIcons} duration={orbitDuration} tier={tier} />
+        {idleReady && <OrbitRing icons={orbitIcons} duration={orbitDuration} tier={tier} />}
 
         {/* Rotating Gradient Ring - skip on low */}
-        {tier !== "low" && (
+        {tier !== "low" && idleReady && (
           <motion.div
             className="absolute rounded-full pointer-events-none"
             style={{
