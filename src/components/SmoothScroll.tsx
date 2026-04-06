@@ -8,7 +8,15 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   const tier = usePerformanceTier();
 
   const raf = useCallback((time: number) => {
-    lenisRef.current?.raf(time);
+    if (lenisRef.current) {
+      const isPrevented = document.documentElement.hasAttribute("data-lenis-prevent");
+      if (isPrevented) {
+        lenisRef.current.stop();
+      } else if (!lenisRef.current.isScrolling) {
+        lenisRef.current.start();
+      }
+      lenisRef.current.raf(time);
+    }
     rafIdRef.current = requestAnimationFrame(raf);
   }, []);
 
