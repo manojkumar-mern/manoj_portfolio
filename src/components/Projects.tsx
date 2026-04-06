@@ -1,19 +1,11 @@
 import { useState, useEffect, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, X } from "lucide-react";
+import { ExternalLink, Github, X, AlertCircle, Lightbulb, Zap, BookOpen, Trophy } from "lucide-react";
 import {
   fadeUp, fadeRight, staggerContainer, staggerItem,
   viewportConfig, prefersReducedMotion, noMotion,
 } from "@/lib/motion";
-
-interface Project {
-  title: string;
-  description: string;
-  tech: string[];
-  demo: string | null;
-  github: string;
-  image: string;
-}
+import { type Project, featuredProjects, miniProjects } from "@/data/projects";
 
 const featuredProjects: Project[] = [
   {
