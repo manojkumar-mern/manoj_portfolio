@@ -81,8 +81,16 @@ const ProjectModal = memo(({
   onClose: () => void;
 }) => {
   useEffect(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    // Stop Lenis smooth scroll so modal can scroll natively
+    document.documentElement.setAttribute("data-lenis-prevent", "");
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+      document.documentElement.removeAttribute("data-lenis-prevent");
+    };
   }, []);
 
   return (
