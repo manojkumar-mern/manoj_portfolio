@@ -81,8 +81,16 @@ const ProjectModal = memo(({
   onClose: () => void;
 }) => {
   useEffect(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    // Stop Lenis smooth scroll so modal can scroll natively
+    document.documentElement.setAttribute("data-lenis-prevent", "");
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+      document.documentElement.removeAttribute("data-lenis-prevent");
+    };
   }, []);
 
   return (
@@ -99,7 +107,8 @@ const ProjectModal = memo(({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.97, opacity: 0 }}
         transition={{ type: "spring", duration: 0.4, bounce: 0.12 }}
-        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto transform-gpu"
+        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto overscroll-contain transform-gpu scroll-smooth"
+        data-lenis-prevent
         onClick={(e) => e.stopPropagation()}
       >
         <button
