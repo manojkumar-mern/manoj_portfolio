@@ -127,10 +127,38 @@ const ProjectModal = memo(({
             {project.description}
           </p>
 
+          {/* Problem Statement */}
+          <CaseStudySection icon={AlertCircle} title="Problem Statement">
+            <p className="text-muted-foreground text-sm leading-relaxed">{project.problem}</p>
+          </CaseStudySection>
+
+          {/* Solution / Approach */}
+          <CaseStudySection icon={Lightbulb} title="Solution / Approach">
+            <p className="text-muted-foreground text-sm leading-relaxed">{project.solution}</p>
+          </CaseStudySection>
+
+          {/* Key Features */}
+          <CaseStudySection icon={Zap} title="Key Features">
+            <BulletList items={project.features} />
+          </CaseStudySection>
+
+          {/* Challenges Faced */}
+          <CaseStudySection icon={Trophy} title="Challenges Faced">
+            <BulletList items={project.challenges} />
+          </CaseStudySection>
+
+          {/* What I Learned */}
+          <CaseStudySection icon={BookOpen} title="What I Learned">
+            <BulletList items={project.learnings} />
+          </CaseStudySection>
+
+          {/* Tech Stack */}
           <div className="mb-6">
-            <span className="text-xs font-medium text-muted-foreground tracking-wider uppercase mb-3 block">
-              Tech Stack
-            </span>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-semibold text-primary tracking-wider uppercase">
+                Tech Stack
+              </span>
+            </div>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span
