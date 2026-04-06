@@ -7,74 +7,39 @@ import {
 } from "@/lib/motion";
 import { type Project, featuredProjects, miniProjects } from "@/data/projects";
 
-const featuredProjects: Project[] = [
-  {
-    title: "Real-Time Chat Application",
-    description:
-      "A real-time messaging application built with MERN stack and Socket.io. Users can send instant messages, see online status, and experience live communication using WebSockets.",
-    tech: ["React", "Vite", "Node.js", "Express.js", "MongoDB", "Socket.io"],
-    demo: "https://chat-app-manoj.vercel.app",
-    github: "https://github.com/manojkumar-mern/chat-app",
-    image: "/projects/chat-app.webp",
-  },
-  {
-    title: "Postly – Social Media Feed",
-    description:
-      "A full-stack social media style feed where users can create posts and view posts dynamically. Built with React and REST APIs with MongoDB backend.",
-    tech: ["React", "Node.js", "Express.js", "MongoDB"],
-    demo: "https://postly-react.vercel.app",
-    github: "https://github.com/manojkumar-mern/postly",
-    image: "/projects/postly.webp",
-  },
-  {
-    title: "Task Manager Authentication",
-    description:
-      "A secure task management system with authentication. Users can register, login, and manage their tasks with protected routes and JWT authentication.",
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT"],
-    demo: "https://task-manager-auth-mern.vercel.app",
-    github: "https://github.com/manojkumar-mern/task-manager-auth",
-    image: "/projects/task-manager.webp",
-  },
-];
+/* ── Case Study Section ── */
+const CaseStudySection = memo(({
+  icon: Icon,
+  title,
+  children,
+}: {
+  icon: React.ElementType;
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <div className="mb-5">
+    <div className="flex items-center gap-2 mb-2">
+      <Icon size={14} className="text-primary shrink-0" />
+      <span className="text-xs font-semibold text-primary tracking-wider uppercase">
+        {title}
+      </span>
+    </div>
+    {children}
+  </div>
+));
+CaseStudySection.displayName = "CaseStudySection";
 
-const miniProjects: Project[] = [
-  {
-    title: "To-Do List Application",
-    description:
-      "A simple and responsive task tracking application where users can add, search, and manage daily tasks efficiently.",
-    tech: ["JavaScript", "HTML", "CSS"],
-    demo: "https://to-do-list-app-87.vercel.app",
-    github: "https://github.com/manojkumar-mern/to-do-list",
-    image: "/projects/todo-list.webp",
-  },
-  {
-    title: "React Live Color Generator",
-    description:
-      "An interactive React application that generates colors dynamically and allows users to preview and save color combinations.",
-    tech: ["React", "JavaScript", "CSS"],
-    demo: "https://react-live-color.vercel.app",
-    github: "https://github.com/manojkumar-mern/react-live-color",
-    image: "/projects/color-generator.webp",
-  },
-  {
-    title: "Rock Paper Scissors – Elite RPS Arena",
-    description:
-      "An interactive browser game with smooth animations and modern UI where users can play Rock Paper Scissors against the computer.",
-    tech: ["JavaScript", "HTML", "CSS"],
-    demo: "https://rock-paper-scissors-game-online.vercel.app",
-    github: "https://github.com/manojkumar-mern/rock-paper-scissors-game",
-    image: "/projects/rps-game.webp",
-  },
-  {
-    title: "Notes API",
-    description:
-      "A RESTful API built with Node.js and Express for creating, updating, deleting, and retrieving notes with MongoDB database integration.",
-    tech: ["Node.js", "Express.js", "MongoDB"],
-    demo: "https://notes-api-mern.vercel.app",
-    github: "https://github.com/manojkumar-mern/notes-api",
-    image: "/projects/notes-api.webp",
-  },
-];
+const BulletList = memo(({ items }: { items: string[] }) => (
+  <ul className="space-y-1.5 ml-1">
+    {items.map((item, i) => (
+      <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm leading-relaxed">
+        <span className="text-primary mt-1.5 shrink-0 w-1 h-1 rounded-full bg-primary" />
+        {item}
+      </li>
+    ))}
+  </ul>
+));
+BulletList.displayName = "BulletList";
 
 /* ── Glowing link button ── */
 const GlowButton = memo(({
