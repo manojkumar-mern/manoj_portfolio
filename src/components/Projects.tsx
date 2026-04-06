@@ -107,89 +107,88 @@ const ProjectModal = memo(({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.97, opacity: 0 }}
         transition={{ type: "spring", duration: 0.4, bounce: 0.12 }}
-        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-y-auto overscroll-contain transform-gpu scroll-smooth"
+        className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl bg-card border border-border card-shadow overflow-hidden transform-gpu flex flex-col"
         data-lenis-prevent
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Sticky close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-300"
+          className="sticky top-0 z-20 ml-auto mr-4 mt-4 mb-[-2.5rem] p-2 rounded-full bg-muted/90 backdrop-blur-sm border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-300 shrink-0"
         >
           <X size={16} />
         </button>
 
-        <div className="h-48 sm:h-56 md:h-64 overflow-hidden bg-muted/30">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover"
-            width={800}
-            height={450}
-          />
+        {/* Scrollable content */}
+        <div className="overflow-y-auto overscroll-contain scroll-smooth flex-1">
+          <div className="h-48 sm:h-56 md:h-64 overflow-hidden bg-muted/30">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover"
+              width={800}
+              height={450}
+            />
+          </div>
+
+          <div className="p-5 sm:p-6 md:p-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
+              {project.title}
+            </h3>
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+              {project.description}
+            </p>
+
+            <CaseStudySection icon={AlertCircle} title="Problem Statement">
+              <p className="text-muted-foreground text-sm leading-relaxed">{project.problem}</p>
+            </CaseStudySection>
+
+            <CaseStudySection icon={Lightbulb} title="Solution / Approach">
+              <p className="text-muted-foreground text-sm leading-relaxed">{project.solution}</p>
+            </CaseStudySection>
+
+            <CaseStudySection icon={Zap} title="Key Features">
+              <BulletList items={project.features} />
+            </CaseStudySection>
+
+            <CaseStudySection icon={Trophy} title="Challenges Faced">
+              <BulletList items={project.challenges} />
+            </CaseStudySection>
+
+            <CaseStudySection icon={BookOpen} title="What I Learned">
+              <BulletList items={project.learnings} />
+            </CaseStudySection>
+
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs font-semibold text-primary tracking-wider uppercase">
+                  Tech Stack
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="p-5 sm:p-6 md:p-8">
-          <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
-            {project.title}
-          </h3>
-          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-            {project.description}
-          </p>
-
-          {/* Problem Statement */}
-          <CaseStudySection icon={AlertCircle} title="Problem Statement">
-            <p className="text-muted-foreground text-sm leading-relaxed">{project.problem}</p>
-          </CaseStudySection>
-
-          {/* Solution / Approach */}
-          <CaseStudySection icon={Lightbulb} title="Solution / Approach">
-            <p className="text-muted-foreground text-sm leading-relaxed">{project.solution}</p>
-          </CaseStudySection>
-
-          {/* Key Features */}
-          <CaseStudySection icon={Zap} title="Key Features">
-            <BulletList items={project.features} />
-          </CaseStudySection>
-
-          {/* Challenges Faced */}
-          <CaseStudySection icon={Trophy} title="Challenges Faced">
-            <BulletList items={project.challenges} />
-          </CaseStudySection>
-
-          {/* What I Learned */}
-          <CaseStudySection icon={BookOpen} title="What I Learned">
-            <BulletList items={project.learnings} />
-          </CaseStudySection>
-
-          {/* Tech Stack */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-semibold text-primary tracking-wider uppercase">
-                Tech Stack
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-            {project.demo && (
-              <GlowButton href={project.demo} variant="primary">
-                <ExternalLink size={14} /> Live Demo
-              </GlowButton>
-            )}
-            <GlowButton href={project.github} variant="outline">
-              <Github size={14} /> GitHub
+        {/* Sticky bottom action buttons */}
+        <div className="sticky bottom-0 z-20 flex flex-wrap gap-3 px-5 sm:px-6 md:px-8 py-4 border-t border-border bg-card/95 backdrop-blur-sm shrink-0">
+          {project.demo && (
+            <GlowButton href={project.demo} variant="primary">
+              <ExternalLink size={14} /> Live Demo
             </GlowButton>
-          </div>
+          )}
+          <GlowButton href={project.github} variant="outline">
+            <Github size={14} /> GitHub
+          </GlowButton>
         </div>
       </motion.div>
     </motion.div>
