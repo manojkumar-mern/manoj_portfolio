@@ -61,6 +61,6 @@ To run this project locally:
 
 ```bash
 git clone https://github.com/manojkumar-mern/manoj_portfolio
-cd manoj-s-mern-portfolio
+cd manoj_portfolio
 npm install
 npm run dev
