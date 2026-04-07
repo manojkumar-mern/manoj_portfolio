@@ -60,7 +60,7 @@ A task management system with authentication and full CRUD functionality for man
 To run this project locally:
 
 ```bash
-git clone https://github.com/manojkumar-mern/manoj-s-mern-portfolio.git
+git clone https://github.com/manojkumar-mern/manoj_portfolio
 cd manoj-s-mern-portfolio
 npm install
 npm run dev
