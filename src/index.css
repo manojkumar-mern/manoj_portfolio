@@ -237,6 +237,19 @@
   }
 }
 
+/* GPU-accelerated orbit rotation */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .will-change-transform {
+    animation: none !important;
+  }
+}
+
 /* ---------------- Lenis Smooth Scroll ---------------- */
 
 html.lenis,
