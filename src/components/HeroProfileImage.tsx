@@ -143,7 +143,7 @@ const HeroProfileImage = memo(() => {
         className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px] transform-gpu"
       >
         {/* Aura Glow - skip on low */}
-        {tier !== "low" && idleReady && isVisible && (
+        {shouldShowHeavyEffects(tier) && idleReady && isVisible && (
           <motion.div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
