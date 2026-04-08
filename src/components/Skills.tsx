@@ -92,7 +92,7 @@ const Skills = memo(() => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="flex flex-wrap gap-2.5 justify-center sm:justify-start"
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5"
               >
                 {group.skills.map((skill) => (
                   <motion.div
