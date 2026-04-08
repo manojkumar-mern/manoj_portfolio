@@ -28,6 +28,11 @@ function getVisibleIcons(tier: PerfTier) {
   return orbitIcons;
 }
 
+// On low tier, skip heavy effects but keep orbit alive
+function shouldShowHeavyEffects(tier: PerfTier): boolean {
+  return tier !== "low";
+}
+
 // Hook: pause when not visible + respect reduced-motion
 function useOrbitVisible(ref: React.RefObject<HTMLElement | null>): boolean {
   const [visible, setVisible] = useState(true);
