@@ -195,7 +195,7 @@ const HeroProfileImage = memo(() => {
           style={{
             boxShadow: hovered ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)" : "none",
           }}
-          whileHover={tier !== "low" ? { scale: 1.05 } : undefined}
+          whileHover={shouldShowHeavyEffects(tier) ? { scale: 1.05 } : undefined}
           transition={{ type: "spring", stiffness: 280, damping: 20 }}
         >
           <img
