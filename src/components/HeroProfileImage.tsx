@@ -173,7 +173,7 @@ const HeroProfileImage = memo(() => {
         )}
 
         {/* Rotating Gradient Ring - skip on low */}
-        {tier !== "low" && idleReady && isVisible && (
+        {shouldShowHeavyEffects(tier) && idleReady && isVisible && (
           <div
             className="absolute rounded-full pointer-events-none will-change-transform"
             style={{
