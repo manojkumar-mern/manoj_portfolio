@@ -11,10 +11,13 @@ function detect(): PerfTier {
   const isMobile = width < 768;
   const isTouch = "ontouchstart" in window;
 
-  // Low: mobile, low cores, low memory, or battery-saving hint
-  if (isMobile && (cores <= 4 || (mem !== undefined && mem <= 4))) return "low";
-  if (isTouch && cores <= 4) return "low";
+  // Low: only truly underpowered devices (≤2 cores or ≤2GB RAM)
+  if (cores <= 2) return "low";
   if (mem !== undefined && mem <= 2) return "low";
+
+  // Medium: mid-range mobile/touch (4GB RAM, 4 cores, etc.)
+  if (isMobile || isTouch) return "medium";
+  if (mem !== undefined && mem <= 4) return "medium";
 
   // Medium: moderate hardware or laptops
   if (cores <= 4 || (mem !== undefined && mem <= 6)) return "medium";

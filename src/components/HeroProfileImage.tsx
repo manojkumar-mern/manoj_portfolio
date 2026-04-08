@@ -17,8 +17,8 @@ const ORBIT_RADIUS_SM = 130;
 
 // Adaptive durations per tier
 function getOrbitDuration(tier: PerfTier, hovered: boolean): number {
-  const base = tier === "low" ? 60 : tier === "medium" ? 48 : 36;
-  return hovered ? base / 2 : base;
+  const base = tier === "low" ? 30 : tier === "medium" ? 24 : 18;
+  return hovered ? base * 0.6 : base;
 }
 
 // Icon count per tier
@@ -26,6 +26,11 @@ function getVisibleIcons(tier: PerfTier) {
   if (tier === "low") return orbitIcons.slice(0, 3);
   if (tier === "medium") return orbitIcons.slice(0, 4);
   return orbitIcons;
+}
+
+// On low tier, skip heavy effects but keep orbit alive
+function shouldShowHeavyEffects(tier: PerfTier): boolean {
+  return tier !== "low";
 }
 
 // Hook: pause when not visible + respect reduced-motion
@@ -138,7 +143,7 @@ const HeroProfileImage = memo(() => {
         className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px] transform-gpu"
       >
         {/* Aura Glow - skip on low */}
-        {tier !== "low" && idleReady && isVisible && (
+        {shouldShowHeavyEffects(tier) && idleReady && isVisible && (
           <motion.div
             className="absolute inset-0 rounded-full pointer-events-none"
             style={{
@@ -168,7 +173,7 @@ const HeroProfileImage = memo(() => {
         )}
 
         {/* Rotating Gradient Ring - skip on low */}
-        {tier !== "low" && idleReady && isVisible && (
+        {shouldShowHeavyEffects(tier) && idleReady && isVisible && (
           <div
             className="absolute rounded-full pointer-events-none will-change-transform"
             style={{
@@ -190,7 +195,7 @@ const HeroProfileImage = memo(() => {
           style={{
             boxShadow: hovered ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)" : "none",
           }}
-          whileHover={tier !== "low" ? { scale: 1.05 } : undefined}
+          whileHover={shouldShowHeavyEffects(tier) ? { scale: 1.05 } : undefined}
           transition={{ type: "spring", stiffness: 280, damping: 20 }}
         >
           <img
