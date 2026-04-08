@@ -17,8 +17,8 @@ const ORBIT_RADIUS_SM = 130;
 
 // Adaptive durations per tier
 function getOrbitDuration(tier: PerfTier, hovered: boolean): number {
-  const base = tier === "low" ? 60 : tier === "medium" ? 48 : 36;
-  return hovered ? base / 2 : base;
+  const base = tier === "low" ? 30 : tier === "medium" ? 24 : 18;
+  return hovered ? base * 0.6 : base;
 }
 
 // Icon count per tier
