@@ -21,9 +21,16 @@
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
+    <!-- Preload hero profile image for LCP -->
+    <link rel="preload" as="image" type="image/webp" href="/src/assets/profile.webp" fetchpriority="high" />
+
     <!-- DNS prefetch for CDN icons -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+    <!-- Preconnect for GitHub API -->
+    <link rel="dns-prefetch" href="https://api.github.com" />
+    <link rel="preconnect" href="https://api.github.com" crossorigin />
 
     <!-- Fonts: single consolidated request -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -143,6 +143,9 @@ const HeroProfileImage = memo(() => {
             className="w-full h-full object-cover object-[center_20%] rounded-full"
             width={224}
             height={224}
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
           />
         </motion.div>
       </div>
