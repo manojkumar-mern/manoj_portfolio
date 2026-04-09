@@ -17,8 +17,8 @@ const ORBIT_RADIUS_SM = 130;
 
 // Adaptive durations per tier
 function getOrbitDuration(tier: PerfTier, hovered: boolean): number {
-  const base = tier === "low" ? 30 : tier === "medium" ? 24 : 18;
-  return hovered ? base * 0.6 : base;
+  const base = tier === "low" ? 28 : tier === "medium" ? 22 : 16;
+  return hovered ? base * 0.5 : base;
 }
 
 // Icon count per tier
@@ -68,7 +68,11 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
     <div
       className="absolute inset-0 pointer-events-none will-change-transform"
       style={{
-        animation: isVisible ? `orbit-spin ${duration}s linear infinite` : "none",
+        animationName: isVisible ? "orbit-spin" : "none",
+        animationDuration: `${duration}s`,
+        animationTimingFunction: "linear",
+        animationIterationCount: "infinite",
+        transition: "animation-duration 0.5s ease",
       }}
     >
       {icons.map((icon, i) => {
