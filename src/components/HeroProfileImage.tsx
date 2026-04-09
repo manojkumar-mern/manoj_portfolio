@@ -68,7 +68,11 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
     <div
       className="absolute inset-0 pointer-events-none will-change-transform"
       style={{
-        animation: isVisible ? `orbit-spin ${duration}s linear infinite` : "none",
+        animationName: isVisible ? "orbit-spin" : "none",
+        animationDuration: `${duration}s`,
+        animationTimingFunction: "linear",
+        animationIterationCount: "infinite",
+        transition: "animation-duration 0.5s ease",
       }}
     >
       {icons.map((icon, i) => {
