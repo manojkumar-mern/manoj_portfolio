@@ -83,7 +83,11 @@ const Skills = memo(() => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
         >
           {skillGroups.map((group, i) => (
-            <motion.div key={group.title} variants={v(groupVariants[i % groupVariants.length])} className="max-sm:text-center">
+            <motion.div
+              key={group.title}
+              variants={v(groupVariants[i % groupVariants.length])}
+              className="rounded-xl border border-border/40 bg-card/50 p-5 md:p-6"
+            >
               <h3 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-4">
                 {group.title}
               </h3>
@@ -92,13 +96,13 @@ const Skills = memo(() => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5"
+                className="grid grid-cols-2 gap-2.5"
               >
                 {group.skills.map((skill) => (
                   <motion.div
                     key={skill.name}
                     variants={v(staggerItemScale)}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg premium-card glow-card cursor-default group"
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg premium-card glow-card cursor-default group"
                   >
                     {skill.icon ? (
                       <img src={skill.icon} alt={skill.name} className="w-4 h-4 object-contain" loading="lazy" width={16} height={16} />
