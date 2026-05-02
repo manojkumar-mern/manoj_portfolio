@@ -80,15 +80,15 @@ const Skills = memo(() => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-10"
         >
           {skillGroups.map((group, i) => (
             <motion.div
               key={group.title}
               variants={v(groupVariants[i % groupVariants.length])}
-              className="rounded-xl border border-border/40 bg-card/50 p-5 md:p-6"
+              className="rounded-xl border border-border/40 bg-card/50 p-3 md:p-6"
             >
-              <h3 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-4">
+              <h3 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-2.5 md:mb-4">
                 {group.title}
               </h3>
               <motion.div

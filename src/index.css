@@ -250,6 +250,10 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring { animation-play-state: paused !important; }
+}
+
 /* ---------------- Lenis Smooth Scroll ---------------- */
 
 html.lenis,

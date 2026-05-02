@@ -14,7 +14,7 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = 130;
+const ORBIT_RADIUS_SM = 110;
 
 function getOrbitBaseDuration(tier: PerfTier): number {
   return tier === "low" ? 28 : tier === "medium" ? 22 : 16;
@@ -22,9 +22,8 @@ function getOrbitBaseDuration(tier: PerfTier): number {
 
 const HOVER_SPEED_MULTIPLIER = 2.2; // playbackRate when hovered
 
-function getVisibleIcons(tier: PerfTier) {
-  if (tier === "low") return orbitIcons.slice(0, 3);
-  if (tier === "medium") return orbitIcons.slice(0, 4);
+function getVisibleIcons(_tier: PerfTier) {
+  // Show full orbit on all devices for consistent UX
   return orbitIcons;
 }
 
@@ -108,7 +107,8 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
   return (
     <div
       ref={ringRef}
-      className="absolute inset-0 pointer-events-none will-change-transform"
+      className="orbit-ring absolute inset-0 pointer-events-none will-change-transform"
+      style={{ transform: "translateZ(0)", backfaceVisibility: "hidden" }}
     >
       {icons.map((icon, i) => {
         const angle = (i / icons.length) * 360;
@@ -135,16 +135,16 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
             </div>
             <div
               className="md:hidden absolute"
-              style={{ left: -13, top: -ORBIT_RADIUS_SM - 13 }}
+              style={{ left: -14, top: -ORBIT_RADIUS_SM - 14 }}
             >
-              <div className="w-[26px] h-[26px] rounded-full bg-card border border-border/60 flex items-center justify-center shadow-md shadow-black/20">
+              <div className="w-[28px] h-[28px] rounded-full bg-card border border-border/60 flex items-center justify-center shadow-md shadow-black/20">
                 <img
                   src={icon.src}
                   alt={icon.label}
-                  className={`w-3.5 h-3.5${icon.invert ? " invert brightness-200" : ""}`}
+                  className={`w-4 h-4${icon.invert ? " invert brightness-200" : ""}`}
                   loading="lazy"
-                  width={14}
-                  height={14}
+                  width={16}
+                  height={16}
                 />
               </div>
             </div>
@@ -183,7 +183,7 @@ const HeroProfileImage = memo(() => {
       {/* Outer container: owns the ref for mouse events + visibility */}
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px]"
+        className="relative flex items-center justify-center w-[260px] h-[260px] md:w-[400px] md:h-[400px]"
       >
         {/* Tilt layer: separate from orbit rotation */}
         <div
@@ -240,7 +240,7 @@ const HeroProfileImage = memo(() => {
 
         {/* Profile Image — outside tilt layer, stays centered */}
         <motion.div
-          className="relative w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
+          className="relative w-[180px] h-[180px] md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
           style={{
             boxShadow: hovered
               ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)"
