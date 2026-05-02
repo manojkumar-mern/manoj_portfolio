@@ -14,7 +14,7 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = 110;
+const ORBIT_RADIUS_SM = 140;
 
 function getOrbitBaseDuration(tier: PerfTier): number {
   return tier === "low" ? 28 : tier === "medium" ? 22 : 16;
@@ -135,16 +135,16 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
             </div>
             <div
               className="md:hidden absolute"
-              style={{ left: -14, top: -ORBIT_RADIUS_SM - 14 }}
+              style={{ left: -16, top: -ORBIT_RADIUS_SM - 16 }}
             >
-              <div className="w-[28px] h-[28px] rounded-full bg-card border border-border/60 flex items-center justify-center shadow-md shadow-black/20">
+              <div className="w-8 h-8 rounded-full bg-card border border-border/60 flex items-center justify-center shadow-md shadow-black/20">
                 <img
                   src={icon.src}
                   alt={icon.label}
-                  className={`w-4 h-4${icon.invert ? " invert brightness-200" : ""}`}
+                  className={`w-[18px] h-[18px]${icon.invert ? " invert brightness-200" : ""}`}
                   loading="lazy"
-                  width={16}
-                  height={16}
+                  width={18}
+                  height={18}
                 />
               </div>
             </div>
@@ -183,7 +183,7 @@ const HeroProfileImage = memo(() => {
       {/* Outer container: owns the ref for mouse events + visibility */}
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center w-[260px] h-[260px] md:w-[400px] md:h-[400px]"
+        className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px]"
       >
         {/* Tilt layer: separate from orbit rotation */}
         <div
@@ -240,7 +240,7 @@ const HeroProfileImage = memo(() => {
 
         {/* Profile Image — outside tilt layer, stays centered */}
         <motion.div
-          className="relative w-[180px] h-[180px] md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
+          className="relative w-[200px] h-[200px] md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
           style={{
             boxShadow: hovered
               ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)"
