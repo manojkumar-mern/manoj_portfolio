@@ -22,9 +22,8 @@ function getOrbitBaseDuration(tier: PerfTier): number {
 
 const HOVER_SPEED_MULTIPLIER = 2.2; // playbackRate when hovered
 
-function getVisibleIcons(tier: PerfTier) {
-  if (tier === "low") return orbitIcons.slice(0, 3);
-  if (tier === "medium") return orbitIcons.slice(0, 4);
+function getVisibleIcons(_tier: PerfTier) {
+  // Show full orbit on all devices for consistent UX
   return orbitIcons;
 }
 
