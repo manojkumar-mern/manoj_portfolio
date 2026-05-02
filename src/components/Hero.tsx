@@ -225,11 +225,11 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
 
         {/* buttons */}
 
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+        <div className="flex flex-col md:flex-row md:flex-wrap items-stretch md:items-center justify-center gap-3 mb-8 w-full">
 
           <a
             href="#projects"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-semibold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-semibold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full md:w-auto"
           >
             View Projects
             <ExternalLink size={14} />
@@ -237,7 +237,7 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
 
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/40 hover:text-primary transition-all duration-300"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/40 hover:text-primary transition-all duration-300 w-full md:w-auto"
           >
             Contact Me
           </a>
@@ -246,7 +246,7 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
             href="/resume.pdf#zoom=65"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary transition-all duration-300"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary transition-all duration-300 w-full md:w-auto"
           >
             <Eye size={14} />
             View Resume
@@ -255,7 +255,7 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
           <a
             href="/resume.pdf"
             download="manoj_resume.pdf"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary transition-all duration-300"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary transition-all duration-300 w-full md:w-auto"
           >
             <Download size={14} />
             Resume Download
