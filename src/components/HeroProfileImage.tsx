@@ -108,7 +108,8 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
   return (
     <div
       ref={ringRef}
-      className="absolute inset-0 pointer-events-none will-change-transform"
+      className="orbit-ring absolute inset-0 pointer-events-none will-change-transform"
+      style={{ transform: "translateZ(0)", backfaceVisibility: "hidden" }}
     >
       {icons.map((icon, i) => {
         const angle = (i / icons.length) * 360;
@@ -135,16 +136,16 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
             </div>
             <div
               className="md:hidden absolute"
-              style={{ left: -13, top: -ORBIT_RADIUS_SM - 13 }}
+              style={{ left: -14, top: -ORBIT_RADIUS_SM - 14 }}
             >
-              <div className="w-[26px] h-[26px] rounded-full bg-card border border-border/60 flex items-center justify-center shadow-md shadow-black/20">
+              <div className="w-[28px] h-[28px] rounded-full bg-card border border-border/60 flex items-center justify-center shadow-md shadow-black/20">
                 <img
                   src={icon.src}
                   alt={icon.label}
-                  className={`w-3.5 h-3.5${icon.invert ? " invert brightness-200" : ""}`}
+                  className={`w-4 h-4${icon.invert ? " invert brightness-200" : ""}`}
                   loading="lazy"
-                  width={14}
-                  height={14}
+                  width={16}
+                  height={16}
                 />
               </div>
             </div>
