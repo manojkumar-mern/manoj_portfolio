@@ -14,7 +14,7 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = 130;
+const ORBIT_RADIUS_SM = 110;
 
 function getOrbitBaseDuration(tier: PerfTier): number {
   return tier === "low" ? 28 : tier === "medium" ? 22 : 16;
@@ -183,7 +183,7 @@ const HeroProfileImage = memo(() => {
       {/* Outer container: owns the ref for mouse events + visibility */}
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px]"
+        className="relative flex items-center justify-center w-[260px] h-[260px] md:w-[400px] md:h-[400px]"
       >
         {/* Tilt layer: separate from orbit rotation */}
         <div
@@ -240,7 +240,7 @@ const HeroProfileImage = memo(() => {
 
         {/* Profile Image — outside tilt layer, stays centered */}
         <motion.div
-          className="relative w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
+          className="relative w-[180px] h-[180px] md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
           style={{
             boxShadow: hovered
               ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)"
