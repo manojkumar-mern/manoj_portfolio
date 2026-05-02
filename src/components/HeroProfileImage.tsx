@@ -16,10 +16,11 @@ const orbitIcons = [
 const ORBIT_RADIUS_MD = 170;
 const ORBIT_RADIUS_SM = 130;
 
-function getOrbitDuration(tier: PerfTier, hovered: boolean): number {
-  const base = tier === "low" ? 28 : tier === "medium" ? 22 : 16;
-  return hovered ? base * 0.45 : base;
+function getOrbitBaseDuration(tier: PerfTier): number {
+  return tier === "low" ? 28 : tier === "medium" ? 22 : 16;
 }
+
+const HOVER_SPEED_MULTIPLIER = 2.2; // playbackRate when hovered
 
 function getVisibleIcons(tier: PerfTier) {
   if (tier === "low") return orbitIcons.slice(0, 3);
@@ -55,26 +56,59 @@ function useOrbitVisible(ref: React.RefObject<HTMLElement | null>): boolean {
 /* ── Orbit Ring: pure CSS rotation, speed controlled via animation-duration ── */
 const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered: boolean; isVisible: boolean }) => {
   const icons = getVisibleIcons(tier);
-  const duration = getOrbitDuration(tier, hovered);
+  const baseDuration = getOrbitBaseDuration(tier);
   const ringRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<Animation | null>(null);
+  const currentRateRef = useRef<number>(1);
+  const rafRef = useRef<number | null>(null);
 
-  // Update duration directly on the DOM element to avoid React re-render restarting animation
+  // Create a single Web Animations API rotation; speed is changed via playbackRate (no position jump).
   useEffect(() => {
-    if (ringRef.current) {
-      ringRef.current.style.animationDuration = `${duration}s`;
-    }
-  }, [duration]);
+    const el = ringRef.current;
+    if (!el || !isVisible) return;
+
+    const anim = el.animate(
+      [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
+      { duration: baseDuration * 1000, iterations: Infinity, easing: "linear" }
+    );
+    animationRef.current = anim;
+    anim.playbackRate = currentRateRef.current;
+
+    return () => {
+      anim.cancel();
+      animationRef.current = null;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [baseDuration, isVisible]);
+
+  // Smoothly LERP playbackRate on hover state change — no transform reset, just speed.
+  useEffect(() => {
+    const anim = animationRef.current;
+    if (!anim) return;
+    const target = hovered ? HOVER_SPEED_MULTIPLIER : 1;
+
+    const tick = () => {
+      const cur = currentRateRef.current;
+      const next = cur + (target - cur) * 0.12;
+      if (Math.abs(target - next) < 0.01) {
+        currentRateRef.current = target;
+        anim.playbackRate = target;
+        rafRef.current = null;
+        return;
+      }
+      currentRateRef.current = next;
+      anim.playbackRate = next;
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(tick);
+  }, [hovered]);
 
   return (
     <div
       ref={ringRef}
       className="absolute inset-0 pointer-events-none will-change-transform"
-      style={{
-        animationName: isVisible ? "orbit-spin" : "none",
-        animationDuration: `${getOrbitDuration(tier, false)}s`,
-        animationTimingFunction: "linear",
-        animationIterationCount: "infinite",
-      }}
     >
       {icons.map((icon, i) => {
         const angle = (i / icons.length) * 360;
