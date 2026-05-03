@@ -290,16 +290,18 @@ html.lenis body {
     border-radius: 16px !important;
   }
   .skills-items-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
     width: 100% !important;
+    grid-template-columns: unset !important;
   }
   .skill-item-card {
-    width: 100% !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
     margin: 0 !important;
   }
   .skills-items-grid > .skill-item-card:last-child:nth-child(odd) {
-    grid-column: 1 / -1 !important;
+    grid-column: unset !important;
   }
 }
