@@ -268,3 +268,37 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* Skills mobile single-column fix */
+@media (max-width: 767px) {
+  .skills-categories-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    grid-template-columns: unset !important;
+  }
+  .skills-category-box {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    padding: 16px !important;
+  }
+  .skills-items-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .skill-item-card {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .skills-items-grid > .skill-item-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1 !important;
+  }
+}
