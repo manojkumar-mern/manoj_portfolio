@@ -235,7 +235,7 @@ const HeroProfileImage = memo(() => {
         </div>
 
         {/* Profile */}
-        <div className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10 -translate-y-3">
+        <div className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10 ">
           <img
             src={profileImg}
             alt="profile"
