@@ -108,7 +108,14 @@ const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered:
     <div
       ref={ringRef}
       className="orbit-ring absolute inset-0 pointer-events-none will-change-transform"
-      style={{ transform: "translateZ(0)", backfaceVisibility: "hidden" }}
+      style={{
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
+        // CSS animation fallback — guaranteed to spin even if WAAPI is blocked.
+        // WAAPI (when active) overrides this transform; otherwise this keeps the ring rotating.
+        animation: `orbit-spin ${baseDuration}s linear infinite`,
+      }}
     >
       {icons.map((icon, i) => {
         const angle = (i / icons.length) * 360;
