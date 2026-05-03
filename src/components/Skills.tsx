@@ -80,13 +80,13 @@ const Skills = memo(() => {
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
-          className="skills-categories-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-10"
+          className="skills-categories-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10"
         >
           {skillGroups.map((group, i) => (
             <motion.div
               key={group.title}
               variants={v(groupVariants[i % groupVariants.length])}
-              className="skills-category-box rounded-xl border border-border/40 bg-card/50 p-4 md:p-6 w-full"
+              className="skills-category-box rounded-2xl border border-border/40 bg-card/50 p-5 md:p-6 w-full"
             >
               <h3 className="text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-2.5 md:mb-4">
                 {group.title}
@@ -96,7 +96,7 @@ const Skills = memo(() => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="skills-items-grid grid grid-cols-2 gap-2 [&>*:last-child:nth-child(odd)]:col-span-2"
+                className="skills-items-grid grid grid-cols-2 gap-2 md:gap-2 [&>*:last-child:nth-child(odd)]:col-span-2"
               >
                 {group.skills.map((skill) => (
                   <motion.div
