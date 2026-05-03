@@ -28,7 +28,7 @@ function getVisibleIcons(tier: PerfTier, isMobile: boolean) {
   if (isMobile) return orbitIcons.slice(0, 4);
 
   if (tier === "low") return orbitIcons.slice(0, 4);
-  if (tier === "medium") return orbitIcons.slice(0, 4);
+  if (tier === "medium") return orbitIcons.slice(0, 5);
 
   return orbitIcons;
 }
@@ -81,7 +81,6 @@ const OrbitRing = memo(
     isMobile: boolean;
   }) => {
     const icons = getVisibleIcons(tier, isMobile);
-    const baseDuration = getOrbitBaseDuration(tier, isMobile);
 
     const ringRef = useRef<HTMLDivElement>(null);
     const animationRef = useRef<Animation | null>(null);
@@ -95,7 +94,7 @@ const OrbitRing = memo(
       const anim = el.animate(
         [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
         {
-          duration: baseDuration * 1000,
+          duration: 2000,
           iterations: Infinity,
           easing: "linear",
         }
@@ -109,17 +108,21 @@ const OrbitRing = memo(
         animationRef.current = null;
         if (rafRef.current) cancelAnimationFrame(rafRef.current);
       };
-    }, [baseDuration, isVisible]);
+    }, [isVisible]);
+
+    const BASE_SPEED = isMobile ? 0.7 : 1;
+    const HOVER_SPEED = isMobile ? 1.2 : 1.8;
 
     useEffect(() => {
       const anim = animationRef.current;
       if (!anim) return;
 
-      const target = hovered ? HOVER_SPEED_MULTIPLIER : 1;
+      const target = hovered ? HOVER_SPEED : BASE_SPEED;
 
       const tick = () => {
         const cur = currentRateRef.current;
-        const next = cur + (target - cur) * 0.12;
+        const smoothFactor = isMobile ? 0.08 : 0.12;
+        const next = cur + (target - cur) * smoothFactor;
 
         if (Math.abs(target - next) < 0.01) {
           currentRateRef.current = target;
@@ -143,7 +146,6 @@ const OrbitRing = memo(
         className="absolute inset-0 pointer-events-none will-change-transform"
         style={{
           transform: "translateZ(0)",
-          animation: `orbit-spin ${baseDuration}s linear infinite`,
         }}
       >
         {icons.map((icon, i) => {
@@ -211,7 +213,7 @@ const HeroProfileImage = memo(() => {
   useMouseTilt(
     containerRef,
     tiltRef,
-    !isMobile && shouldShowHeavyEffects(tier) && isVisible
+    shouldShowHeavyEffects(tier) && isVisible
   );
 
   return (
