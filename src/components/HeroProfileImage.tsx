@@ -18,15 +18,24 @@ const ORBIT_RADIUS_MD = 170;
 const ORBIT_RADIUS_SM = 100;
 
 function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
-  if (isMobile) return 30; // slow + smooth on mobile
+  if (isMobile) return 30;
   return tier === "low" ? 28 : tier === "medium" ? 22 : 16;
 }
 
-const HOVER_SPEED_MULTIPLIER = 2.2; // playbackRate when hovered
+const HOVER_SPEED_MULTIPLIER = 2.2;
 
-function getVisibleIcons(_tier: PerfTier, isMobile: boolean) {
-  // Mobile: cap at 4 icons for lightweight performance. Desktop: full set.
-  return isMobile ? orbitIcons.slice(0, 4) : orbitIcons;
+function getVisibleIcons(tier: PerfTier, isMobile: boolean) {
+  if (isMobile) return orbitIcons.slice(0, 4);
+
+  if (tier === "low") return orbitIcons.slice(0, 4);
+  if (tier === "medium") return orbitIcons.slice(0, 4);
+
+  return orbitIcons;
+}
+
+function getOrbitDuration(tier: PerfTier, hovered: boolean): number {
+  const base = tier === "low" ? 32 : tier === "medium" ? 22 : 16;
+  return hovered ? base * 0.45 : base;
 }
 
 function shouldShowHeavyEffects(tier: PerfTier): boolean {
@@ -38,7 +47,10 @@ function useOrbitVisible(ref: React.RefObject<HTMLElement | null>): boolean {
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) { setVisible(false); return; }
+    if (mq.matches) {
+      setVisible(false);
+      return;
+    }
 
     const el = ref.current;
     if (!el) return;
@@ -47,6 +59,7 @@ function useOrbitVisible(ref: React.RefObject<HTMLElement | null>): boolean {
       ([entry]) => setVisible(entry.isIntersecting),
       { threshold: 0.1 }
     );
+
     observer.observe(el);
     return () => observer.disconnect();
   }, [ref]);
@@ -54,227 +67,184 @@ function useOrbitVisible(ref: React.RefObject<HTMLElement | null>): boolean {
   return visible;
 }
 
-/* ── Orbit Ring: pure CSS rotation, speed controlled via animation-duration ── */
-const OrbitRing = memo(({ tier, hovered, isVisible, isMobile }: { tier: PerfTier; hovered: boolean; isVisible: boolean; isMobile: boolean }) => {
-  const icons = getVisibleIcons(tier, isMobile);
-  const baseDuration = getOrbitBaseDuration(tier, isMobile);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<Animation | null>(null);
-  const currentRateRef = useRef<number>(1);
-  const rafRef = useRef<number | null>(null);
+/* ───────── Orbit Ring ───────── */
+const OrbitRing = memo(
+  ({
+    tier,
+    hovered,
+    isVisible,
+    isMobile,
+  }: {
+    tier: PerfTier;
+    hovered: boolean;
+    isVisible: boolean;
+    isMobile: boolean;
+  }) => {
+    const icons = getVisibleIcons(tier, isMobile);
+    const baseDuration = getOrbitBaseDuration(tier, isMobile);
 
-  // Create a single Web Animations API rotation; speed is changed via playbackRate (no position jump).
-  useEffect(() => {
-    const el = ringRef.current;
-    if (!el || !isVisible) return;
+    const ringRef = useRef<HTMLDivElement>(null);
+    const animationRef = useRef<Animation | null>(null);
+    const currentRateRef = useRef(1);
+    const rafRef = useRef<number | null>(null);
 
-    const anim = el.animate(
-      [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
-      { duration: baseDuration * 1000, iterations: Infinity, easing: "linear" }
-    );
-    animationRef.current = anim;
-    anim.playbackRate = currentRateRef.current;
+    useEffect(() => {
+      const el = ringRef.current;
+      if (!el || !isVisible) return;
 
-    return () => {
-      anim.cancel();
-      animationRef.current = null;
+      const anim = el.animate(
+        [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
+        {
+          duration: baseDuration * 1000,
+          iterations: Infinity,
+          easing: "linear",
+        }
+      );
+
+      animationRef.current = anim;
+      anim.playbackRate = currentRateRef.current;
+
+      return () => {
+        anim.cancel();
+        animationRef.current = null;
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      };
+    }, [baseDuration, isVisible]);
+
+    useEffect(() => {
+      const anim = animationRef.current;
+      if (!anim) return;
+
+      const target = hovered ? HOVER_SPEED_MULTIPLIER : 1;
+
+      const tick = () => {
+        const cur = currentRateRef.current;
+        const next = cur + (target - cur) * 0.12;
+
+        if (Math.abs(target - next) < 0.01) {
+          currentRateRef.current = target;
+          anim.playbackRate = target;
+          rafRef.current = null;
+          return;
+        }
+
+        currentRateRef.current = next;
+        anim.playbackRate = next;
+        rafRef.current = requestAnimationFrame(tick);
+      };
+
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [baseDuration, isVisible]);
-
-  // Smoothly LERP playbackRate on hover state change — no transform reset, just speed.
-  useEffect(() => {
-    const anim = animationRef.current;
-    if (!anim) return;
-    const target = hovered ? HOVER_SPEED_MULTIPLIER : 1;
-
-    const tick = () => {
-      const cur = currentRateRef.current;
-      const next = cur + (target - cur) * 0.12;
-      if (Math.abs(target - next) < 0.01) {
-        currentRateRef.current = target;
-        anim.playbackRate = target;
-        rafRef.current = null;
-        return;
-      }
-      currentRateRef.current = next;
-      anim.playbackRate = next;
       rafRef.current = requestAnimationFrame(tick);
-    };
+    }, [hovered]);
 
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(tick);
-  }, [hovered]);
+    return (
+      <div
+        ref={ringRef}
+        className="absolute inset-0 pointer-events-none will-change-transform"
+        style={{
+          transform: "translateZ(0)",
+          animation: `orbit-spin ${baseDuration}s linear infinite`,
+        }}
+      >
+        {icons.map((icon, i) => {
+          const angle = (i / icons.length) * 360;
 
-  return (
-    <div
-      ref={ringRef}
-      className="orbit-ring absolute inset-0 pointer-events-none will-change-transform"
-      style={{
-        transform: "translateZ(0)",
-        backfaceVisibility: "hidden",
-        WebkitBackfaceVisibility: "hidden",
-        // CSS animation fallback — guaranteed to spin even if WAAPI is blocked.
-        // WAAPI (when active) overrides this transform; otherwise this keeps the ring rotating.
-        animation: `orbit-spin ${baseDuration}s linear infinite`,
-      }}
-    >
-      {icons.map((icon, i) => {
-        const angle = (i / icons.length) * 360;
-        return (
-          <div
-            key={icon.label}
-            className="absolute left-1/2 top-1/2 pointer-events-auto"
-            style={{ transform: `rotate(${angle}deg)` }}
-          >
+          return (
             <div
-              className="hidden md:block absolute"
-              style={{ left: -18, top: -ORBIT_RADIUS_MD - 18 }}
+              key={icon.label}
+              className="absolute left-1/2 top-1/2"
+              style={{ transform: `rotate(${angle}deg)` }}
             >
-              <div className="w-9 h-9 rounded-full bg-card border border-border/60 flex items-center justify-center shadow-lg shadow-black/20 hover:shadow-[0_0_16px_hsl(187_78%_53%/0.35)] hover:border-primary/50 transition-shadow transition-colors duration-300 cursor-pointer group">
-                <img
-                  src={icon.src}
-                  alt={icon.label}
-                  className={`w-5 h-5 group-hover:drop-shadow-[0_0_6px_hsl(187_78%_53%/0.6)] transition-all duration-300${icon.invert ? " invert brightness-200" : ""}`}
-                  loading="lazy"
-                  width={20}
-                  height={20}
-                />
+              {/* Desktop */}
+              <div
+                className="hidden md:block absolute"
+                style={{ left: -18, top: -ORBIT_RADIUS_MD - 18 }}
+              >
+                <div className="w-9 h-9 rounded-full bg-card border border-border/60 flex items-center justify-center shadow-lg shadow-black/20 hover:shadow-[0_0_16px_hsl(187_78%_53%/0.35)] hover:border-primary/50 transition duration-300">
+                  <img
+                    src={icon.src}
+                    alt={icon.label}
+                    className={`w-5 h-5 ${
+                      icon.invert ? "invert brightness-200" : ""
+                    }`}
+                  />
+                </div>
+              </div>
+
+              {/* Mobile */}
+              <div
+                className="md:hidden absolute"
+                style={{ left: -16, top: -ORBIT_RADIUS_SM - 16 }}
+              >
+                <div className="w-8 h-8 rounded-full bg-card border border-border/60 flex items-center justify-center">
+                  <img
+                    src={icon.src}
+                    alt={icon.label}
+                    className={`w-[18px] h-[18px] ${
+                      icon.invert ? "invert brightness-200" : ""
+                    }`}
+                  />
+                </div>
               </div>
             </div>
-            <div
-              className="md:hidden absolute"
-              style={{ left: -16, top: -ORBIT_RADIUS_SM - 16 }}
-            >
-              <div className="w-8 h-8 rounded-full bg-card border border-border/60 flex items-center justify-center shadow-md shadow-black/20">
-                <img
-                  src={icon.src}
-                  alt={icon.label}
-                  className={`w-[18px] h-[18px]${icon.invert ? " invert brightness-200" : ""}`}
-                  loading="lazy"
-                  width={18}
-                  height={18}
-                />
-              </div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-});
+          );
+        })}
+      </div>
+    );
+  }
+);
+
 OrbitRing.displayName = "OrbitRing";
 
-/* ── Main Component ── */
+/* ───────── MAIN ───────── */
 const HeroProfileImage = memo(() => {
   const tier = usePerformanceTier();
   const idleReady = useIdleReady(400);
   const isMobile = useIsMobile();
   const [hovered, setHovered] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
+
   const isVisible = useOrbitVisible(containerRef);
 
-  // Mouse tilt — desktop only (disabled on mobile)
-  useMouseTilt(containerRef, tiltRef, !isMobile && shouldShowHeavyEffects(tier) && isVisible);
-
-  const handleEnter = useCallback(() => setHovered(true), []);
-  const handleLeave = useCallback(() => setHovered(false), []);
+  useMouseTilt(
+    containerRef,
+    tiltRef,
+    !isMobile && shouldShowHeavyEffects(tier) && isVisible
+  );
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, delay: 0.25 }}
-      className="flex-shrink-0"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-    >
-      {/* Outer container: owns the ref for mouse events + visibility */}
+    <motion.div className="flex-shrink-0">
       <div
         ref={containerRef}
         className="relative flex items-center justify-center w-[260px] h-[260px] md:w-[400px] md:h-[400px]"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
-        {/* Tilt layer: separate from orbit rotation */}
-        <div
-          ref={tiltRef}
-          className="absolute inset-0 will-change-transform"
-          style={{ transform: "perspective(800px) rotateX(0deg) rotateY(0deg)" }}
-        >
-          {/* Static Aura Glow — no heavy animation, just opacity transition */}
-          {!isMobile && shouldShowHeavyEffects(tier) && idleReady && isVisible && (
-            <div
-              className="absolute inset-0 rounded-full pointer-events-none transition-opacity duration-700"
-              style={{
-                background: "radial-gradient(circle, hsl(187 78% 53% / 0.08) 0%, hsl(160 64% 43% / 0.04) 40%, transparent 65%)",
-                opacity: hovered ? 0.9 : 0.6,
-              }}
-            />
-          )}
-
-          {/* Orbit Tracks */}
-          <div
-            className="absolute rounded-full border border-border/30 pointer-events-none hidden md:block"
-            style={{ width: ORBIT_RADIUS_MD * 2, height: ORBIT_RADIUS_MD * 2, top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+        <div ref={tiltRef} className="absolute inset-0">
+          {/* Orbit */}
+          <OrbitRing
+            tier={tier}
+            hovered={hovered}
+            isVisible={isVisible}
+            isMobile={isMobile}
           />
-          <div
-            className="absolute rounded-full border border-border/30 pointer-events-none md:hidden"
-            style={{ width: ORBIT_RADIUS_SM * 2, height: ORBIT_RADIUS_SM * 2, top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-          />
-
-          {/* Orbit Icons */}
-          {idleReady && (
-            <OrbitRing tier={tier} hovered={hovered} isVisible={isVisible} isMobile={isMobile} />
-          )}
-
-          {/* Rotating Gradient Ring - skip on low */}
-          {!isMobile && shouldShowHeavyEffects(tier) && idleReady && isVisible && (
-            <div
-              className="absolute rounded-full pointer-events-none will-change-transform"
-              style={{
-                width: "calc(100% - 120px)",
-                height: "calc(100% - 120px)",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                background: "conic-gradient(from 0deg, hsl(187 78% 53% / 0.25), hsl(160 64% 43% / 0.2), transparent 40%, transparent 60%, hsl(187 78% 53% / 0.15), hsl(160 64% 43% / 0.25))",
-                filter: "blur(2px)",
-                animationName: "orbit-spin",
-                animationDuration: "20s",
-                animationTimingFunction: "linear",
-                animationIterationCount: "infinite",
-              }}
-            />
-          )}
         </div>
 
-        {/* Profile Image — outside tilt layer, stays centered */}
-        <motion.div
-          className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
-          style={{
-            boxShadow: hovered
-              ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)"
-              : "none",
-            transition: "box-shadow 0.4s ease",
-          }}
-          whileHover={!isMobile && shouldShowHeavyEffects(tier) ? { scale: 1.05 } : undefined}
-          transition={{ type: "spring", stiffness: 280, damping: 20 }}
-        >
+        {/* Profile */}
+        <div className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10">
           <img
             src={profileImg}
-            alt="Manoj Kumar"
-            className="w-full h-full object-cover object-[center_20%] rounded-full"
-            width={224}
-            height={224}
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
+            alt="profile"
+            className="w-full h-full object-cover"
           />
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );
 });
 
 HeroProfileImage.displayName = "HeroProfileImage";
+
 export default HeroProfileImage;
