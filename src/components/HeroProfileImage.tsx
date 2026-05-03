@@ -15,18 +15,18 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = 105;
+const ORBIT_RADIUS_SM = 100;
 
 function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
-  if (isMobile) return 30; // ultra-slow on mobile
+  if (isMobile) return 30; // slow + smooth on mobile
   return tier === "low" ? 28 : tier === "medium" ? 22 : 16;
 }
 
 const HOVER_SPEED_MULTIPLIER = 2.2; // playbackRate when hovered
 
-function getVisibleIcons(_tier: PerfTier, isMobile: boolean) {
-  // Reduce icons on mobile to keep things light
-  return isMobile ? orbitIcons.slice(0, 4) : orbitIcons;
+function getVisibleIcons(_tier: PerfTier, _isMobile: boolean) {
+  // Always show all icons — never reduce below full set
+  return orbitIcons;
 }
 
 function shouldShowHeavyEffects(tier: PerfTier): boolean {
