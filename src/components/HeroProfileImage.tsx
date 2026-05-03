@@ -15,7 +15,7 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = 100;
+const ORBIT_RADIUS_SM = Math.min(window.innerWidth * 0.35, 150);
 
 function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
   if (isMobile) return 30;
@@ -176,7 +176,7 @@ const OrbitRing = memo(
               {/* Mobile */}
               <div
                 className="md:hidden absolute"
-                style={{ left: -16, top: -ORBIT_RADIUS_SM - 16 }}
+                style={{ left: -18, top: -ORBIT_RADIUS_SM - 18 }}
               >
                 <div className="w-8 h-8 rounded-full bg-card border border-border/60 flex items-center justify-center">
                   <img

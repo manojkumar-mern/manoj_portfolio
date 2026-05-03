@@ -301,7 +301,7 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1 }}
-      className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 z-20"
     >
       <a
         href="#about"
