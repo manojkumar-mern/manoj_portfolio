@@ -15,7 +15,7 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = Math.min(window.innerWidth * 0.35, 130);
+const ORBIT_RADIUS_SM = Math.min(window.innerWidth * 0.35, 115);
 
 function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
   if (isMobile) return 30;
@@ -220,7 +220,7 @@ const HeroProfileImage = memo(() => {
     <motion.div className="flex-shrink-0">
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center w-[260px] h-[260px] md:w-[400px] md:h-[400px]"
+        className="relative flex items-center justify-center w-[260px] h-[300px] md:w-[400px] md:h-[400px] overflow-visible"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -235,11 +235,11 @@ const HeroProfileImage = memo(() => {
         </div>
 
         {/* Profile */}
-        <div className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10">
+        <div className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10 -translate-y-3">
           <img
             src={profileImg}
             alt="profile"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
         </div>
       </div>
