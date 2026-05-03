@@ -25,7 +25,7 @@ function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
 const HOVER_SPEED_MULTIPLIER = 2.2;
 
 function getVisibleIcons(tier: PerfTier, isMobile: boolean) {
-  if (isMobile) return orbitIcons.slice(0, 4);
+  if (isMobile) return orbitIcons;
 
   if (tier === "low") return orbitIcons.slice(0, 4);
   if (tier === "medium") return orbitIcons.slice(0, 5);
@@ -89,12 +89,12 @@ const OrbitRing = memo(
 
     useEffect(() => {
       const el = ringRef.current;
-      if (!el || !isVisible) return;
+      if (!el) return;
 
       const anim = el.animate(
         [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
         {
-          duration: isMobile ? 18000 : 20000,
+          duration: isMobile ? 8000 : 20000,
           iterations: Infinity,
           easing: "linear",
         }
