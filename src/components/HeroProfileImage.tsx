@@ -239,7 +239,7 @@ const HeroProfileImage = memo(() => {
           <img
             src={profileImg}
             alt="profile"
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-contain"
           />
         </div>
       </div>
