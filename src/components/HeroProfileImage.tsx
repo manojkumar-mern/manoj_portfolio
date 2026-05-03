@@ -94,7 +94,7 @@ const OrbitRing = memo(
       const anim = el.animate(
         [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
         {
-          duration: 2000,
+          duration: isMobile ? 18000 : 20000,
           iterations: Infinity,
           easing: "linear",
         }
@@ -108,10 +108,10 @@ const OrbitRing = memo(
         animationRef.current = null;
         if (rafRef.current) cancelAnimationFrame(rafRef.current);
       };
-    }, [isVisible]);
+    }, [isVisible, isMobile]);
 
-    const BASE_SPEED = isMobile ? 0.7 : 1;
-    const HOVER_SPEED = isMobile ? 1.2 : 1.8;
+    const BASE_SPEED = isMobile ? 0.5 : 1;
+    const HOVER_SPEED = isMobile ? 1.0 : 1.8;
 
     useEffect(() => {
       const anim = animationRef.current;
