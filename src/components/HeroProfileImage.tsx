@@ -4,6 +4,7 @@ import profileImg from "@/assets/profile.webp";
 import { usePerformanceTier, type PerfTier } from "@/hooks/use-performance";
 import { useIdleReady } from "@/hooks/use-idle-animation";
 import { useMouseTilt } from "@/hooks/use-mouse-tilt";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const orbitIcons = [
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", label: "React", invert: false },
@@ -14,17 +15,18 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = 140;
+const ORBIT_RADIUS_SM = 105;
 
-function getOrbitBaseDuration(tier: PerfTier): number {
+function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
+  if (isMobile) return 30; // ultra-slow on mobile
   return tier === "low" ? 28 : tier === "medium" ? 22 : 16;
 }
 
 const HOVER_SPEED_MULTIPLIER = 2.2; // playbackRate when hovered
 
-function getVisibleIcons(_tier: PerfTier) {
-  // Show full orbit on all devices for consistent UX
-  return orbitIcons;
+function getVisibleIcons(_tier: PerfTier, isMobile: boolean) {
+  // Reduce icons on mobile to keep things light
+  return isMobile ? orbitIcons.slice(0, 4) : orbitIcons;
 }
 
 function shouldShowHeavyEffects(tier: PerfTier): boolean {
@@ -53,9 +55,9 @@ function useOrbitVisible(ref: React.RefObject<HTMLElement | null>): boolean {
 }
 
 /* ── Orbit Ring: pure CSS rotation, speed controlled via animation-duration ── */
-const OrbitRing = memo(({ tier, hovered, isVisible }: { tier: PerfTier; hovered: boolean; isVisible: boolean }) => {
-  const icons = getVisibleIcons(tier);
-  const baseDuration = getOrbitBaseDuration(tier);
+const OrbitRing = memo(({ tier, hovered, isVisible, isMobile }: { tier: PerfTier; hovered: boolean; isVisible: boolean; isMobile: boolean }) => {
+  const icons = getVisibleIcons(tier, isMobile);
+  const baseDuration = getOrbitBaseDuration(tier, isMobile);
   const ringRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<Animation | null>(null);
   const currentRateRef = useRef<number>(1);
@@ -167,13 +169,14 @@ OrbitRing.displayName = "OrbitRing";
 const HeroProfileImage = memo(() => {
   const tier = usePerformanceTier();
   const idleReady = useIdleReady(400);
+  const isMobile = useIsMobile();
   const [hovered, setHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
   const isVisible = useOrbitVisible(containerRef);
 
-  // Mouse tilt — only on high tier desktops
-  useMouseTilt(containerRef, tiltRef, shouldShowHeavyEffects(tier) && isVisible);
+  // Mouse tilt — desktop only (disabled on mobile)
+  useMouseTilt(containerRef, tiltRef, !isMobile && shouldShowHeavyEffects(tier) && isVisible);
 
   const handleEnter = useCallback(() => setHovered(true), []);
   const handleLeave = useCallback(() => setHovered(false), []);
@@ -190,7 +193,7 @@ const HeroProfileImage = memo(() => {
       {/* Outer container: owns the ref for mouse events + visibility */}
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center w-[320px] h-[320px] md:w-[400px] md:h-[400px]"
+        className="relative flex items-center justify-center w-[260px] h-[260px] md:w-[400px] md:h-[400px]"
       >
         {/* Tilt layer: separate from orbit rotation */}
         <div
@@ -199,7 +202,7 @@ const HeroProfileImage = memo(() => {
           style={{ transform: "perspective(800px) rotateX(0deg) rotateY(0deg)" }}
         >
           {/* Static Aura Glow — no heavy animation, just opacity transition */}
-          {shouldShowHeavyEffects(tier) && idleReady && isVisible && (
+          {!isMobile && shouldShowHeavyEffects(tier) && idleReady && isVisible && (
             <div
               className="absolute inset-0 rounded-full pointer-events-none transition-opacity duration-700"
               style={{
@@ -221,11 +224,11 @@ const HeroProfileImage = memo(() => {
 
           {/* Orbit Icons */}
           {idleReady && (
-            <OrbitRing tier={tier} hovered={hovered} isVisible={isVisible} />
+            <OrbitRing tier={tier} hovered={hovered} isVisible={isVisible} isMobile={isMobile} />
           )}
 
           {/* Rotating Gradient Ring - skip on low */}
-          {shouldShowHeavyEffects(tier) && idleReady && isVisible && (
+          {!isMobile && shouldShowHeavyEffects(tier) && idleReady && isVisible && (
             <div
               className="absolute rounded-full pointer-events-none will-change-transform"
               style={{
@@ -247,14 +250,14 @@ const HeroProfileImage = memo(() => {
 
         {/* Profile Image — outside tilt layer, stays centered */}
         <motion.div
-          className="relative w-[200px] h-[200px] md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
+          className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden bg-card z-10"
           style={{
             boxShadow: hovered
               ? "0 0 30px hsl(187 78% 53% / 0.3), 0 0 60px hsl(187 78% 53% / 0.1)"
               : "none",
             transition: "box-shadow 0.4s ease",
           }}
-          whileHover={shouldShowHeavyEffects(tier) ? { scale: 1.05 } : undefined}
+          whileHover={!isMobile && shouldShowHeavyEffects(tier) ? { scale: 1.05 } : undefined}
           transition={{ type: "spring", stiffness: 280, damping: 20 }}
         >
           <img
