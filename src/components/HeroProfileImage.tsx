@@ -15,7 +15,7 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = Math.min(window.innerWidth * 0.35, 150);
+const ORBIT_RADIUS_SM = Math.min(window.innerWidth * 0.35, 130);
 
 function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
   if (isMobile) return 30;
