@@ -24,9 +24,9 @@ function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
 
 const HOVER_SPEED_MULTIPLIER = 2.2; // playbackRate when hovered
 
-function getVisibleIcons(_tier: PerfTier, _isMobile: boolean) {
-  // Always show all icons — never reduce below full set
-  return orbitIcons;
+function getVisibleIcons(_tier: PerfTier, isMobile: boolean) {
+  // Mobile: cap at 4 icons for lightweight performance. Desktop: full set.
+  return isMobile ? orbitIcons.slice(0, 4) : orbitIcons;
 }
 
 function shouldShowHeavyEffects(tier: PerfTier): boolean {
