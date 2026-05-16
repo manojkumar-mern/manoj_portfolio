@@ -165,7 +165,7 @@ const OrbitRing = memo(
                 <div className="w-9 h-9 rounded-full bg-card border border-border/60 flex items-center justify-center shadow-lg shadow-black/20 hover:shadow-[0_0_16px_hsl(187_78%_53%/0.35)] hover:border-primary/50 transition duration-300">
                   <img
                     src={icon.src}
-                    alt={icon.label}
+                    alt={`${icon.label} Logo`}
                     className={`w-5 h-5 ${
                       icon.invert ? "invert brightness-200" : ""
                     }`}
@@ -181,7 +181,7 @@ const OrbitRing = memo(
                 <div className="w-8 h-8 rounded-full bg-card border border-border/60 flex items-center justify-center">
                   <img
                     src={icon.src}
-                    alt={icon.label}
+                    alt={`${icon.label} Logo`}
                     className={`w-[18px] h-[18px] ${
                       icon.invert ? "invert brightness-200" : ""
                     }`}
@@ -238,7 +238,7 @@ const HeroProfileImage = memo(() => {
         <div className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10 ">
           <img
             src={profileImg}
-            alt="profile"
+            alt="Manoj Kumar - Profile Picture"
             className="w-full h-full object-cover object-[center_20%]"
           />
         </div>

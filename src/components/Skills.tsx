@@ -105,7 +105,7 @@ const Skills = memo(() => {
                     className="skill-item-card flex items-center gap-2 px-3 py-2 rounded-lg premium-card glow-card cursor-default group"
                   >
                     {skill.icon ? (
-                      <img src={skill.icon} alt={skill.name} className="w-4 h-4 object-contain" loading="lazy" width={16} height={16} />
+                      <img src={skill.icon} alt={`${skill.name} Logo`} className="w-4 h-4 object-contain" loading="lazy" width={16} height={16} />
                     ) : (
                       <div className="w-4 h-4 rounded bg-primary/15 flex items-center justify-center text-primary text-[9px] font-bold">
                         {skill.name.charAt(0)}

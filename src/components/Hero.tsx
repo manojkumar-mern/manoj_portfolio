@@ -186,6 +186,7 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
           {!nameDone && (
             <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 align-middle animate-pulse" />
           )}
+          <span className="sr-only"> — MERN Stack Developer</span>
         </h1>
 
         {/* role */}
@@ -268,14 +269,15 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
         <div className="flex items-center justify-center gap-2">
 
           {[
-            { icon: Github, href: "https://github.com/manojkumar-mern" },
-            { icon: Linkedin, href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
-            { icon: Mail, href: "mailto:vijaymanoj0000@gmail.com" },
-          ].map(({ icon: Icon, href }) => (
+            { icon: Github, href: "https://github.com/manojkumar-mern", label: "GitHub Profile" },
+            { icon: Linkedin, href: "https://linkedin.com/in/manoj-kumar-d-513253293", label: "LinkedIn Profile" },
+            { icon: Mail, href: "mailto:vijaymanoj0000@gmail.com", label: "Send Email" },
+          ].map(({ icon: Icon, href, label }) => (
 
             <a
               key={href}
               href={href}
+              aria-label={label}
               target={href.startsWith("mailto") ? undefined : "_blank"}
               rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
               className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:scale-105 transition-all duration-300"
@@ -305,6 +307,7 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
     >
       <a
         href="#about"
+        aria-label="Scroll to about section"
         className="text-muted-foreground hover:text-primary transition-colors animate-bounce inline-block"
       >
         <ArrowDown size={22} />

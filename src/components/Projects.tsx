@@ -114,6 +114,7 @@ const ProjectModal = memo(({
         {/* Sticky close button */}
         <button
           onClick={onClose}
+          aria-label="Close modal"
           className="sticky top-0 z-20 ml-auto mr-4 mt-4 mb-[-2.5rem] p-2 rounded-full bg-muted/90 backdrop-blur-sm border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all duration-300 shrink-0"
         >
           <X size={16} />
@@ -352,9 +353,9 @@ const MiniCard = memo(({
     </div>
 
     <div className="p-3 sm:p-4 flex flex-col flex-1">
-      <h4 className="text-sm font-semibold text-foreground mb-1 group-hover:text-gradient transition-colors duration-300">
+      <h3 className="text-sm font-semibold text-foreground mb-1 group-hover:text-gradient transition-colors duration-300">
         {project.title}
-      </h4>
+      </h3>
       <div className="flex flex-wrap gap-1 mb-3">
         {project.tech.slice(0, 3).map((t) => (
           <span

@@ -20,7 +20,7 @@ const Footer = memo(() => {
       >
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-center sm:text-left">
-            <a href="#" className="font-mono text-base font-bold text-gradient inline-block mb-2">
+            <a href="#" aria-label="Home" className="font-mono text-base font-bold text-gradient inline-block mb-2">
               {"<MK />"}
             </a>
             <p className="text-sm text-muted-foreground">
@@ -35,13 +35,14 @@ const Footer = memo(() => {
             className="flex items-center gap-3"
           >
             {[
-              { icon: Github, href: "https://github.com/manojkumar-mern" },
-              { icon: Linkedin, href: "https://linkedin.com/in/manoj-kumar-d-513253293" },
-              { icon: Mail, href: "mailto:vijaymanoj0000@gmail.com" },
-            ].map(({ icon: Icon, href }) => (
+              { icon: Github, href: "https://github.com/manojkumar-mern", label: "GitHub Profile" },
+              { icon: Linkedin, href: "https://linkedin.com/in/manoj-kumar-d-513253293", label: "LinkedIn Profile" },
+              { icon: Mail, href: "mailto:vijaymanoj0000@gmail.com", label: "Send Email" },
+            ].map(({ icon: Icon, href, label }) => (
               <motion.a
                 key={href}
                 href={href}
+                aria-label={label}
                 target={href.startsWith("mailto") ? undefined : "_blank"}
                 rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
                 variants={v(staggerItemScale)}

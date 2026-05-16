@@ -69,7 +69,7 @@ const Navbar = memo(() => {
       }`}
     >
       <div className="flex items-center justify-between h-14 px-5">
-        <a href="#" className="font-mono text-base font-bold text-gradient">
+        <a href="#" aria-label="Home" className="font-mono text-base font-bold text-gradient">
           {"<MK />"}
         </a>
         <div className="hidden md:flex items-center gap-1">
@@ -98,7 +98,7 @@ const Navbar = memo(() => {
             );
           })}
         </div>
-        <button onClick={() => setOpen(!open)} className="md:hidden text-foreground p-2">
+        <button onClick={() => setOpen(!open)} aria-label="Toggle menu" className="md:hidden text-foreground p-2">
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
