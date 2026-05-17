@@ -133,7 +133,7 @@ export const miniProjects: Project[] = [
       "Client-side data persistence strategies",
     ],
     tech: ["JavaScript", "HTML", "CSS"],
-    demo: "https://to-do-list-app-87.vercel.app",
+    demo: "https://todo-list-react-dashboard.vercel.app",
     github: "https://github.com/manojkumar-mern/to-do-list",
     image: "/projects/todo-list.webp",
   },
