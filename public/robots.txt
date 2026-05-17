@@ -13,3 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
+Sitemap: https://mern-marvel-hub.lovable.app/sitemap.xml
