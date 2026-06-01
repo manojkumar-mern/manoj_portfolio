@@ -1,0 +1,7 @@
+# Manoj Kumar | MERN Stack Developer Portfolio
+
+> Portfolio of Manoj Kumar D, a MERN Stack Developer building scalable web applications with React, Node.js, Express, and MongoDB.
+
+## Pages
+
+- [Home](/): Full portfolio landing page with hero, about me, skills, projects, education timeline, and contact form.
