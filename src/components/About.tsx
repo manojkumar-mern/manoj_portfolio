@@ -24,13 +24,13 @@ const highlights = [
   {
     icon: Database, label: "Database", desc: "MongoDB, Mongoose ODM",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", alt: "MongoDB" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", alt: "MongoDB Logo" },
     ],
   },
   {
     icon: Rocket, label: "Real-time", desc: "Socket.io, WebSockets",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg", alt: "Socket.io" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg", alt: "Socket.io Logo" },
     ],
   },
 ];
