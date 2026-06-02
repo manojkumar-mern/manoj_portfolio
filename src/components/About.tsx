@@ -10,27 +10,27 @@ const highlights = [
   {
     icon: Code2, label: "Frontend", desc: "React, Tailwind, Modern UI/UX",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React" },
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", alt: "Tailwind" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React Logo" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", alt: "Tailwind CSS Logo" },
     ],
   },
   {
     icon: Server, label: "Backend", desc: "Node.js, Express, REST APIs",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js" },
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", alt: "Express" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js Logo" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", alt: "Express.js Logo" },
     ],
   },
   {
     icon: Database, label: "Database", desc: "MongoDB, Mongoose ODM",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", alt: "MongoDB" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", alt: "MongoDB Logo" },
     ],
   },
   {
     icon: Rocket, label: "Real-time", desc: "Socket.io, WebSockets",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg", alt: "Socket.io" },
+      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg", alt: "Socket.io Logo" },
     ],
   },
 ];
