@@ -240,10 +240,11 @@ const HeroProfileImage = memo(() => {
             src={profileImg}
             alt="Manoj Kumar - Profile Picture"
             className="w-full h-full object-cover object-[center_20%]"
-            width="160"
-            height="160"
+            width="400"
+            height="400"
             fetchPriority="high"
             loading="eager"
+            decoding="async"
           />
         </div>
       </div>

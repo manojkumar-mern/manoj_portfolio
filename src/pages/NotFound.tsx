@@ -16,8 +16,8 @@ const NotFound = () => {
         <meta name="description" content="The page you are looking for does not exist. Return to Manoj Kumar's MERN Stack Developer portfolio." />
         <meta property="og:title" content="404 - Page Not Found | Manoj Kumar" />
         <meta property="og:description" content="The page you are looking for does not exist. Return to Manoj Kumar's MERN Stack Developer portfolio." />
-        <meta property="og:url" content={`https://mern-marvel-hub.lovable.app${location.pathname}`} />
-        <link rel="canonical" href={`https://mern-marvel-hub.lovable.app${location.pathname}`} />
+        <meta property="og:url" content={`https://manoj-portfolio-mern.vercel.app${location.pathname}`} />
+        <link rel="canonical" href={`https://manoj-portfolio-mern.vercel.app${location.pathname}`} />
       </Helmet>
       <div className="flex min-h-screen items-center justify-center bg-muted">
         <div className="text-center">
