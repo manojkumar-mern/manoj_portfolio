@@ -6,7 +6,7 @@ import HeroProfileImage from "./HeroProfileImage";
 
 const HERO_NAME = "Manoj Kumar";
 const HERO_ROLE = "MERN Stack Developer";
-const SKILLS = ["JavaScript", "React", "Node", "Express", "MongoDB"];
+const SKILLS = ["JavaScript(ES6+)", "HTML5", "CSS3", "React.js", "Express.js", "Node.js", "MongoDB", "Tailwind CSS", "Git"];
 
 const NAME_SPEED = 100;
 const TYPE_SPEED = 85;
