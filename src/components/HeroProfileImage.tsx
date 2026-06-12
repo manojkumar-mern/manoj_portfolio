@@ -223,7 +223,7 @@ const HeroProfileImage = memo(() => {
     <motion.div className="flex-shrink-0">
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center w-[260px] h-[300px] md:w-[400px] md:h-[400px] overflow-visible"
+        className="relative flex items-center justify-center w-[240px] h-[260px] md:w-[400px] md:h-[400px] overflow-visible"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
