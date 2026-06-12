@@ -4,47 +4,48 @@ import {
   fadeUp, fadeLeft, fadeRight, staggerContainer, staggerItemScale,
   viewportConfig, prefersReducedMotion, noMotion,
 } from "@/lib/motion";
+import { devicon } from "@/lib/devicons";
 
 const skillGroups = [
   {
     title: "Frontend",
     skills: [
-      { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-      { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-      { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+      { name: "React", icon: devicon.react },
+      { name: "HTML", icon: devicon.html5 },
+      { name: "CSS", icon: devicon.css3 },
+      { name: "Tailwind CSS", icon: devicon.tailwind },
     ],
   },
   {
     title: "Backend",
     skills: [
-      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-      { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+      { name: "Node.js", icon: devicon.nodejs },
+      { name: "Express.js", icon: devicon.express },
     ],
   },
   {
     title: "Database",
     skills: [
-      { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-      { name: "Mongoose", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongoose/mongoose-original.svg" },
+      { name: "MongoDB", icon: devicon.mongodb },
+      { name: "Mongoose", icon: devicon.mongoose },
     ],
   },
   {
     title: "Core",
     skills: [
-      { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-      { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+      { name: "JavaScript", icon: devicon.javascript },
+      { name: "TypeScript", icon: devicon.typescript },
       { name: "REST API", icon: "" },
-      { name: "Socket.io", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg" },
+      { name: "Socket.io", icon: devicon.socketio },
     ],
   },
   {
     title: "Tools",
     skills: [
-      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-      { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
-      { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
-      { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" },
+      { name: "Git", icon: devicon.git },
+      { name: "GitHub", icon: devicon.github },
+      { name: "Postman", icon: devicon.postman },
+      { name: "Vercel", icon: devicon.vercel },
       { name: "Render", icon: "" },
     ],
   },
@@ -59,7 +60,7 @@ const Skills = memo(() => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="skills" className="py-12 md:py-28 bg-muted/20 px-4 md:px-8 overflow-x-hidden">
+    <section id="skills" className="py-16 md:py-28 bg-muted/20 px-4 md:px-8 overflow-x-hidden">
       <div className="container">
         <motion.div
           variants={v(fadeUp)}
