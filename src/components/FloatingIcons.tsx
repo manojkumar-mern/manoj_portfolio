@@ -2,14 +2,15 @@ import { memo, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { usePerformanceTier } from "@/hooks/use-performance";
 import { useIdleReady } from "@/hooks/use-idle-animation";
+import { devicon } from "@/lib/devicons";
 
 const allIcons = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", x: "10%", y: "20%" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", x: "80%", y: "15%" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", x: "70%", y: "70%" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", x: "15%", y: "75%" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", x: "85%", y: "45%" },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", x: "5%", y: "50%" },
+  { src: devicon.react, x: "10%", y: "20%" },
+  { src: devicon.nodejs, x: "80%", y: "15%" },
+  { src: devicon.mongodb, x: "70%", y: "70%" },
+  { src: devicon.typescript, x: "15%", y: "75%" },
+  { src: devicon.javascript, x: "85%", y: "45%" },
+  { src: devicon.tailwind, x: "5%", y: "50%" },
 ];
 
 const FloatingIcons = memo(() => {
