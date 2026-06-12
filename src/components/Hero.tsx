@@ -139,7 +139,7 @@ return ( <section className="relative min-h-[auto] md:min-h-screen flex items-ce
 
   <div className="container relative z-10">
 
-    <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-8 md:gap-14 lg:gap-20 max-w-5xl mx-auto">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14 lg:gap-20 max-w-5xl mx-auto">
 
       {/* LEFT CONTENT */}
 
