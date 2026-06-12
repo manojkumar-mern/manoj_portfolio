@@ -27,7 +27,7 @@ const Education = memo(() => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="education" className="py-20 md:py-28 bg-muted/30 px-4 md:px-8">
+    <section id="education" className="py-16 md:py-28 bg-muted/30 px-4 md:px-8">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}

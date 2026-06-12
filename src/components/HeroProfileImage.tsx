@@ -5,17 +5,20 @@ import { usePerformanceTier, type PerfTier } from "@/hooks/use-performance";
 import { useIdleReady } from "@/hooks/use-idle-animation";
 import { useMouseTilt } from "@/hooks/use-mouse-tilt";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { devicon } from "@/lib/devicons";
 
 const orbitIcons = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", label: "React", invert: false },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", label: "Node.js", invert: false },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", label: "MongoDB", invert: false },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", label: "Tailwind", invert: false },
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", label: "Express", invert: true },
+  { src: devicon.react, label: "React", invert: false },
+  { src: devicon.nodejs, label: "Node.js", invert: false },
+  { src: devicon.mongodb, label: "MongoDB", invert: false },
+  { src: devicon.tailwind, label: "Tailwind", invert: false },
+  { src: devicon.express, label: "Express", invert: true },
 ];
 
 const ORBIT_RADIUS_MD = 170;
-const ORBIT_RADIUS_SM = Math.min(window.innerWidth * 0.35, 115);
+// SSR-safe and mobile-tuned: tighter orbit so decorations stay inside the viewport on <390px.
+const ORBIT_RADIUS_SM =
+  typeof window !== "undefined" ? Math.min(window.innerWidth * 0.3, 100) : 100;
 
 function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
   if (isMobile) return 30;
@@ -220,7 +223,7 @@ const HeroProfileImage = memo(() => {
     <motion.div className="flex-shrink-0">
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center w-[260px] h-[300px] md:w-[400px] md:h-[400px] overflow-visible"
+        className="relative flex items-center justify-center w-[240px] h-[260px] md:w-[400px] md:h-[400px] overflow-visible"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
