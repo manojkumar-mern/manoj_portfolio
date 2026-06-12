@@ -109,7 +109,7 @@ if (roleText.length < HERO_ROLE.length) {
 
 const skillText = useTypewriterLoop(SKILLS, roleDone, 110, 55);
 
-return ( <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-16 px-4 md:px-0 render-layer">
+return ( <section className="relative min-h-[auto] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-10 md:pt-16 md:pb-0 px-4 md:px-0 render-layer">
 
 
   {/* background grid */}
@@ -139,7 +139,7 @@ return ( <section className="relative min-h-screen flex items-center justify-cen
 
   <div className="container relative z-10">
 
-    <div className="flex flex-col md:flex-row items-center justify-center gap-14 lg:gap-20 max-w-5xl mx-auto">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-8 md:gap-14 lg:gap-20 max-w-5xl mx-auto">
 
       {/* LEFT CONTENT */}
 
