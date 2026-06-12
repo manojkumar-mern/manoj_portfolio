@@ -406,7 +406,7 @@ const Projects = memo(() => {
   const subFeatured = featuredProjects.slice(1);
 
   return (
-    <section id="projects" className="py-20 md:py-28 overflow-x-hidden">
+    <section id="projects" className="py-16 md:py-28 overflow-x-hidden">
       <div className="container px-4 md:px-8">
         {/* Header */}
         <motion.div

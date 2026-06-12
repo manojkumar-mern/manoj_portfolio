@@ -21,7 +21,7 @@ const GitHubActivity = memo(() => {
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
   return (
-    <section id="github" className="py-20 md:py-28 px-4 md:px-8">
+    <section id="github" className="py-16 md:py-28 px-4 md:px-8">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}
