@@ -5,32 +5,33 @@ import {
   fadeLeft, fadeUp, staggerContainer, staggerItem, staggerItemScale,
   viewportConfig, prefersReducedMotion, noMotion,
 } from "@/lib/motion";
+import { devicon } from "@/lib/devicons";
 
 const highlights = [
   {
     icon: Code2, label: "Frontend", desc: "React, Tailwind, Modern UI/UX",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React Logo" },
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", alt: "Tailwind CSS Logo" },
+      { src: devicon.react, alt: "React Logo" },
+      { src: devicon.tailwind, alt: "Tailwind CSS Logo" },
     ],
   },
   {
     icon: Server, label: "Backend", desc: "Node.js, Express, REST APIs",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js Logo" },
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", alt: "Express.js Logo" },
+      { src: devicon.nodejs, alt: "Node.js Logo" },
+      { src: devicon.express, alt: "Express.js Logo" },
     ],
   },
   {
     icon: Database, label: "Database", desc: "MongoDB, Mongoose ODM",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", alt: "MongoDB Logo" },
+      { src: devicon.mongodb, alt: "MongoDB Logo" },
     ],
   },
   {
     icon: Rocket, label: "Real-time", desc: "Socket.io, WebSockets",
     logos: [
-      { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg", alt: "Socket.io Logo" },
+      { src: devicon.socketio, alt: "Socket.io Logo" },
     ],
   },
 ];
@@ -42,7 +43,7 @@ const About = memo(() => {
   const v = (variant: typeof fadeLeft) => reduced ? noMotion : variant;
 
   return (
-    <section id="about" className="py-20 md:py-28 px-4 md:px-8">
+    <section id="about" className="py-16 md:py-28 px-4 md:px-8">
       <div className="container">
         <motion.div
           variants={v(fadeLeft)}
