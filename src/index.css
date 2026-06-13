@@ -275,7 +275,7 @@ html.lenis body {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
-    gap: 14px !important;
+    gap: 0 !important;
     width: 100% !important;
     max-width: 360px !important;
     margin-left: auto !important;
@@ -283,6 +283,12 @@ html.lenis body {
     padding: 0 !important;
     margin: 0 !important;
     grid-template-columns: unset !important;
+    /* Unified parent card */
+    border: 1px solid hsl(var(--border) / 0.5) !important;
+    background: hsl(var(--card) / 0.5) !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 20px hsl(187 78% 53% / 0.06) !important;
   }
   #skills .container {
     padding-left: 16px !important;
@@ -293,14 +299,20 @@ html.lenis body {
     margin-left: 0 !important;
     margin-right: 0 !important;
     box-sizing: border-box !important;
-    padding: 18px !important;
-    border-radius: 16px !important;
+    padding: 18px 16px !important;
+    border-radius: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
     display: flex !important;
     flex-direction: column !important;
-    min-height: 168px !important;
+    min-height: 0 !important;
+  }
+  .skills-category-box + .skills-category-box {
+    border-top: 1px solid hsl(var(--border) / 0.4) !important;
   }
   .skills-category-box > h3 {
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
   }
   .skills-items-grid {
     display: grid !important;
@@ -308,7 +320,7 @@ html.lenis body {
     gap: 10px !important;
     width: 100% !important;
     align-content: start !important;
-    flex: 1 1 auto !important;
+    flex: 0 0 auto !important;
   }
   .skill-item-card {
     width: 100% !important;
@@ -316,7 +328,6 @@ html.lenis body {
     min-height: 44px !important;
     justify-content: flex-start !important;
   }
-  /* Remove last-odd spanning so all items remain uniform tiles */
   .skills-items-grid > .skill-item-card:last-child:nth-child(odd) {
     grid-column: auto !important;
     justify-content: flex-start !important;
