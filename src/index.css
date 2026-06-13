@@ -275,7 +275,7 @@ html.lenis body {
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
-    gap: 24px !important;
+    gap: 16px !important;
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -288,20 +288,22 @@ html.lenis body {
     box-sizing: border-box !important;
     padding: 20px !important;
     border-radius: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   .skills-items-grid {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 12px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
     width: 100% !important;
-    grid-template-columns: unset !important;
   }
   .skill-item-card {
-    flex: 0 0 auto !important;
-    width: auto !important;
+    width: 100% !important;
     margin: 0 !important;
+    min-height: 40px !important;
   }
   .skills-items-grid > .skill-item-card:last-child:nth-child(odd) {
-    grid-column: unset !important;
+    grid-column: span 2 !important;
+    justify-content: center !important;
   }
 }
