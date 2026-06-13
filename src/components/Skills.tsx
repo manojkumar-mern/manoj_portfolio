@@ -5,6 +5,7 @@ import {
   viewportConfig, prefersReducedMotion, noMotion,
 } from "@/lib/motion";
 import { devicon } from "@/lib/devicons";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const skillGroups = [
   {
@@ -56,6 +57,7 @@ const groupVariants = [fadeLeft, fadeRight, fadeUp, fadeLeft, fadeRight];
 const Skills = memo(() => {
   const [reduced, setReduced] = useState(false);
   useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+  const isMobile = useIsMobile();
 
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
@@ -76,6 +78,34 @@ const Skills = memo(() => {
           </p>
         </motion.div>
 
+        {isMobile ? (
+          <div className="skills-mobile-card">
+            {skillGroups.map((group) => (
+              <div key={group.title} className="skills-mobile-category">
+                <h3 className="skills-mobile-title">{group.title}</h3>
+                <div className="skills-mobile-grid">
+                  {group.skills.map((skill) => (
+                    <div
+                      key={skill.name}
+                      className="skills-mobile-chip premium-card"
+                    >
+                      {skill.icon ? (
+                        <img src={skill.icon} alt={`${skill.name} Logo`} className="w-4 h-4 object-contain shrink-0" loading="lazy" width={16} height={16} />
+                      ) : (
+                        <div className="w-4 h-4 rounded bg-primary/15 flex items-center justify-center text-primary text-[9px] font-bold shrink-0">
+                          {skill.name.charAt(0)}
+                        </div>
+                      )}
+                      <span className="text-sm text-muted-foreground truncate">
+                        {skill.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
         <motion.div
           variants={v(staggerContainer(0.12))}
           initial="hidden"
@@ -121,6 +151,7 @@ const Skills = memo(() => {
             </motion.div>
           ))}
         </motion.div>
+        )}
       </div>
     </section>
   );
