@@ -283,7 +283,7 @@ html.lenis body {
   }
 
   /* Education: unify all groups on the same center axis */
-  #education .grid {
+  /* #education .grid {
     gap: 2rem;
   }
   #education .lg\:col-span-2,
@@ -298,11 +298,11 @@ html.lenis body {
   #education .premium-card {
     width: 100%;
     box-sizing: border-box;
-  }
+  } */
   /* Language badges centered as a group */
-  #education .flex-wrap {
+  /* #education .flex-wrap {
     justify-content: center;
-  }
+  } */
 
   /* Contact: unify form and contact cards on the same center axis */
   #contact .grid {
