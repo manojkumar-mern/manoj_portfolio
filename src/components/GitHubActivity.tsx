@@ -9,21 +9,19 @@ import {
 const GITHUB_USERNAME = "manojkumar-mern";
 
 type StatKind = "repos" | "commits" | "since";
-const stats: { icon: typeof GitCommit; label: string; value: string; kind: StatKind }[] = [
-  { icon: GitCommit, label: "Repositories", value: "10+", kind: "repos" },
-  { icon: Star, label: "Commits", value: "500+", kind: "commits" },
-  { icon: GitFork, label: "Active Since", value: "2022", kind: "since" },
-];
-
 const REPOS_URL = `https://github.com/${GITHUB_USERNAME}?tab=repositories`;
+const ACTIVE_SINCE = "2025";
+const CONTRIBUTIONS_FALLBACK = "500+";
 
 /* ── Stat Modal ── */
 const StatModal = memo(({
   kind,
   onClose,
+  contributionsValue,
 }: {
   kind: "commits" | "since";
   onClose: () => void;
+  contributionsValue: string;
 }) => {
   useEffect(() => {
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -42,11 +40,11 @@ const StatModal = memo(({
 
   const isCommits = kind === "commits";
   const title = isCommits ? "Commits & Activity" : "GitHub Journey";
-  const headlineValue = isCommits ? "500+" : "2022";
-  const headlineLabel = isCommits ? "Total commits" : "Active since";
+  const headlineValue = isCommits ? contributionsValue : ACTIVE_SINCE;
+  const headlineLabel = isCommits ? "Total contributions" : "Active since";
   const description = isCommits
     ? "Consistent, active development across personal and open-source projects. Regular commits reflect an ongoing focus on shipping, refactoring, and learning in public."
-    : "Coding on GitHub since 2022. Started with frontend fundamentals, grew into full-stack MERN development, and continue to ship side projects, experiments, and contributions.";
+    : `Coding on GitHub since ${ACTIVE_SINCE}. Started with frontend fundamentals, grew into full-stack MERN development, and continue to ship side projects, experiments, and contributions.`;
 
   return (
     <motion.div
@@ -119,7 +117,39 @@ StatModal.displayName = "StatModal";
 const GitHubActivity = memo(() => {
   const [reduced, setReduced] = useState(false);
   const [openModal, setOpenModal] = useState<"commits" | "since" | null>(null);
+  const [contributions, setContributions] = useState<string>(CONTRIBUTIONS_FALLBACK);
   useEffect(() => { setReduced(prefersReducedMotion()); }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(
+          `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=all`
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        const total = data?.total
+          ? Object.values(data.total as Record<string, number>).reduce(
+              (a, b) => a + (Number(b) || 0),
+              0
+            )
+          : 0;
+        if (!cancelled && total > 0) {
+          setContributions(total.toLocaleString());
+        }
+      } catch {
+        /* keep fallback */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  const stats: { icon: typeof GitCommit; label: string; value: string; kind: StatKind }[] = [
+    { icon: GitCommit, label: "Repositories", value: "10+", kind: "repos" },
+    { icon: Star, label: "Commits", value: contributions, kind: "commits" },
+    { icon: GitFork, label: "Active Since", value: ACTIVE_SINCE, kind: "since" },
+  ];
 
   const v = <T extends object>(variant: T) => reduced ? noMotion : variant;
 
@@ -221,7 +251,11 @@ const GitHubActivity = memo(() => {
 
       <AnimatePresence>
         {openModal && (
-          <StatModal kind={openModal} onClose={() => setOpenModal(null)} />
+          <StatModal
+            kind={openModal}
+            onClose={() => setOpenModal(null)}
+            contributionsValue={contributions}
+          />
         )}
       </AnimatePresence>
     </section>
