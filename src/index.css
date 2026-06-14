@@ -269,6 +269,67 @@ html.lenis body {
   overflow: hidden;
 }
 
+/* ---------------- Education & Contact mobile (<768px) alignment ---------------- */
+@media (max-width: 767px) {
+  #education .container,
+  #contact .container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  /* Education: unify all groups on the same center axis */
+  #education .grid {
+    gap: 2rem;
+  }
+  #education .lg\:col-span-2,
+  #education .lg\:col-span-2 > div,
+  #education .space-y-8 > div {
+    width: 100%;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+  #education .premium-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  /* Language badges centered as a group */
+  #education .flex-wrap {
+    justify-content: center;
+  }
+
+  /* Contact: unify form and contact cards on the same center axis */
+  #contact .grid {
+    gap: 1.25rem;
+  }
+  #contact form,
+  #contact .space-y-3 {
+    width: 100%;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+  #contact .space-y-3 > a {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Address / link text wrapping: natural word breaks, no awkward splits */
+  #contact .space-y-3 a span {
+    word-break: normal;
+    overflow-wrap: anywhere;
+    hyphens: none;
+    line-height: 1.45;
+  }
+}
+
 /* ---------------- Skills mobile (<768px) — dedicated deterministic layout ---------------- */
 @media (max-width: 767px) {
   #skills .container {
