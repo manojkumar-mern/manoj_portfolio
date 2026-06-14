@@ -271,7 +271,7 @@ html.lenis body {
 
 /* ---------------- Education & Contact mobile (<768px) alignment ---------------- */
  @media (max-width: 767px) {
-  /* #education .container,
+  #education .container,
   #contact .container {
     width: 100%;
     max-width: 100%;
@@ -280,10 +280,10 @@ html.lenis body {
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
-  } */ */
+  } */
 
   /* Education: unify all groups on the same center axis */
-  /* #education .grid {
+  #education .grid {
     gap: 2rem;
   }
   #education .lg\:col-span-2,
@@ -300,12 +300,12 @@ html.lenis body {
     box-sizing: border-box;
   } */
   /* Language badges centered as a group */
-  /* #education .flex-wrap {
+  #education .flex-wrap {
     justify-content: center;
-  } */
+  }
 
   /* Contact: unify form and contact cards on the same center axis */
-  /* #contact .grid {
+  #contact .grid {
     gap: 1.25rem;
   }
   #contact form,
@@ -319,7 +319,7 @@ html.lenis body {
   #contact .space-y-3 > a {
     width: 100%;
     box-sizing: border-box;
-  } */
+  }
 
   /* Address / link text wrapping: natural word breaks, no awkward splits */
   #contact .space-y-3 a span {
