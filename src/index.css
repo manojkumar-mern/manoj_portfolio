@@ -280,7 +280,7 @@ html.lenis body {
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
-  } */
+  }
 
   /* Education: unify all groups on the same center axis */
   #education .grid {
@@ -298,7 +298,7 @@ html.lenis body {
   #education .premium-card {
     width: 100%;
     box-sizing: border-box;
-  } */
+  }
   /* Language badges centered as a group */
   #education .flex-wrap {
     justify-content: center;
