@@ -139,7 +139,7 @@ return ( <section className="relative min-h-[auto] md:min-h-screen flex items-ce
 
   <div className="container relative z-10">
 
-    <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14 lg:gap-20 max-w-5xl mx-auto">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-14 lg:gap-20 max-w-5xl mx-auto">
 
       {/* LEFT CONTENT */}
 
@@ -303,7 +303,7 @@ return ( <section className="relative min-h-[auto] md:min-h-screen flex items-ce
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1 }}
-      className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 z-20"
+      className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20"
     >
       <a
         href="#about"
