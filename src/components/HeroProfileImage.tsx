@@ -16,9 +16,9 @@ const orbitIcons = [
 ];
 
 const ORBIT_RADIUS_MD = 170;
-// SSR-safe and mobile-tuned: tighter orbit so decorations stay inside the viewport on <390px.
+// SSR-safe and mobile-tuned: slightly larger orbit so icons sit farther from the profile photo on mobile.
 const ORBIT_RADIUS_SM =
-  typeof window !== "undefined" ? Math.min(window.innerWidth * 0.3, 100) : 100;
+  typeof window !== "undefined" ? Math.min(window.innerWidth * 0.32, 115) : 115;
 
 function getOrbitBaseDuration(tier: PerfTier, isMobile: boolean): number {
   if (isMobile) return 30;
