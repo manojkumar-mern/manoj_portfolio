@@ -69,8 +69,16 @@ const Navbar = memo(() => {
       }`}
     >
       <div className="flex items-center justify-between h-14 px-5">
-        <a href="#" aria-label="Home" className="font-mono text-base font-bold text-gradient">
-          {"<MK />"}
+        <a
+          href="#"
+          aria-label="Home"
+          className="flex items-center justify-center"
+        >
+        <img
+          src="/logo.png"
+          alt="Manoj Kumar Logo"
+          className="h-20 w-20 object-contain transition-transform duration-300 hover:scale-105"
+        />
         </a>
         <div className="hidden md:flex items-center gap-1">
           {links.map((l) => {
