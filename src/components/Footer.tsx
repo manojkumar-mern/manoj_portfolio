@@ -20,8 +20,16 @@ const Footer = memo(() => {
       >
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-center sm:text-left">
-            <a href="#" aria-label="Home" className="font-mono text-base font-bold text-gradient inline-block mb-2">
-              {"<MK />"}
+            <a
+              href="#"
+              aria-label="Home"
+              className="flex items-center justify-center"
+            >
+            <img
+              src="/logo.png"
+              alt="Manoj Kumar Logo"
+              className="h-20 w-20 object-contain transition-transform duration-300 hover:scale-105"
+            />
             </a>
             <p className="text-sm text-muted-foreground">
               Built with <Heart size={11} className="inline text-primary" /> using React & Tailwind
