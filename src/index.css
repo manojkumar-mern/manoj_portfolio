@@ -244,6 +244,14 @@
   }
 }
 
+/* Premium scroll invitation — soft dot drifting down inside the mouse shape. */
+@keyframes scroll-dot {
+  0%   { transform: translateY(-6px); opacity: 0; }
+  25%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .will-change-transform {
     animation: none !important;
