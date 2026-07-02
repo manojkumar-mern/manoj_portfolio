@@ -1,27 +1,17 @@
 import { useEffect, useRef, useCallback } from "react";
 import Lenis from "lenis";
 import { usePerformanceTier } from "@/hooks/use-performance";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register ScrollTrigger once at module load (safe to call multiple times).
+gsap.registerPlugin(ScrollTrigger);
 
 const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   const lenisRef = useRef<Lenis | null>(null);
-  const rafIdRef = useRef<number>(0);
   const tier = usePerformanceTier();
 
-  const raf = useCallback((time: number) => {
-    if (lenisRef.current) {
-      const isPrevented = document.documentElement.hasAttribute("data-lenis-prevent");
-      if (isPrevented) {
-        lenisRef.current.stop();
-      } else if (!lenisRef.current.isScrolling) {
-        lenisRef.current.start();
-      }
-      lenisRef.current.raf(time);
-    }
-    rafIdRef.current = requestAnimationFrame(raf);
-  }, []);
-
   useEffect(() => {
-    // On low-tier mobile, use lighter scroll config
     const isLow = tier === "low";
 
     const lenis = new Lenis({
@@ -32,7 +22,24 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     });
 
     lenisRef.current = lenis;
-    rafIdRef.current = requestAnimationFrame(raf);
+
+    // Drive Lenis via GSAP's ticker so ScrollTrigger stays perfectly in sync.
+    const tickerCb = (time: number) => {
+      const isPrevented = document.documentElement.hasAttribute("data-lenis-prevent");
+      if (isPrevented) {
+        lenis.stop();
+      } else if (!lenis.isScrolling) {
+        lenis.start();
+      }
+      // GSAP ticker time is in seconds; Lenis expects ms.
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(tickerCb);
+    // Disable GSAP's own lag smoothing — Lenis handles smoothing itself.
+    gsap.ticker.lagSmoothing(0);
+
+    // Refresh ScrollTrigger whenever Lenis reports a scroll (keeps triggers accurate).
+    lenis.on("scroll", ScrollTrigger.update);
 
     const handleAnchorClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
@@ -50,12 +57,16 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 
     document.addEventListener("click", handleAnchorClick);
 
+    // After first paint, make sure ScrollTrigger measures the correct layout.
+    ScrollTrigger.refresh();
+
     return () => {
-      cancelAnimationFrame(rafIdRef.current);
+      gsap.ticker.remove(tickerCb);
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
+      lenisRef.current = null;
     };
-  }, [raf, tier]);
+  }, [tier]);
 
   return <>{children}</>;
 };
