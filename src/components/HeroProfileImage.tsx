@@ -1,4 +1,4 @@
-import { useState, memo, useEffect, useRef, useCallback } from "react";
+import { useState, memo, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import profileImg from "@/assets/profile.webp";
 import { usePerformanceTier, type PerfTier } from "@/hooks/use-performance";
@@ -6,6 +6,8 @@ import { useIdleReady } from "@/hooks/use-idle-animation";
 import { useMouseTilt } from "@/hooks/use-mouse-tilt";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { devicon } from "@/lib/devicons";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { useGsap } from "@/hooks/use-gsap";
 
 const orbitIcons = [
   { src: devicon.react, label: "React", invert: false },
@@ -210,6 +212,8 @@ const HeroProfileImage = memo(() => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
+  const ringRevealRef = useRef<HTMLDivElement>(null);
 
   const isVisible = useOrbitVisible(containerRef);
 
@@ -218,6 +222,35 @@ const HeroProfileImage = memo(() => {
     tiltRef,
     shouldShowHeavyEffects(tier) && isVisible
   );
+
+  /* Mask-style circular reveal for the profile photo + orbit ring on mount. */
+  useGsap(() => {
+    if (prefersReducedMotion()) return;
+    if (photoRef.current) {
+      gsap.fromTo(
+        photoRef.current,
+        { clipPath: "circle(0% at 50% 50%)", scale: 1.08, opacity: 0 },
+        {
+          clipPath: "circle(75% at 50% 50%)",
+          scale: 1,
+          opacity: 1,
+          duration: 1.4,
+          ease: "power3.out",
+          delay: 0.35,
+          onComplete: () => {
+            if (photoRef.current) photoRef.current.style.clipPath = "";
+          },
+        },
+      );
+    }
+    if (ringRevealRef.current) {
+      gsap.fromTo(
+        ringRevealRef.current,
+        { opacity: 0, scale: 0.85 },
+        { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out", delay: 0.55 },
+      );
+    }
+  }, { scope: containerRef, deps: [] });
 
   return (
     <motion.div className="flex-shrink-0">
@@ -228,6 +261,7 @@ const HeroProfileImage = memo(() => {
         onMouseLeave={() => setHovered(false)}
       >
         <div ref={tiltRef} className="absolute inset-0">
+          <div ref={ringRevealRef} className="absolute inset-0">
           {/* Orbit */}
           <OrbitRing
             tier={tier}
@@ -235,10 +269,11 @@ const HeroProfileImage = memo(() => {
             isVisible={isVisible}
             isMobile={isMobile}
           />
+          </div>
         </div>
 
         {/* Profile */}
-        <div className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10 ">
+        <div ref={photoRef} className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10 will-change-transform">
           <img
             src={profileImg}
             alt="Manoj Kumar - Profile Picture"
