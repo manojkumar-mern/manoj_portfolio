@@ -162,7 +162,8 @@ const Hero = () => {
 
     // Safety net: if the tab is hidden mid-animation or GSAP is throttled,
     // still land on the final state after the timeline's total duration.
-    const safetyId = window.setTimeout(forceFinalState, (tl.duration() + 0.5) * 1000);
+    // delayedCall is registered in the gsap.context and reverts on unmount.
+    gsap.delayedCall(tl.duration() + 0.5, forceFinalState);
 
     /* Ambient background drift — infinite, very subtle. */
     gsap.utils.toArray<HTMLElement>("[data-hero-blob]").forEach((el, i) => {
@@ -192,10 +193,6 @@ const Hero = () => {
     }
 
     ScrollTrigger.refresh();
-
-    return () => {
-      window.clearTimeout(safetyId);
-    };
   }, { scope: rootRef, deps: [] });
 
   return (
