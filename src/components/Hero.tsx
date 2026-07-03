@@ -108,12 +108,14 @@ const Hero = () => {
       .to('[data-hero-reveal="role"]', { opacity: 1, y: 0 }, "-=0.55")
       .to('[data-hero-reveal="skill"]', { opacity: 1, y: 0 }, "-=0.55")
       .to('[data-hero-reveal="desc"]', { opacity: 1, y: 0 }, "-=0.55")
+      .to('[data-hero-reveal="ctas"]', { opacity: 1, y: 0, duration: 0.5 }, "-=0.55")
       .to('[data-hero-reveal="ctas"] > *', {
         opacity: 1, y: 0, stagger: 0.08, duration: 0.6,
-      }, "-=0.55")
+      }, "<")
+      .to('[data-hero-reveal="socials"]', { opacity: 1, y: 0, duration: 0.5 }, "-=0.45")
       .to('[data-hero-reveal="socials"] > *', {
         opacity: 1, y: 0, stagger: 0.06, duration: 0.5,
-      }, "-=0.45")
+      }, "<")
       .to('[data-hero-reveal="scroll"]', { opacity: 1, y: 0, duration: 0.6 }, "-=0.3");
 
     /* Ambient background drift — infinite, very subtle. */
