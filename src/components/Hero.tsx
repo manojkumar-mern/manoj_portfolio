@@ -91,32 +91,79 @@ const Hero = () => {
   /* ---- GSAP entrance choreography + scroll storytelling ---- */
   useGsap(() => {
     if (prefersReducedMotion()) {
-      gsap.set("[data-hero-reveal]", { opacity: 1, y: 0 });
+      gsap.set("[data-hero-reveal], [data-hero-reveal] > *", {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        visibility: "visible",
+        clearProps: "transform",
+      });
       return;
     }
 
     const targets = gsap.utils.toArray<HTMLElement>("[data-hero-reveal]");
+    const childTargets = gsap.utils.toArray<HTMLElement>(
+      '[data-hero-reveal="ctas"] > *, [data-hero-reveal="socials"] > *',
+    );
+    // Baseline: keep everything visible/scale:1; only opacity + y animate.
+    gsap.set([...targets, ...childTargets], {
+      visibility: "visible",
+      scale: 1,
+      willChange: "opacity, transform",
+    });
     gsap.set(targets, { opacity: 0, y: 24 });
+    gsap.set(childTargets, { opacity: 0, y: 12 });
+
+    // Guarantees the final resting state no matter what interrupts the timeline.
+    const forceFinalState = () => {
+      gsap.set([...targets, ...childTargets], {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        visibility: "visible",
+        clearProps: "transform,willChange",
+      });
+    };
 
     const tl = gsap.timeline({
       delay: 0.15,
       defaults: { ease: "power3.out", duration: 0.9 },
+      onComplete: forceFinalState,
+      onInterrupt: forceFinalState,
     });
-    tl.to('[data-hero-reveal="badge"]', { opacity: 1, y: 0, duration: 0.7 })
-      .to('[data-hero-reveal="greeting"]', { opacity: 1, y: 0, duration: 0.6 }, "-=0.45")
-      .to('[data-hero-reveal="name"]', { opacity: 1, y: 0 }, "-=0.35")
-      .to('[data-hero-reveal="role"]', { opacity: 1, y: 0 }, "-=0.55")
-      .to('[data-hero-reveal="skill"]', { opacity: 1, y: 0 }, "-=0.55")
-      .to('[data-hero-reveal="desc"]', { opacity: 1, y: 0 }, "-=0.55")
-      .to('[data-hero-reveal="ctas"]', { opacity: 1, y: 0, duration: 0.5 }, "-=0.55")
-      .to('[data-hero-reveal="ctas"] > *', {
-        opacity: 1, y: 0, stagger: 0.08, duration: 0.6,
-      }, "<")
-      .to('[data-hero-reveal="socials"]', { opacity: 1, y: 0, duration: 0.5 }, "-=0.45")
-      .to('[data-hero-reveal="socials"] > *', {
-        opacity: 1, y: 0, stagger: 0.06, duration: 0.5,
-      }, "<")
-      .to('[data-hero-reveal="scroll"]', { opacity: 1, y: 0, duration: 0.6 }, "-=0.3");
+    tl.addLabel("start")
+      .to('[data-hero-reveal="badge"]', { opacity: 1, y: 0, duration: 0.7 }, "start")
+      .addLabel("greeting", "-=0.45")
+      .to('[data-hero-reveal="greeting"]', { opacity: 1, y: 0, duration: 0.6 }, "greeting")
+      .addLabel("name", "-=0.35")
+      .to('[data-hero-reveal="name"]', { opacity: 1, y: 0 }, "name")
+      .addLabel("role", "-=0.55")
+      .to('[data-hero-reveal="role"]', { opacity: 1, y: 0 }, "role")
+      .addLabel("skill", "-=0.55")
+      .to('[data-hero-reveal="skill"]', { opacity: 1, y: 0 }, "skill")
+      .addLabel("desc", "-=0.55")
+      .to('[data-hero-reveal="desc"]', { opacity: 1, y: 0 }, "desc")
+      .addLabel("ctas", "-=0.55")
+      .to('[data-hero-reveal="ctas"]', { opacity: 1, y: 0, duration: 0.5 }, "ctas")
+      .to(
+        '[data-hero-reveal="ctas"] > *',
+        { opacity: 1, y: 0, stagger: 0.08, duration: 0.6 },
+        "ctas",
+      )
+      .addLabel("socials", "-=0.45")
+      .to('[data-hero-reveal="socials"]', { opacity: 1, y: 0, duration: 0.5 }, "socials")
+      .to(
+        '[data-hero-reveal="socials"] > *',
+        { opacity: 1, y: 0, stagger: 0.06, duration: 0.5 },
+        "socials",
+      )
+      .addLabel("scroll", "-=0.3")
+      .to('[data-hero-reveal="scroll"]', { opacity: 1, y: 0, duration: 0.6 }, "scroll");
+
+    // Safety net: if the tab is hidden mid-animation or GSAP is throttled,
+    // still land on the final state after the timeline's total duration.
+    // delayedCall is registered in the gsap.context and reverts on unmount.
+    gsap.delayedCall(tl.duration() + 0.5, forceFinalState);
 
     /* Ambient background drift — infinite, very subtle. */
     gsap.utils.toArray<HTMLElement>("[data-hero-blob]").forEach((el, i) => {
