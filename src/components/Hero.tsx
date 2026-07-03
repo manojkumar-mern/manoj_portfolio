@@ -4,7 +4,6 @@ import FloatingIcons from "./FloatingIcons";
 import HeroProfileImage from "./HeroProfileImage";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useGsap } from "@/hooks/use-gsap";
-import { useMagnetic } from "@/hooks/use-magnetic";
 
 const HERO_NAME = "Manoj Kumar";
 const HERO_ROLE = "MERN Stack Developer";
@@ -61,11 +60,6 @@ const Hero = () => {
 
   const rootRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const primaryCtaRef = useRef<HTMLAnchorElement>(null);
-  const secondaryCtaRef = useRef<HTMLAnchorElement>(null);
-
-  useMagnetic(primaryCtaRef, { strength: 0.3, radius: 110 });
-  useMagnetic(secondaryCtaRef, { strength: 0.25, radius: 90 });
 
   useEffect(() => {
     if (nameText.length < HERO_NAME.length) {
@@ -276,39 +270,43 @@ const Hero = () => {
 
             <div data-hero-reveal="ctas" className="flex flex-col md:flex-row md:flex-wrap items-stretch md:items-center justify-center gap-3 mb-8 w-full">
               <a
-                ref={primaryCtaRef}
                 href="#projects"
-                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-semibold text-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 w-full md:w-auto"
+                className="hero-cta hero-cta--primary group relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-accent text-primary-foreground font-semibold text-sm w-full md:w-auto"
               >
-                View Projects
-                <ExternalLink size={14} />
+                <span className="relative z-10 inline-flex items-center gap-2">
+                  View Projects
+                  <ExternalLink size={14} className="transition-transform duration-300 ease-out group-hover:translate-x-0.5" />
+                </span>
               </a>
 
               <a
-                ref={secondaryCtaRef}
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/40 hover:text-primary transition-all duration-300 w-full md:w-auto"
+                className="hero-cta hero-cta--ghost group relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border border-border text-foreground font-medium text-sm w-full md:w-auto"
               >
-                Contact Me
+                <span className="relative z-10">Contact Me</span>
               </a>
 
               <a
                 href="/resume.pdf#zoom=65"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary transition-all duration-300 w-full md:w-auto"
+                className="hero-cta hero-cta--ghost group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm w-full md:w-auto"
               >
-                <Eye size={14} />
-                View Resume
+                <span className="relative z-10 inline-flex items-center gap-2">
+                  <Eye size={14} className="transition-transform duration-300 ease-out group-hover:-translate-y-0.5" />
+                  View Resume
+                </span>
               </a>
 
               <a
                 href="/resume.pdf"
                 download="manoj_resume.pdf"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm hover:text-primary transition-all duration-300 w-full md:w-auto"
+                className="hero-cta hero-cta--ghost group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border text-muted-foreground font-medium text-sm w-full md:w-auto"
               >
-                <Download size={14} />
-                Resume Download
+                <span className="relative z-10 inline-flex items-center gap-2">
+                  <Download size={14} className="transition-transform duration-300 ease-out group-hover:translate-y-0.5" />
+                  Resume Download
+                </span>
               </a>
             </div>
 
