@@ -24,8 +24,9 @@ export function useGsap(
   savedSetup.current = setup;
 
   useIsoLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      savedSetup.current(ctx);
+    let ctx: gsap.Context;
+    ctx = gsap.context((self) => {
+      savedSetup.current(self as gsap.Context);
     }, scope?.current ?? undefined);
 
     return () => ctx.revert();
