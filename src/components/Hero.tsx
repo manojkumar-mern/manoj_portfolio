@@ -6,10 +6,11 @@ import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useGsap } from "@/hooks/use-gsap";
 
 const HERO_NAME = "Manoj Kumar";
+const NAME_CHARS = HERO_NAME.split("");
+const SCRAMBLE_POOL = "{}<>/=+*#$%&@!?_-;:";
 const HERO_ROLE = "MERN Stack Developer";
 const SKILLS = ["JavaScript", "HTML", "CSS", "React.js", "Express.js", "Node.js", "MongoDB", "Tailwind CSS", "Git"];
 
-const NAME_SPEED = 100;
 const TYPE_SPEED = 85;
 const DELETE_SPEED = 45;
 const PAUSE_BEFORE_DELETE = 2000;
@@ -53,22 +54,14 @@ const useTypewriterLoop = (
 };
 
 const Hero = () => {
-  const [nameText, setNameText] = useState("");
   const [nameDone, setNameDone] = useState(false);
   const [roleText, setRoleText] = useState("");
   const [roleDone, setRoleDone] = useState(false);
 
   const rootRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (nameText.length < HERO_NAME.length) {
-      const t = setTimeout(() => setNameText(HERO_NAME.slice(0, nameText.length + 1)), NAME_SPEED);
-      return () => clearTimeout(t);
-    } else {
-      setNameDone(true);
-    }
-  }, [nameText]);
+  const nameWrapRef = useRef<HTMLSpanElement>(null);
+  const sweepRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!nameDone) return;
