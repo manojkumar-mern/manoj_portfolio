@@ -7,7 +7,6 @@ import { useGsap } from "@/hooks/use-gsap";
 
 const HERO_NAME = "Manoj Kumar";
 const NAME_CHARS = HERO_NAME.split("");
-const SCRAMBLE_POOL = "{}<>/=+*#$%&@!?_-;:";
 const HERO_ROLE = "MERN Stack Developer";
 const SKILLS = ["JavaScript", "HTML", "CSS", "React.js", "Express.js", "Node.js", "MongoDB", "Tailwind CSS", "Git"];
 
