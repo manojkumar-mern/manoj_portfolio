@@ -272,17 +272,6 @@ const Hero = () => {
                     {char}
                   </span>
                 ))}
-                <span
-                  ref={sweepRef}
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 -left-8 -right-8 opacity-0"
-                  style={{
-                    background:
-                      "linear-gradient(100deg, transparent 38%, hsl(var(--primary) / 0.45) 50%, transparent 62%)",
-                    mixBlendMode: "plus-lighter",
-                    filter: "blur(6px)",
-                  }}
-                />
               </span>
               {!nameDone && (
                 <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 align-middle animate-pulse" />
