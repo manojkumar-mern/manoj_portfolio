@@ -227,14 +227,34 @@ const Hero = () => {
             </p>
 
             <h1 data-hero-reveal="name" className="text-4xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em]">
-              {nameText.split("").map((char, i) => (
+              <span
+                ref={nameWrapRef}
+                className="relative inline-block align-baseline [overflow-x:hidden] [overflow-y:visible] pb-[0.05em]"
+                aria-label={HERO_NAME}
+              >
+                {NAME_CHARS.map((char, i) => (
+                  <span
+                    key={i}
+                    data-name-char
+                    aria-hidden="true"
+                    className={`inline-block will-change-transform ${i >= 6 ? "text-gradient" : ""}`}
+                    style={{ whiteSpace: char === " " ? "pre" : undefined }}
+                  >
+                    {char}
+                  </span>
+                ))}
                 <span
-                  key={i}
-                  className={`transition duration-300 ${i >= 6 ? "text-gradient" : ""}`}
-                >
-                  {char}
-                </span>
-              ))}
+                  ref={sweepRef}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 -left-8 -right-8 opacity-0"
+                  style={{
+                    background:
+                      "linear-gradient(100deg, transparent 38%, hsl(var(--primary) / 0.45) 50%, transparent 62%)",
+                    mixBlendMode: "plus-lighter",
+                    filter: "blur(6px)",
+                  }}
+                />
+              </span>
               {!nameDone && (
                 <span className="inline-block w-[3px] h-[0.8em] bg-primary/70 ml-1 align-middle animate-pulse" />
               )}
