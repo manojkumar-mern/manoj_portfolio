@@ -60,7 +60,6 @@ const Hero = () => {
   const rootRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const nameWrapRef = useRef<HTMLSpanElement>(null);
-  const sweepRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!nameDone) return;
@@ -157,7 +156,7 @@ const Hero = () => {
     // delayedCall is registered in the gsap.context and reverts on unmount.
     gsap.delayedCall(tl.duration() + 0.5, forceFinalState);
 
-    /* ---- Name scramble reveal — resolves each char into "Manoj Kumar" ---- */
+    /* ---- Name stagger reveal — clean left-to-right character fade ---- */
     const nameChars = nameWrapRef.current
       ? Array.from(
           nameWrapRef.current.querySelectorAll<HTMLSpanElement>("[data-name-char]"),
@@ -165,84 +164,21 @@ const Hero = () => {
       : [];
 
     if (nameChars.length) {
-      const total = nameChars.length;
-      const scrambleWindow = 0.95; // seconds — total reveal duration
-      const startDelay = 0.55; // begins after name container has faded in
-      const settleDur = 0.35;
+      gsap.set(nameChars, { opacity: 0, y: 14 });
 
-      // Initial state — placeholder scramble character.
-      nameChars.forEach((el, i) => {
-        if (NAME_CHARS[i] === " ") return;
-        el.textContent =
-          SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
+      const nameTl = gsap.timeline({
+        delay: 0.55,
+        onComplete: () => setNameDone(true),
       });
 
-      const scrambleTl = gsap.timeline({ delay: startDelay });
-
-      nameChars.forEach((el, i) => {
-        if (NAME_CHARS[i] === " ") return;
-        const settleAt = (i / Math.max(1, total - 1)) * (scrambleWindow - settleDur);
-        const proxy = { t: 0 };
-        let lastSwap = -1;
-
-        // Rapid but throttled character swap until this char's settle time.
-        scrambleTl.to(
-          proxy,
-          {
-            t: 1,
-            duration: settleAt + 0.001,
-            ease: "none",
-            onUpdate: () => {
-              const now = performance.now();
-              if (now - lastSwap < 55) return;
-              lastSwap = now;
-              el.textContent =
-                SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
-            },
-            onComplete: () => {
-              el.textContent = NAME_CHARS[i];
-            },
-          },
-          0,
-        );
-
-        // Gentle settle — slight rise + opacity kiss as it locks in.
-        scrambleTl.fromTo(
-          el,
-          { yPercent: 14, opacity: 0.55 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: settleDur,
-            ease: "power3.out",
-            clearProps: "transform,willChange",
-          },
-          settleAt,
-        );
+      nameTl.to(nameChars, {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        stagger: 0.05,
+        ease: "power3.out",
+        clearProps: "transform",
       });
-
-      // Ensure final text is authoritative, then trigger role typewriter.
-      scrambleTl.add(() => {
-        nameChars.forEach((el, i) => (el.textContent = NAME_CHARS[i]));
-        setNameDone(true);
-      }, scrambleWindow);
-
-      // Subtle light sweep across the settled name.
-      if (sweepRef.current) {
-        scrambleTl.fromTo(
-          sweepRef.current,
-          { xPercent: -110, opacity: 0 },
-          {
-            xPercent: 110,
-            opacity: 1,
-            duration: 0.85,
-            ease: "power2.inOut",
-            onStart: () => gsap.set(sweepRef.current, { opacity: 1 }),
-            onComplete: () => gsap.set(sweepRef.current, { opacity: 0 }),
-          },
-          scrambleWindow + 0.05,
-        );
-      }
     }
 
     /* Ambient background drift — infinite, very subtle. */
