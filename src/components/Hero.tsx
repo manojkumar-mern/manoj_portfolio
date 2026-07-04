@@ -258,7 +258,7 @@ const Hero = () => {
             <h1 data-hero-reveal="name" className="text-4xl md:text-7xl font-extrabold mb-2 tracking-tight min-h-[1.2em]">
               <span
                 ref={nameWrapRef}
-                className="relative inline-block align-baseline [overflow-x:hidden] [overflow-y:visible] pb-[0.05em]"
+                className="relative inline-block align-baseline pb-[0.05em]"
                 aria-label={HERO_NAME}
               >
                 {NAME_CHARS.map((char, i) => (
