@@ -366,7 +366,7 @@ const Hero = () => {
 
         <div
           data-hero-reveal="scroll"
-          className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20"
+          className="absolute bottom-3 md:bottom-5 left-1/2 -translate-x-1/2 z-20"
         >
           <a
             href="#about"
