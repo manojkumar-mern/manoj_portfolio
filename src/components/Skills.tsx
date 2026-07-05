@@ -77,7 +77,22 @@ const Skills = memo(() => {
       willChange: "opacity, transform",
     });
     gsap.set(headerEls, { opacity: 0, y: 20 });
-    gsap.set(cardEls, { opacity: 0, y: 24, scale: 0.97 });
+    // Multi-directional assembly: each card enters from a different side
+    // (left / right / top / bottom) with a short 20–40px travel distance.
+    const directions: Array<{ x: number; y: number }> = [
+      { x: -32, y: 0 },   // from left
+      { x: 0, y: -28 },   // from top
+      { x: 32, y: 0 },    // from right
+      { x: 0, y: 32 },    // from bottom
+      { x: -28, y: 0 },   // from left
+      { x: 0, y: -32 },   // from top
+      { x: 28, y: 0 },    // from right
+      { x: 0, y: 28 },    // from bottom
+    ];
+    cardEls.forEach((el, i) => {
+      const d = directions[i % directions.length];
+      gsap.set(el, { opacity: 0, x: d.x, y: d.y });
+    });
     gsap.set(chipEls, { opacity: 0, y: 12 });
 
     const forceFinalState = () => {
@@ -97,22 +112,22 @@ const Skills = memo(() => {
         start: "top 80%",
         once: true,
       },
-      defaults: { ease: "power3.out" },
+      defaults: { ease: "power4.out" },
       onComplete: forceFinalState,
       onInterrupt: forceFinalState,
     });
 
-    tl.to(headerEls, { opacity: 1, y: 0, duration: 0.7 })
+    tl.to(headerEls, { opacity: 1, y: 0, duration: 0.8 })
       .to(
         cardEls,
         {
           opacity: 1,
+          x: 0,
           y: 0,
-          scale: 1,
-          duration: 0.7,
-          stagger: 0.09,
+          duration: 0.85,
+          stagger: 0.08,
         },
-        "-=0.5"
+        "-=0.6"
       )
       .to(
         chipEls,
@@ -120,9 +135,9 @@ const Skills = memo(() => {
           opacity: 1,
           y: 0,
           duration: 0.5,
-          stagger: 0.04,
+          stagger: 0.035,
         },
-        "-=0.55"
+        "-=0.65"
       );
 
     gsap.delayedCall(tl.duration() + 0.5, forceFinalState);
