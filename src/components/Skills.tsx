@@ -137,10 +137,8 @@ const Skills = memo(() => {
           duration: 0.5,
           stagger: 0.035,
         },
-        "-=0.65"
-      );
-
-    gsap.delayedCall(tl.duration() + 0.5, forceFinalState);
+      "-=0.65"
+    );
   }, { scope: sectionRef, deps: [isMobile] });
 
   return (
