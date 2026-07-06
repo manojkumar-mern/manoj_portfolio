@@ -353,7 +353,7 @@ const Hero = () => {
                   aria-label={label}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
                   rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                  className="p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:scale-105 transition-all duration-300"
+                  className="inline-flex items-center justify-center p-2.5 rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 hover:scale-105 transition-all duration-300"
                 >
                   <Icon size={17} />
                 </a>
