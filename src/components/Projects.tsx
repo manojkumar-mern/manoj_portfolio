@@ -392,6 +392,7 @@ const Projects = memo(() => {
     if (prefersReducedMotion()) {
       gsap.set("[data-projects-animate]", {
         opacity: 1,
+        x: 0,
         y: 0,
         visibility: "visible",
         clearProps: "transform,willChange",
@@ -405,11 +406,22 @@ const Projects = memo(() => {
       visibility: "visible",
       willChange: "opacity, transform",
     });
-    gsap.set(els, { opacity: 0, y: 22 });
+
+    els.forEach((el) => {
+      const dir = el.dataset.direction;
+      const fromVars: { opacity: number; x?: number; y?: number } = { opacity: 0 };
+      if (dir === "left") fromVars.x = -25;
+      else if (dir === "right") fromVars.x = 25;
+      else if (dir === "top") fromVars.y = -25;
+      else if (dir === "bottom") fromVars.y = 25;
+      else fromVars.y = 22;
+      gsap.set(el, fromVars);
+    });
 
     const forceFinalState = () => {
       gsap.set(els, {
         opacity: 1,
+        x: 0,
         y: 0,
         visibility: "visible",
         clearProps: "transform,willChange",
@@ -422,16 +434,16 @@ const Projects = memo(() => {
         start: "top 80%",
         once: true,
       },
-      defaults: { ease: "power3.out" },
+      defaults: { ease: "power4.out", duration: 0.8 },
       onComplete: forceFinalState,
       onInterrupt: forceFinalState,
     });
 
     tl.to(els, {
       opacity: 1,
+      x: 0,
       y: 0,
-      duration: 0.7,
-      stagger: 0.1,
+      stagger: 0.08,
     });
   }, { scope: sectionRef });
 
