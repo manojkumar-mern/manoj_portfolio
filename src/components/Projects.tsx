@@ -463,12 +463,16 @@ const Projects = memo(() => {
         </div>
 
         {/* Hero project */}
-        <HeroCard project={hero} onOpen={() => setSelectedProject(hero)} />
+        <div data-projects-animate data-direction="bottom">
+          <HeroCard project={hero} onOpen={() => setSelectedProject(hero)} />
+        </div>
 
         {/* Sub-featured */}
         <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-20">
-          {subFeatured.map((p) => (
-            <FeaturedCard key={p.title} project={p} onOpen={() => setSelectedProject(p)} />
+          {subFeatured.map((p, i) => (
+            <div key={p.title} data-projects-animate data-direction={i === 0 ? "left" : "right"}>
+              <FeaturedCard project={p} onOpen={() => setSelectedProject(p)} />
+            </div>
           ))}
         </div>
 
@@ -483,13 +487,14 @@ const Projects = memo(() => {
 
         {/* Mini Projects Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {miniProjects.map((p) => (
-            <MiniCard
-              key={p.title}
-              project={p}
-              onOpen={() => setSelectedProject(p)}
-            />
-          ))}
+          {miniProjects.map((p, i) => {
+            const directions = ["top", "bottom", "left", "right"];
+            return (
+              <div key={p.title} data-projects-animate data-direction={directions[i % 4]}>
+                <MiniCard project={p} onOpen={() => setSelectedProject(p)} />
+              </div>
+            );
+          })}
         </div>
       </div>
 
