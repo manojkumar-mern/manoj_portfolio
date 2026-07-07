@@ -165,7 +165,7 @@ export const miniProjects: Project[] = [
     image: "/projects/color-generator.webp",
   },
   {
-    title: "Rock Paper Scissors – Elite RPS Arena",
+    title: "Rock Paper Scissors – Arena",
     description:
       "An interactive browser game with smooth animations and modern UI where users can play Rock Paper Scissors against the computer.",
     problem:
