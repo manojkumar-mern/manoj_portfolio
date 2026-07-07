@@ -392,6 +392,7 @@ const Projects = memo(() => {
     if (prefersReducedMotion()) {
       gsap.set("[data-projects-animate]", {
         opacity: 1,
+        x: 0,
         y: 0,
         visibility: "visible",
         clearProps: "transform,willChange",
@@ -405,11 +406,22 @@ const Projects = memo(() => {
       visibility: "visible",
       willChange: "opacity, transform",
     });
-    gsap.set(els, { opacity: 0, y: 22 });
+
+    els.forEach((el) => {
+      const dir = el.dataset.direction;
+      const fromVars: { opacity: number; x?: number; y?: number } = { opacity: 0 };
+      if (dir === "left") fromVars.x = -25;
+      else if (dir === "right") fromVars.x = 25;
+      else if (dir === "top") fromVars.y = -25;
+      else if (dir === "bottom") fromVars.y = 25;
+      else fromVars.y = 22;
+      gsap.set(el, fromVars);
+    });
 
     const forceFinalState = () => {
       gsap.set(els, {
         opacity: 1,
+        x: 0,
         y: 0,
         visibility: "visible",
         clearProps: "transform,willChange",
@@ -422,16 +434,16 @@ const Projects = memo(() => {
         start: "top 80%",
         once: true,
       },
-      defaults: { ease: "power3.out" },
+      defaults: { ease: "power4.out", duration: 0.8 },
       onComplete: forceFinalState,
       onInterrupt: forceFinalState,
     });
 
     tl.to(els, {
       opacity: 1,
+      x: 0,
       y: 0,
-      duration: 0.7,
-      stagger: 0.1,
+      stagger: 0.08,
     });
   }, { scope: sectionRef });
 
@@ -451,12 +463,16 @@ const Projects = memo(() => {
         </div>
 
         {/* Hero project */}
-        <HeroCard project={hero} onOpen={() => setSelectedProject(hero)} />
+        <div data-projects-animate data-direction="bottom">
+          <HeroCard project={hero} onOpen={() => setSelectedProject(hero)} />
+        </div>
 
         {/* Sub-featured */}
         <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-20">
-          {subFeatured.map((p) => (
-            <FeaturedCard key={p.title} project={p} onOpen={() => setSelectedProject(p)} />
+          {subFeatured.map((p, i) => (
+            <div key={p.title} data-projects-animate data-direction={i === 0 ? "left" : "right"}>
+              <FeaturedCard project={p} onOpen={() => setSelectedProject(p)} />
+            </div>
           ))}
         </div>
 
@@ -471,13 +487,14 @@ const Projects = memo(() => {
 
         {/* Mini Projects Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          {miniProjects.map((p) => (
-            <MiniCard
-              key={p.title}
-              project={p}
-              onOpen={() => setSelectedProject(p)}
-            />
-          ))}
+          {miniProjects.map((p, i) => {
+            const directions = ["top", "bottom", "left", "right"];
+            return (
+              <div key={p.title} data-projects-animate data-direction={directions[i % 4]}>
+                <MiniCard project={p} onOpen={() => setSelectedProject(p)} />
+              </div>
+            );
+          })}
         </div>
       </div>
 
