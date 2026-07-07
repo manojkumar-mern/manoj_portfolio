@@ -1,10 +1,8 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, X, AlertCircle, Lightbulb, Zap, BookOpen, Trophy } from "lucide-react";
-import {
-  fadeUp, fadeRight, staggerContainer, staggerItem,
-  viewportConfig, prefersReducedMotion, noMotion,
-} from "@/lib/motion";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { useGsap } from "@/hooks/use-gsap";
 import { type Project, featuredProjects, miniProjects } from "@/data/projects";
 
 /* ── Case Study Section ── */
@@ -200,71 +198,63 @@ ProjectModal.displayName = "ProjectModal";
 /* ── Featured Hero Card ── */
 const HeroCard = memo(({
   project,
-  reduced,
   onOpen,
 }: {
   project: Project;
-  reduced: boolean;
   onOpen: () => void;
-}) => {
-  const v = <T extends object>(variant: T) => (reduced ? noMotion : variant);
-  return (
-    <motion.div
-      variants={v(fadeUp)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewportConfig}
-      onClick={onOpen}
-      className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu cursor-pointer"
-    >
-      <div className="grid md:grid-cols-2 gap-0">
-        <div className="relative h-48 sm:h-56 md:h-auto md:min-h-[260px] overflow-hidden bg-muted/30">
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="eager"
-            width={960}
-            height={540}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 transform-gpu"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
-          <div className="absolute top-5 left-5 px-3 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[10px] font-semibold tracking-wider uppercase backdrop-blur-sm">
-            ★ Featured
-          </div>
-        </div>
-
-        <div className="p-5 sm:p-7 md:p-10 flex flex-col justify-center">
-          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
-            {project.title}
-          </h3>
-          <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-            {project.description}
-          </p>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.tech.map((t) => (
-              <span
-                key={t}
-                className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono group-hover:border-primary/20 group-hover:text-foreground transition-all duration-300"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-3 max-md:opacity-100 max-md:translate-y-0 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
-            {project.demo && (
-              <GlowButton href={project.demo} variant="primary">
-                <ExternalLink size={14} /> Live Demo
-              </GlowButton>
-            )}
-            <GlowButton href={project.github} variant="outline">
-              <Github size={14} /> GitHub
-            </GlowButton>
-          </div>
+}) => (
+  <div
+    data-projects-card
+    onClick={onOpen}
+    className="group relative rounded-2xl premium-card glow-card overflow-hidden mb-8 transform-gpu cursor-pointer"
+  >
+    <div className="grid md:grid-cols-2 gap-0">
+      <div className="relative h-48 sm:h-56 md:h-auto md:min-h-[260px] overflow-hidden bg-muted/30">
+        <img
+          src={project.image}
+          alt={project.title}
+          loading="eager"
+          width={960}
+          height={540}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 transform-gpu"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
+        <div className="absolute top-5 left-5 px-3 py-1 rounded-full bg-primary/15 border border-primary/20 text-primary text-[10px] font-semibold tracking-wider uppercase backdrop-blur-sm">
+          ★ Featured
         </div>
       </div>
-    </motion.div>
-  );
-});
+
+      <div className="p-5 sm:p-7 md:p-10 flex flex-col justify-center">
+        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 group-hover:text-gradient transition-colors duration-300">
+          {project.title}
+        </h3>
+        <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+          {project.description}
+        </p>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.tech.map((t) => (
+            <span
+              key={t}
+              className="text-xs px-3 py-1.5 rounded-md bg-muted border border-border text-muted-foreground font-mono group-hover:border-primary/20 group-hover:text-foreground transition-all duration-300"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-3 max-md:opacity-100 max-md:translate-y-0 opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+          {project.demo && (
+            <GlowButton href={project.demo} variant="primary">
+              <ExternalLink size={14} /> Live Demo
+            </GlowButton>
+          )}
+          <GlowButton href={project.github} variant="outline">
+            <Github size={14} /> GitHub
+          </GlowButton>
+        </div>
+      </div>
+    </div>
+  </div>
+));
 HeroCard.displayName = "HeroCard";
 
 /* ── Featured Sub Card ── */
@@ -275,8 +265,8 @@ const FeaturedCard = memo(({
   project: Project;
   onOpen: () => void;
 }) => (
-  <motion.div
-    variants={staggerItem}
+  <div
+    data-projects-card
     onClick={onOpen}
     className="group relative premium-card glow-card overflow-hidden rounded-2xl flex flex-col transform-gpu cursor-pointer"
   >
@@ -322,7 +312,7 @@ const FeaturedCard = memo(({
         </GlowButton>
       </div>
     </div>
-  </motion.div>
+  </div>
 ));
 FeaturedCard.displayName = "FeaturedCard";
 
@@ -334,8 +324,8 @@ const MiniCard = memo(({
   project: Project;
   onOpen: () => void;
 }) => (
-  <motion.div
-    variants={staggerItem}
+  <div
+    data-projects-card
     onClick={onOpen}
     className="group relative premium-card glow-card overflow-hidden rounded-xl flex flex-col cursor-pointer transform-gpu"
   >
@@ -389,79 +379,98 @@ const MiniCard = memo(({
         </a>
       </div>
     </div>
-  </motion.div>
+  </div>
 ));
 MiniCard.displayName = "MiniCard";
 
 /* ── Main Section ── */
 const Projects = memo(() => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    setReduced(prefersReducedMotion());
-  }, []);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const v = <T extends object>(variant: T) => (reduced ? noMotion : variant);
+  useGsap(() => {
+    if (prefersReducedMotion()) {
+      gsap.set("[data-projects-animate]", {
+        opacity: 1,
+        y: 0,
+        visibility: "visible",
+        clearProps: "transform,willChange",
+      });
+      return;
+    }
+
+    const els = gsap.utils.toArray<HTMLElement>("[data-projects-animate]");
+
+    gsap.set(els, {
+      visibility: "visible",
+      willChange: "opacity, transform",
+    });
+    gsap.set(els, { opacity: 0, y: 22 });
+
+    const forceFinalState = () => {
+      gsap.set(els, {
+        opacity: 1,
+        y: 0,
+        visibility: "visible",
+        clearProps: "transform,willChange",
+      });
+    };
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        once: true,
+      },
+      defaults: { ease: "power3.out" },
+      onComplete: forceFinalState,
+      onInterrupt: forceFinalState,
+    });
+
+    tl.to(els, {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.1,
+    });
+  }, { scope: sectionRef });
+
   const hero = featuredProjects[0];
   const subFeatured = featuredProjects.slice(1);
 
   return (
-    <section id="projects" className="py-16 md:py-28 overflow-x-hidden">
+    <section ref={sectionRef} id="projects" className="py-16 md:py-28 overflow-x-hidden">
       <div className="container px-4 md:px-8">
         {/* Header */}
-        <motion.div
-          variants={v(fadeRight)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="mb-12"
-        >
+        <div data-projects-animate className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Featured Projects</h2>
           <div className="h-0.5 w-12 rounded-full bg-gradient-accent mb-4" />
           <p className="text-muted-foreground max-w-lg">
             Full-stack applications built with modern technologies.
           </p>
-        </motion.div>
+        </div>
 
         {/* Hero project */}
-        <HeroCard project={hero} reduced={reduced} onOpen={() => setSelectedProject(hero)} />
+        <HeroCard project={hero} onOpen={() => setSelectedProject(hero)} />
 
         {/* Sub-featured */}
-        <motion.div
-          variants={v(staggerContainer(0.15))}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-20"
-        >
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-20">
           {subFeatured.map((p) => (
             <FeaturedCard key={p.title} project={p} onOpen={() => setSelectedProject(p)} />
           ))}
-        </motion.div>
+        </div>
 
         {/* Mini Projects Header */}
-        <motion.div
-          variants={v(fadeRight)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="mb-10"
-        >
+        <div data-projects-animate className="mb-10">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">Mini Projects</h2>
           <div className="h-0.5 w-12 rounded-full bg-gradient-accent mb-4" />
           <p className="text-muted-foreground max-w-lg">
             Smaller experiments and utility tools.
           </p>
-        </motion.div>
+        </div>
 
         {/* Mini Projects Grid */}
-        <motion.div
-          variants={v(staggerContainer(0.1))}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {miniProjects.map((p) => (
             <MiniCard
               key={p.title}
@@ -469,7 +478,7 @@ const Projects = memo(() => {
               onOpen={() => setSelectedProject(p)}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
 
       <AnimatePresence>
