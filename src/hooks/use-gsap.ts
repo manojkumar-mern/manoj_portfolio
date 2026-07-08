@@ -24,12 +24,10 @@ export function useGsap(
   savedSetup.current = setup;
 
   useIsoLayoutEffect(() => {
-    let ctx: gsap.Context;
-    ctx = gsap.context((self) => {
+    const ctx = gsap.context((self) => {
       savedSetup.current(self as gsap.Context);
     }, scope?.current ?? undefined);
 
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }

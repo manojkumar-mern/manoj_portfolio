@@ -390,7 +390,7 @@ const Projects = memo(() => {
 
   useGsap(() => {
     if (prefersReducedMotion()) {
-      gsap.set("[data-projects-animate]", {
+      gsap.set("[data-projects-animate][data-direction]", {
         opacity: 1,
         x: 0,
         y: 0,
@@ -400,26 +400,31 @@ const Projects = memo(() => {
       return;
     }
 
-    const els = gsap.utils.toArray<HTMLElement>("[data-projects-animate]");
+    const cards = gsap.utils.toArray<HTMLElement>("[data-projects-animate][data-direction]");
 
-    gsap.set(els, {
+    gsap.set(cards, {
       visibility: "visible",
       willChange: "opacity, transform",
     });
 
-    els.forEach((el) => {
-      const dir = el.dataset.direction;
-      const fromVars: { opacity: number; x?: number; y?: number } = { opacity: 0 };
-      if (dir === "left") fromVars.x = -25;
-      else if (dir === "right") fromVars.x = 25;
-      else if (dir === "top") fromVars.y = -25;
-      else if (dir === "bottom") fromVars.y = 25;
-      else fromVars.y = 22;
-      gsap.set(el, fromVars);
+    const directions: Array<{ x: number; y: number }> = [
+      { x: 0, y: 110 },
+      { x: -105, y: 0 },
+      { x: 105, y: 0 },
+      { x: 0, y: -95 },
+      { x: -90, y: 0 },
+      { x: 0, y: 100 },
+      { x: 90, y: 0 },
+      { x: 0, y: -85 },
+    ];
+
+    cards.forEach((card, i) => {
+      const d = directions[i % directions.length];
+      gsap.set(card, { opacity: 0, x: d.x, y: d.y });
     });
 
     const forceFinalState = () => {
-      gsap.set(els, {
+      gsap.set(cards, {
         opacity: 1,
         x: 0,
         y: 0,
@@ -439,11 +444,12 @@ const Projects = memo(() => {
       onInterrupt: forceFinalState,
     });
 
-    tl.to(els, {
+    tl.to(cards, {
       opacity: 1,
       x: 0,
       y: 0,
-      stagger: 0.08,
+      duration: 1,
+      stagger: 0.12,
     });
   }, { scope: sectionRef });
 
