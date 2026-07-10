@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { usePerformanceTier } from "@/hooks/use-performance";
 import { gsap } from "gsap";
@@ -47,12 +47,18 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
       const id = anchor.getAttribute("href");
       if (!id) return;
       e.preventDefault();
+      
+      const scrollOptions = {
+        duration: 1.8, // Noticeably slower and premium duration
+        easing: (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, // Gentle ease-in-out cubic curve
+      };
+
       if (id === "#") {
-        lenis.scrollTo(0);
+        lenis.scrollTo(0, scrollOptions);
         return;
       }
       const el = document.querySelector(id);
-      if (el) lenis.scrollTo(el as HTMLElement, { offset: -80 });
+      if (el) lenis.scrollTo(el as HTMLElement, { offset: -80, ...scrollOptions });
     };
 
     document.addEventListener("click", handleAnchorClick);
