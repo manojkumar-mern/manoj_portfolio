@@ -1,5 +1,5 @@
 import { memo, useRef } from "react";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useGsap } from "@/hooks/use-gsap";
 import { devicon } from "@/lib/devicons";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -139,6 +139,8 @@ const Skills = memo(() => {
         },
       "-=0.65"
     );
+
+    ScrollTrigger.refresh();
   }, { scope: sectionRef, deps: [isMobile] });
 
   return (

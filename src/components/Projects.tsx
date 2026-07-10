@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, X, AlertCircle, Lightbulb, Zap, BookOpen, Trophy } from "lucide-react";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { useGsap } from "@/hooks/use-gsap";
 import { type Project, featuredProjects, miniProjects } from "@/data/projects";
 
@@ -423,8 +423,8 @@ const Projects = memo(() => {
       gsap.set(card, { opacity: 0, x: d.x, y: d.y });
     });
 
-    const forceFinalState = () => {
-      gsap.set(cards, {
+    const forceState = (elements: HTMLElement[]) => {
+      gsap.set(elements, {
         opacity: 1,
         x: 0,
         y: 0,
@@ -433,24 +433,69 @@ const Projects = memo(() => {
       });
     };
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        once: true,
-      },
-      defaults: { ease: "power4.out", duration: 0.8 },
-      onComplete: forceFinalState,
-      onInterrupt: forceFinalState,
-    });
+    // 1. Featured Hero Card (First row)
+    if (cards[0]) {
+      const heroCard = cards[0];
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: heroCard,
+          start: "top 85%",
+          once: true,
+        },
+        defaults: { ease: "power4.out" },
+        onComplete: () => forceState([heroCard]),
+        onInterrupt: () => forceState([heroCard]),
+      }).to(heroCard, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 1,
+      });
+    }
 
-    tl.to(cards, {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      duration: 1,
-      stagger: 0.12,
-    });
+    // 2. Sub-Featured Cards (Second row)
+    const subCards = cards.slice(1, 3);
+    if (subCards.length > 0) {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: subCards[0],
+          start: "top 85%",
+          once: true,
+        },
+        defaults: { ease: "power4.out" },
+        onComplete: () => forceState(subCards),
+        onInterrupt: () => forceState(subCards),
+      }).to(subCards, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 1,
+        stagger: 0.12,
+      });
+    }
+
+    // 3. Mini Cards (Third row)
+    const miniCards = cards.slice(3);
+    if (miniCards.length > 0) {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: miniCards[0],
+          start: "top 85%",
+          once: true,
+        },
+        defaults: { ease: "power4.out" },
+        onComplete: () => forceState(miniCards),
+        onInterrupt: () => forceState(miniCards),
+      }).to(miniCards, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 1,
+        stagger: 0.12,
+      });
+    }
+
+    ScrollTrigger.refresh();
   }, { scope: sectionRef });
 
   const hero = featuredProjects[0];
