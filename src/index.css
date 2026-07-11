@@ -480,3 +480,19 @@ html.lenis body {
     transform: none !important;
   }
 }
+
+@keyframes arrow-nudge {
+  0% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  35% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+

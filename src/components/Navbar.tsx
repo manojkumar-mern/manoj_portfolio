@@ -57,22 +57,21 @@ const Navbar = memo(() => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
   const close = useCallback(() => setOpen(false), []);
 
   return (
     <nav
-      className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] border ${
+      className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[95%] md:max-w-3xl lg:max-w-5xl xl:max-w-[1280px] 2xl:max-w-[1200px] rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] border ${
         scrolled
           ? "bg-card/60 backdrop-blur-xl border-border/40 shadow-[0_8px_32px_hsl(0_0%_0%/0.35),0_0_0_1px_hsl(187_78%_53%/0.06)]"
           : "bg-card/30 backdrop-blur-md border-border/20 shadow-[0_4px_16px_hsl(0_0%_0%/0.2)]"
       }`}
     >
-      <div className="flex items-center justify-between h-14 px-5">
+      <div className="flex items-center justify-between h-14 px-5 md:px-[10.65px] xl:px-[50.65px] 2xl:px-[10.65px]">
         <a
           href="#"
           aria-label="Home"
-          className="flex items-center justify-center"
+          className="flex items-center justify-center -ml-5 md:ml-0"
         >
         <img
           src="/logo.png"
@@ -80,7 +79,7 @@ const Navbar = memo(() => {
           className="h-20 w-20 object-contain transition-transform duration-300 hover:scale-105"
         />
         </a>
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1 md:mr-[5px]">
           {links.map((l) => {
             const isActive = l.href === "#" ? !activeSection : activeSection === l.href.replace("#", "");
             return (

@@ -214,7 +214,7 @@ const Hero = () => {
   return (
     <section
       ref={rootRef}
-      className="relative min-h-[auto] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-10 md:pt-16 md:pb-0 px-4 md:px-0 render-layer"
+      className="relative min-h-[auto] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-20 md:pt-16 md:pb-0 px-4 md:px-0 render-layer"
     >
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -363,22 +363,28 @@ const Hero = () => {
 
           <HeroProfileImage />
         </div>
+      </div>
 
-        <div
-          data-hero-reveal="scroll"
-          className="absolute bottom-3 md:bottom-5 left-1/2 -translate-x-1/2 z-20"
+      <div
+        data-hero-reveal="scroll"
+        className="absolute bottom-4 md:bottom-5 left-1/2 -translate-x-1/2 z-20"
+      >
+        <a
+          href="#about"
+          aria-label="Scroll to about section"
+          className="group relative flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
         >
-          <a
-            href="#about"
-            aria-label="Scroll to about section"
-            className="group relative flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-          >
-            <span className="relative flex h-9 w-6 items-center justify-center rounded-full border border-border/70 group-hover:border-primary/50 transition-colors">
-              <span className="absolute top-2 h-1.5 w-[3px] rounded-full bg-current animate-[scroll-dot_1.8s_ease-in-out_infinite]" />
-            </span>
-            <ArrowDown size={14} className="opacity-60 group-hover:opacity-100 transition-opacity" />
-          </a>
-        </div>
+          <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap font-sans text-[10px] tracking-widest uppercase opacity-0 translate-y-1.5 transition-all duration-200 ease-out group-hover:opacity-40 group-hover:translate-y-0 hidden md:block">
+            Explore More
+          </span>
+          <span className="relative flex h-9 w-6 items-center justify-center rounded-full border border-border/70 group-hover:border-primary/50 transition-colors">
+            <span className="absolute top-2 h-1.5 w-[3px] rounded-full bg-current animate-[scroll-dot_1.8s_ease-in-out_infinite]" />
+          </span>
+          <ArrowDown
+            size={14}
+            className="opacity-60 transition-all duration-300 group-hover:animate-[arrow-nudge_0.6s_ease-out_forwards]"
+          />
+        </a>
       </div>
     </section>
   );
