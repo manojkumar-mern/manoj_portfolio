@@ -95,6 +95,7 @@ const StatModal = memo(({
               alt="GitHub Contribution Graph"
               className="w-full rounded-md"
               loading="lazy"
+              decoding="async"
             />
           </div>
 
@@ -243,6 +244,7 @@ const GitHubActivity = memo(() => {
             alt="GitHub Contribution Graph"
             className="w-full rounded-lg"
             loading="lazy"
+            decoding="async"
             width={722}
             height={112}
           />

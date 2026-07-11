@@ -29,6 +29,10 @@ const Footer = memo(() => {
               src="/logo.png"
               alt="Manoj Kumar Logo"
               className="h-20 w-20 object-contain transition-transform duration-300 hover:scale-105"
+              width="80"
+              height="80"
+              decoding="async"
+              loading="lazy"
             />
             </a>
             <p className="text-sm text-muted-foreground">

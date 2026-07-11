@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => ({
           "vendor-query": ["@tanstack/react-query"],
           "vendor-lenis": ["lenis"],
           "vendor-emailjs": ["@emailjs/browser"],
+          "vendor-gsap": ["gsap", "gsap/ScrollTrigger"],
         },
       },
     },

@@ -61,7 +61,7 @@ const Navbar = memo(() => {
 
   return (
     <nav
-      className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[95%] md:max-w-3xl lg:max-w-5xl xl:max-w-[1280px] 2xl:max-w-[1200px] rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] border ${
+      className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[95%] md:max-w-3xl lg:max-w-5xl xl:max-w-[1280px] 2xl:max-w-[1200px] rounded-2xl transition-all duration-500 ease-premium border ${
         scrolled
           ? "bg-card/60 backdrop-blur-xl border-border/40 shadow-[0_8px_32px_hsl(0_0%_0%/0.35),0_0_0_1px_hsl(187_78%_53%/0.06)]"
           : "bg-card/30 backdrop-blur-md border-border/20 shadow-[0_4px_16px_hsl(0_0%_0%/0.2)]"
@@ -77,6 +77,10 @@ const Navbar = memo(() => {
           src="/logo.png"
           alt="Manoj Kumar Logo"
           className="h-20 w-20 object-contain transition-transform duration-300 hover:scale-105"
+          width="80"
+          height="80"
+          decoding="async"
+          fetchpriority="high"
         />
         </a>
         <div className="hidden md:flex items-center gap-1 md:mr-[5px]">

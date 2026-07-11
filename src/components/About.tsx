@@ -97,7 +97,7 @@ const About = memo(() => {
                 </div>
                 <p className="font-semibold text-foreground text-sm mb-1">{item.label}</p>
                 <p className="text-xs text-muted-foreground leading-relaxed mb-2">{item.desc}</p>
-                <div className="flex items-center gap-2 max-md:opacity-100 max-md:translate-y-0 max-md:scale-100 opacity-0 translate-y-1 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                <div className="flex items-center gap-2 max-md:opacity-100 max-md:translate-y-0 max-md:scale-100 opacity-0 translate-y-1 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-400 ease-premium">
                   {item.logos.map((logo) => (
                     <img key={logo.alt} src={logo.src} alt={logo.alt} className="w-5 h-5 object-contain" loading="lazy" width={20} height={20} />
                   ))}

@@ -125,6 +125,8 @@ const ProjectModal = memo(({
               src={project.image}
               alt={project.title}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
               width={800}
               height={450}
             />
@@ -213,7 +215,8 @@ const HeroCard = memo(({
         <img
           src={project.image}
           alt={project.title}
-          loading="eager"
+          loading="lazy"
+          decoding="async"
           width={960}
           height={540}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 transform-gpu"

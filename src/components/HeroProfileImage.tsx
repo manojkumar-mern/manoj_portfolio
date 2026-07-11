@@ -275,12 +275,12 @@ const HeroProfileImage = memo(() => {
         {/* Profile */}
         <div ref={photoRef} className="relative w-[160px] h-[160px] md:w-56 md:h-56 rounded-full overflow-hidden z-10 will-change-transform">
           <img
-            src={profileImg}
+            src="/profile.webp"
             alt="Manoj Kumar - Profile Picture"
             className="w-full h-full object-cover object-[center_20%]"
             width="400"
             height="400"
-            fetchPriority="high"
+            fetchpriority="high"
             loading="eager"
             decoding="async"
           />

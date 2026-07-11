@@ -3,6 +3,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import SmoothScroll from "@/components/SmoothScroll";
+import DeferredSection from "@/components/DeferredSection";
 
 // Lazy load below-fold sections
 const About = lazy(() => import("@/components/About"));
@@ -26,27 +27,48 @@ const Index = () => {
         <ScrollProgress />
         <Navbar />
         <Hero />
-        <Suspense fallback={<SectionFallback />}>
-          <About />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Skills />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Projects />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <GitHubActivity />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Education />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Contact />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Footer />
-        </Suspense>
+        
+        <DeferredSection id="about" minHeight="450px" fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback />}>
+            <About />
+          </Suspense>
+        </DeferredSection>
+
+        <DeferredSection id="skills" minHeight="500px" fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback />}>
+            <Skills />
+          </Suspense>
+        </DeferredSection>
+
+        <DeferredSection id="projects" minHeight="800px" fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback />}>
+            <Projects />
+          </Suspense>
+        </DeferredSection>
+
+        <DeferredSection id="github" minHeight="400px" fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback />}>
+            <GitHubActivity />
+          </Suspense>
+        </DeferredSection>
+
+        <DeferredSection id="education" minHeight="600px" fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback />}>
+            <Education />
+          </Suspense>
+        </DeferredSection>
+
+        <DeferredSection id="contact" minHeight="650px" fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback />}>
+            <Contact />
+          </Suspense>
+        </DeferredSection>
+
+        <DeferredSection id="footer" minHeight="100px" fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionFallback />}>
+            <Footer />
+          </Suspense>
+        </DeferredSection>
       </div>
     </SmoothScroll>
   );
