@@ -280,7 +280,7 @@ const HeroProfileImage = memo(() => {
             className="w-full h-full object-cover object-[center_20%]"
             width="400"
             height="400"
-            fetchpriority="high"
+            fetchPriority="high"
             loading="eager"
             decoding="async"
           />

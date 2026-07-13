@@ -80,7 +80,7 @@ const Navbar = memo(() => {
           width="80"
           height="80"
           decoding="async"
-          fetchpriority="high"
+          fetchPriority="high"
         />
         </a>
         <div className="hidden md:flex items-center gap-1 md:mr-[5px]">
