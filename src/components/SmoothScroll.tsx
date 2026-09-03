@@ -124,7 +124,6 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
-      window.removeEventListener("beforeunload", saveScrollPos);
       gsap.ticker.remove(tickerCb);
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
