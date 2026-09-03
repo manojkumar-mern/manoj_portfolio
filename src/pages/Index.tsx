@@ -28,43 +28,43 @@ const Index = () => {
         <Navbar />
         <Hero />
         
-        <DeferredSection id="about" minHeight="450px" fallback={<SectionFallback />}>
+        <DeferredSection id="about" minHeight="500px" fallback={<SectionFallback />}>
           <Suspense fallback={<SectionFallback />}>
             <About />
           </Suspense>
         </DeferredSection>
 
-        <DeferredSection id="skills" minHeight="500px" fallback={<SectionFallback />}>
+        <DeferredSection id="skills" minHeight="550px" fallback={<SectionFallback />}>
           <Suspense fallback={<SectionFallback />}>
             <Skills />
           </Suspense>
         </DeferredSection>
 
-        <DeferredSection id="projects" minHeight="800px" fallback={<SectionFallback />}>
+        <DeferredSection id="projects" minHeight="1350px" fallback={<SectionFallback />}>
           <Suspense fallback={<SectionFallback />}>
             <Projects />
           </Suspense>
         </DeferredSection>
 
-        <DeferredSection id="github" minHeight="400px" fallback={<SectionFallback />}>
+        <DeferredSection id="github" minHeight="450px" fallback={<SectionFallback />}>
           <Suspense fallback={<SectionFallback />}>
             <GitHubActivity />
           </Suspense>
         </DeferredSection>
 
-        <DeferredSection id="education" minHeight="600px" fallback={<SectionFallback />}>
+        <DeferredSection id="education" minHeight="550px" fallback={<SectionFallback />}>
           <Suspense fallback={<SectionFallback />}>
             <Education />
           </Suspense>
         </DeferredSection>
 
-        <DeferredSection id="contact" minHeight="650px" fallback={<SectionFallback />}>
+        <DeferredSection id="contact" minHeight="550px" fallback={<SectionFallback />}>
           <Suspense fallback={<SectionFallback />}>
             <Contact />
           </Suspense>
         </DeferredSection>
 
-        <DeferredSection id="footer" minHeight="100px" fallback={<SectionFallback />}>
+        <DeferredSection id="footer" minHeight="120px" fallback={<SectionFallback />}>
           <Suspense fallback={<SectionFallback />}>
             <Footer />
           </Suspense>

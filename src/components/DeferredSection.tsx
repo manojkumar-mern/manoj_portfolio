@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface DeferredSectionProps {
   children: React.ReactNode;
@@ -8,6 +8,20 @@ interface DeferredSectionProps {
   minHeight?: string;
 }
 
+const ContentNotifier = ({
+  children,
+  onLoaded,
+}: {
+  children: React.ReactNode;
+  onLoaded: () => void;
+}) => {
+  useEffect(() => {
+    onLoaded();
+  }, [onLoaded]);
+
+  return <>{children}</>;
+};
+
 export const DeferredSection = ({
   children,
   fallback,
@@ -15,10 +29,23 @@ export const DeferredSection = ({
   className,
   minHeight = "300px",
 }: DeferredSectionProps) => {
-  const [isNear, setIsNear] = useState(false);
+  const [isNear, setIsNear] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const hasHash = Boolean(window.location.hash);
+    const savedScroll = sessionStorage.getItem("portfolio_scroll_y");
+    const hasSavedScroll = savedScroll !== null && parseInt(savedScroll, 10) > 50;
+    return hasHash || hasSavedScroll || window.scrollY > 50;
+  });
+
+  const [isLoaded, setIsLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const handleLoaded = useCallback(() => {
+    setIsLoaded(true);
+  }, []);
+
   useEffect(() => {
+    if (isNear) return;
     const el = containerRef.current;
     if (!el) return;
 
@@ -39,22 +66,26 @@ export const DeferredSection = ({
         }
       },
       {
-        rootMargin: "300px 0px", // Trigger load when within 300px of viewport
+        rootMargin: "400px 0px", // Trigger load when within 400px of viewport
       }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [isNear]);
 
   return (
     <div
       ref={containerRef}
       id={id}
       className={className}
-      style={!isNear ? { minHeight } : undefined}
+      style={!isLoaded ? { minHeight } : undefined}
     >
-      {isNear ? children : fallback}
+      {isNear ? (
+        <ContentNotifier onLoaded={handleLoaded}>{children}</ContentNotifier>
+      ) : (
+        fallback
+      )}
     </div>
   );
 };

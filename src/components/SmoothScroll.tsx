@@ -11,7 +11,13 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   const lenisRef = useRef<Lenis | null>(null);
   const tier = usePerformanceTier();
 
+  const isRestoringRef = useRef(true);
+
   useEffect(() => {
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
     const isLow = tier === "low";
 
     const lenis = new Lenis({
@@ -22,6 +28,20 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     });
 
     lenisRef.current = lenis;
+
+    // Save scroll position continuously so reloads stay at exact location
+    const saveScrollPos = () => {
+      if (isRestoringRef.current) return;
+      if (window.scrollY > 0) {
+        sessionStorage.setItem("portfolio_scroll_y", String(Math.round(window.scrollY)));
+      }
+    };
+    lenis.on("scroll", saveScrollPos);
+    window.addEventListener("beforeunload", () => {
+      if (window.scrollY > 0) {
+        sessionStorage.setItem("portfolio_scroll_y", String(Math.round(window.scrollY)));
+      }
+    });
 
     // Drive Lenis via GSAP's ticker so ScrollTrigger stays perfectly in sync.
     const tickerCb = (time: number) => {
@@ -40,6 +60,41 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 
     // Refresh ScrollTrigger whenever Lenis reports a scroll (keeps triggers accurate).
     lenis.on("scroll", ScrollTrigger.update);
+
+    const restoreScrollPosition = () => {
+      const hash = window.location.hash;
+      if (hash && hash !== "#") {
+        const el = document.querySelector(hash);
+        if (el) {
+          lenis.scrollTo(el as HTMLElement, { offset: -80, immediate: true });
+          return;
+        }
+      }
+
+      const savedPos = sessionStorage.getItem("portfolio_scroll_y");
+      if (savedPos) {
+        const targetY = parseInt(savedPos, 10);
+        if (!isNaN(targetY) && targetY > 0) {
+          lenis.scrollTo(targetY, { immediate: true });
+          window.scrollTo(0, targetY);
+        }
+      }
+    };
+
+    // Perform immediate scroll restoration
+    restoreScrollPosition();
+
+    // Re-verify after layout and lazy modules settle
+    const timer1 = setTimeout(() => {
+      restoreScrollPosition();
+      ScrollTrigger.refresh();
+    }, 100);
+
+    const timer2 = setTimeout(() => {
+      restoreScrollPosition();
+      ScrollTrigger.refresh();
+      isRestoringRef.current = false;
+    }, 400);
 
     const handleAnchorClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
@@ -67,6 +122,9 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     ScrollTrigger.refresh();
 
     return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      window.removeEventListener("beforeunload", saveScrollPos);
       gsap.ticker.remove(tickerCb);
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
